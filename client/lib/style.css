@@ -1,0 +1,100 @@
+@font-face {
+    font-family: 'continuummedium';
+    src: url('continuummedium.ttf');
+}
+
+body {
+	text-align: center;
+	color: #bbbbbb;
+	background: #000;
+	font-family:continuummedium;
+}
+
+h1 {
+	color: #88ffff;
+	margin: 6px;
+}
+
+h3 {
+	color: #88ffff;
+	margin: 10px;
+}
+
+input {
+	text-align: center;
+	color: #ffffff;
+	display: inline-block;
+	background: #444;
+	border: 2px solid #8ff;
+	border-radius: 2px;
+	font-size: 16px;
+	margin: 4px;
+	font-family:continuummedium;
+}
+
+button {
+	color: #bbbbbb;
+	background: #444;
+	border: 2px solid #8ff;
+	border-radius: 2px;
+	width:150px;
+	font-size: 20px;
+	margin: 4px;
+}
+
+#login {
+	visibility: hidden;
+	width: 360px;
+	height: 200px;
+	margin-right: -180px;
+	margin-bottom: -100px;
+}
+
+#regis {
+	visibility: hidden;
+	width: 360px;
+	height: 304px;
+	margin-right: -180px;
+	margin-bottom: -204px;
+}
+
+#planet {
+	visibility: hidden;
+	width: 360px;
+	height: 200px;
+	bottom: 50%;
+	margin-right: -180px;
+	margin-bottom: -100px;
+}
+
+#valid {
+	margin-top: 10px;
+}
+
+.main {
+	background: #111;
+	position: absolute;
+	text-align: center;
+	right : 50%;
+	bottom: 80%;
+	border: 2px solid #8ff;
+	border-radius: 8px;
+	font-size: 20px;
+	z-index: 1;
+}
+
+#CNTS {
+	position: absolute;
+	right : 0%;
+	bottom: 0%;
+	width: 164px;
+	height: 24px;
+	background: #222;
+	color: #8ff;
+	border: 1px solid #8ff;
+	border-radius: 2px;
+	font-size: 16px;
+	z-index: 1;
+}
+
+/*style="visibility:hidden;"*/
