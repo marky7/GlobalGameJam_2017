@@ -4,14 +4,13 @@ var icons = new THREE.Object3D();
 var systemtracking = -1;
 
 function ShowSystem() { if (!system.visible) {
-	console.log("trigger !");
 	HideAll();
 	system.visible = true;
 	controls.minDistance =  0.1;
 	controls.maxDistance = 256000;
 	controls.userPan = true;
 	controls.userPanSpeed = 0.02;
-	console.log(JSON.stringify(active_stars,null,4));
+	//console.log(JSON.stringify(active_stars,null,4));
 	//console.log(JSON.stringify(active_planet,null,4));
 	MakeSystem();
 	camera.position.set(0,100,200);
@@ -19,18 +18,25 @@ function ShowSystem() { if (!system.visible) {
     controls.traveling(new THREE.Vector3(),64000);
 }}
 
+var TsunTexture
+   ,TsunColorLookupTexture 
+   ,TstarColorGraph 
+   ,TsunCoronaTexture
+   ,TsunHaloTexture
+   ,TsunHaloColorTexture;
+
 function InitSystem() {
 	scene.add(system);	
-}
-
-var TsunTexture = THREE.ImageUtils.loadTexture( "./img/star/sunsurface.png" );
+	TsunTexture = new THREE.TextureLoader().load( "./img/star/sunsurface.png" );
 	//sunTexture.anisotropy = renderer.getMaxAnisotropy();
 	TsunTexture.wrapS = TsunTexture.wrapT = THREE.RepeatWrapping;
-var TsunColorLookupTexture = THREE.ImageUtils.loadTexture( "./img/star/starcolorshift.png" );
-var TstarColorGraph = THREE.ImageUtils.loadTexture( "./img/star/starcolorspectral.png" );
-var TsunCoronaTexture = THREE.ImageUtils.loadTexture( "./img/star/corona.png" );
-var TsunHaloTexture = THREE.ImageUtils.loadTexture( "/img/star/sunhalo.png" );
-var TsunHaloColorTexture = THREE.ImageUtils.loadTexture( "/img/star/halocolorshift.png" );
+	TsunColorLookupTexture = new THREE.TextureLoader().load( "./img/star/starcolorshift.png" );
+	TstarColorGraph = new THREE.TextureLoader().load( "./img/star/starcolorspectral.png" );
+	TsunCoronaTexture = new THREE.TextureLoader().load( "./img/star/corona.png" );
+	TsunHaloTexture = new THREE.TextureLoader().load( "/img/star/sunhalo.png" );
+	TsunHaloColorTexture = new THREE.TextureLoader().load( "/img/star/halocolorshift.png" );
+}
+
 
 //M solar mass x G -> 1.3275*Math.pow(10,20)*M
 //1/AU^3 -> 2.9630*Math.pow(10,-34)
@@ -75,9 +81,9 @@ function MakeSystem() {
 	for (var p=0;p<active_planet.length;p++) {
 		var currad = active_planet[p].radius;
 		if (currad>maxrad)
-			maxrad = currad;
+			maxrad = currad*2;
 	}
-	systemscale = 64000/maxrad;
+	systemscale = 64000/maxrad;//64000
 	var lmaterial = new THREE.LineBasicMaterial({ color: 0x888888 });
 	for (var c=0;c<system.elem.length;c++) {
 		if (c==0) {
@@ -113,8 +119,8 @@ function MakeSystem() {
 	//TOREMOVE LOCATOR
 	var sunMaterial = new THREE.SpriteMaterial( 
 	{ 
-		map: new THREE.ImageUtils.loadTexture( './img/star.png' ),
-		useScreenCoordinates: false, 
+		map: new new THREE.TextureLoader().load( './img/star.png' ),
+		//useScreenCoordinates: false, 
 		color: 0xffddbb,
 		transparent: false,
 		blending: THREE.AdditiveBlending
@@ -202,12 +208,12 @@ function MakeSystem() {
 		var geop = new THREE.SphereBufferGeometry(active_planet[p].size/15000000*systemscale, 32, 32);//0000000
 
 			matp= new THREE.MeshPhongMaterial();
-			matp.map       	 = THREE.ImageUtils.loadTexture('./img/planetmin/'+active_planet[p].ptype+'d.jpg');
-			//matp.normalMap   = THREE.ImageUtils.loadTexture('./img/planet/Alien-n.png');
+			matp.map       	 = new THREE.TextureLoader().load('./img/planetmin/'+active_planet[p].ptype+'d.jpg');
+			//matp.normalMap   = new THREE.TextureLoader().load('./img/planet/Alien-n.png');
 			//matp.normalScale = 0;
-			//matp.bumpMap   	= THREE.ImageUtils.loadTexture('./img/planet/'+active_planet[p].ptype+'N.jpg');
-			//matp.bumpScale 	= 0.00001;
-			//matp.specularMap= THREE.ImageUtils.loadTexture('./img/planet/'+active_planet[p].ptype+'N.jpg');
+			matp.bumpMap   	= new THREE.TextureLoader().load('./img/planetmin/'+active_planet[p].ptype+'n.jpg');
+			matp.bumpScale 	= 0.00001;
+			//matp.specularMap= new THREE.TextureLoader().load('./img/planet/'+active_planet[p].ptype+'N.jpg');
 			//matp.specular  	= new THREE.Color(0x2f2f2f);
 
 		var planetMesh = new THREE.Mesh(geop, matp);
@@ -245,11 +251,12 @@ function MakeSystem() {
 		console.log(system.elem[i].core+'-'+system.elem[i].radius);
 	}
 	console.log(JSON.stringify(active_planet,null,4));*/
+
 	//pointlight
-	var slight = new THREE.PointLight(0xdddddd);
-		slight.position.y = 100000; // UP TEMP LIGHT
-		slight.position.z =  50000; // UP TEMP LIGHT
-	system.add(slight)
+	//var slight = new THREE.PointLight(0xdddddd);
+	//	slight.position.y = 100000; // UP TEMP LIGHT
+	//	slight.position.z =  50000; // UP TEMP LIGHT
+	//system.add(slight)
 	var alight = new THREE.AmbientLight(0x222222);
 	system.add(alight);
 
@@ -272,7 +279,7 @@ function MakeSystem() {
 		system.add( object );
 	});*/
 
-	//Hangar
+	/*/Hangar
 	var ship;
 	var loader = new THREE.OBJLoader();
 	loader.load( '100', function ( object ) {
@@ -284,7 +291,7 @@ function MakeSystem() {
 		//object.position.y = 0.1*systemscale;
 		system.add( object );
 	});//*/
-	//SHIP
+	/*/SHIP
 	var loader2 = new THREE.OBJLoader();
 	loader2.load( '0', function ( object ) {
 		//object.traverse( function ( child ) {
@@ -297,7 +304,7 @@ function MakeSystem() {
 	});//*/
 
 	//System Cursor
-	var cursortxt = THREE.ImageUtils.loadTexture( './img/focus2.jpg' );
+	var cursortxt = new THREE.TextureLoader().load( './img/focus2.jpg' );
     var cursormat = new THREE.SpriteMaterial( { map: cursortxt, color: 0xffffff, blending: THREE.AdditiveBlending } );
     var cursorobj = new THREE.Sprite( cursormat );
     	cursorobj.visible = false;
@@ -308,7 +315,7 @@ function MakeSystem() {
 	// Star Skybox
 	var skyGeometry = new THREE.SphereBufferGeometry(500000, 32, 32);
 	var skyMaterial = new THREE.MeshBasicMaterial({
-		map: THREE.ImageUtils.loadTexture( "img/starbox/skystar.jpg" ),
+		map: new THREE.TextureLoader().load( "img/starbox/skystar.jpg" ),
 			color : 0xbbdddd,
 			side: THREE.BackSide
 		});
@@ -322,9 +329,9 @@ function MakeSystem() {
 	};	
 	system.uniforms = {
 		color:   { type: "c", value: new THREE.Color( 0xffffff ) },
-		text0:   { type: "t", value: THREE.ImageUtils.loadTexture( './img/iconstar.png' ) },
-		text1:   { type: "t", value: THREE.ImageUtils.loadTexture( './img/iconplan.png' ) },
-		text2:   { type: "t", value: THREE.ImageUtils.loadTexture( './img/iconmoon.png' ) }
+		text0:   { type: "t", value: new THREE.TextureLoader().load( './img/iconstar.png' ) },
+		text1:   { type: "t", value: new THREE.TextureLoader().load( './img/iconplan.png' ) },
+		text2:   { type: "t", value: new THREE.TextureLoader().load( './img/iconmoon.png' ) }
 	};	
 	system.shaderMaterial = new THREE.ShaderMaterial( {
 		uniforms:       system.uniforms,
@@ -377,14 +384,14 @@ function MakeSystem() {
 	system.geometry.addAttribute( 'texture', new THREE.BufferAttribute( values_text, 1 ) );
 	system.geometry.addAttribute( 'size', new THREE.BufferAttribute( values_size, 1 ) );
 	system.geometry.addAttribute( 'galaxyid', new THREE.BufferAttribute( values_id, 1 ) );
-		icons = new THREE.PointCloud( system.geometry, system.shaderMaterial );
+		icons = new THREE.Points( system.geometry, system.shaderMaterial );
 		icons.frustumCulled = false;
 	system.add(icons);
 
     var accutime = 0;
 	system.rotate = function(delta) {
 		//var NOW2=COUNTER.sprite*16/1000+10000000000;
-		if (ship!=undefined) ship.rotation.y += delta/5;
+		//if (ship!=undefined) ship.rotation.y += delta/5;
 		//Shader processing
 		//var offset = camera.position.clone()/*.sub(camera.center)*/;Math.atan2( offset.x, offset.z );// + rotateYAccumulate
 		accutime += delta;
@@ -398,31 +405,31 @@ function MakeSystem() {
 		var v=0;
 		for (var c=0;c<system.children.length;c++) {
 			var c1 = system.children[c]; var d1 = 0;
-			if (c1.speed) {d1 = 0.0727*NOWS*c1.speed; c1.rotation.y = d1; } //c1.updateMatrix();
+			if (c1.speed) {d1 = 0.0727*NOW*c1.speed; c1.rotation.y = d1; } //c1.updateMatrix();
 			if (c1.iconid) { var posc= new THREE.Vector3(); posc.setFromMatrixPosition(c1.matrixWorld); newpos[c1.ver*3]=posc.x; newpos[c1.ver*3+1]=0; newpos[c1.ver*3+2]=posc.z; 
 				if (systemtracking==v) { controls.track(posc); } v++; }
 			for (var d=0;d<c1.children.length;d++) {
 				var c2 = c1.children[d]; var d2 = 0;
 				if (!c2.exp) c2.rotation.y = -d1;
-				if (c2.speed) {d2 = 0.0727*NOWS*c2.speed; c2.rotation.y = d2; } //c2.updateMatrix();
+				if (c2.speed) {d2 = 0.0727*NOW*c2.speed; c2.rotation.y = d2; } //c2.updateMatrix();
 				if (c2.iconid) { var posc= new THREE.Vector3(); posc.setFromMatrixPosition(c2.matrixWorld); newpos[c2.ver*3]=posc.x; newpos[c2.ver*3+1]=0; newpos[c2.ver*3+2]=posc.z; 
 					if (systemtracking==v) { controls.track(posc); } v++; }
 				for (var e=0;e<c2.children.length;e++) {
 					var c3 = c2.children[e]; var d3 = 0; 
 					if (!c3.exp) c3.rotation.y = -d2;
-					if (c3.speed) {d3 = 0.0727*NOWS*c3.speed; c3.rotation.y = -d3; } //c3.updateMatrix();
+					if (c3.speed) {d3 = 0.0727*NOW*c3.speed; c3.rotation.y = -d3; } //c3.updateMatrix();
 					if (c3.iconid) { var posc= new THREE.Vector3(); posc.setFromMatrixPosition(c3.matrixWorld); newpos[c3.ver*3]=posc.x; newpos[c3.ver*3+1]=0; newpos[c3.ver*3+2]=posc.z; 
 						if (systemtracking==v) { controls.track(posc); } v++; }
 					for (var f=0;f<c3.children.length;f++) {
 						var c4 = c3.children[f]; var d4 = 0; 
 						if (!c4.exp) c4.rotation.y = d3;
-						if (c4.speed) {d4 = 0.0727*NOWS*c4.speed; c4.rotation.y = -d4; } //c4.updateMatrix();
+						if (c4.speed) {d4 = 0.0727*NOW*c4.speed; c4.rotation.y = -d4; } //c4.updateMatrix();
 						if (c4.iconid) { var posc= new THREE.Vector3(); posc.setFromMatrixPosition(c4.matrixWorld); newpos[c4.ver*3]=posc.x; newpos[c4.ver*3+1]=0; newpos[c4.ver*3+2]=posc.z; 
 							if (systemtracking==v) { controls.track(posc); } v++; }
 						for (var g=0;g<c4.children.length;g++) {
 							var c5 = c4.children[g]; //var d5 = 0;
 							if (!c5.exp) c5.rotation.y = d4;
-							//if (c5.speed) {c5.rotation.y += 0.0727*NOWS*c5.speed; } //c5.updateMatrix();
+							//if (c5.speed) {c5.rotation.y += 0.0727*NOW*c5.speed; } //c5.updateMatrix();
 							if (c5.iconid) { var posc= new THREE.Vector3(); posc.setFromMatrixPosition(c5.matrixWorld); newpos[c5.ver*3]=posc.x; newpos[c5.ver*3+1]=0; newpos[c5.ver*3+2]=posc.z; 
 								if (systemtracking==v) { controls.track(posc); } v++; }
 							for (var h=0;h<c5.children.length;h++) {
@@ -509,7 +516,7 @@ function NewGenStar(size,spectral) {
 			blending: THREE.AdditiveBlending,
 			depthTest: 		false,
 			depthWrite: 	false,
-			color: 0xffffff,
+			//color: 0xffffff,
 			transparent: true,
 			//	settings that prevent z fighting
 			polygonOffset: true,
@@ -530,7 +537,7 @@ function NewGenStar(size,spectral) {
 			vertexShader: 	StarCorona.vertexShader,
 			fragmentShader: StarCorona.fragmentShader,
 			blending: THREE.AdditiveBlending,
-			color: 0xffffff,
+			//color: 0xffffff,
 			transparent: true,
 			//	settings that prevent z fighting
 			polygonOffset: true,
@@ -542,6 +549,11 @@ function NewGenStar(size,spectral) {
 	);
 	var sunGlow = new THREE.Mesh( glowGeo, sunGlowMaterial );
 		sunGlow.position.set( 0, 0, 0 );
+
+	var slight = new THREE.PointLight(0xdddddd);
+	//	slight.position.y = 100000; // UP TEMP LIGHT
+	//	slight.position.z =  50000; // UP TEMP LIGHT
+	newgenstar.add(slight)
 
 	var gyro = new THREE.Object3D();
 	newgenstar.add( gyro );	
@@ -566,31 +578,92 @@ function NewGenStar(size,spectral) {
     return newgenstar;
 }
 
-// =======================
-// ===== TECH  CLASS =====
-// =======================
-/*
-function Tech(support,radius,hue,sat,lvl,tid) { if (tech_data[tid].lvl() != 0 || tid<10) {
-	this.planet = new Stark(support,radius,hue,sat,"planet",tid);
+var active_stars = [
+    {
+        "id": 0,
+        "pid": 0,
+        "type": 580,
+        "core": 0,
+        "radius": 0,
+        "mass": 1,
+        "size": 696000,
+        "lumi": 1,
+        "temp": 5778
+    }
+];
 
-	this.moon = [];
-	for (var m=0;m<tech_data[tid].lvl();m++) {
-		this.moon.push(new Stark(this.planet.starcore,50+5*m,hue,sat,"moon",lvl+1))
-	}
+var active_planet = [
+    {
+        "id": 10,
+        "ptype": 50,
+        "mass": 0.000003*0.056,
+        "core": 0,
+        "radius": 0.38,
+        "size": 2440
+    },
+    {
+        "id": 21,
+        "ptype": 21,
+        "mass": 0.000003*0.857,
+        "core": 0,
+        "radius": 0.72,
+        "size": 6051
+    },
+    {
+        "id": 12,
+        "ptype": '00',
+        "mass": 0.000003*1,
+        "core": 0,
+        "radius": 1,
+        "size": 6378
+    },
+    {
+        "id": 13,
+        "ptype": 22,
+        "mass": 0.000003*0.107,
+        "core": 0,
+        "radius": 1.52,
+        "size": 3397
+    },
+    {
+        "id": 14,
+        "ptype": 43,
+        "mass": 0.000003*1321,
+        "core": 0,
+        "radius": 5.2,
+        "size": 71492
+    },
+    {
+        "id": 15,
+        "ptype": 41,
+        "mass": 0.000003*763,
+        "core": 0,
+        "radius": 9.53,
+        "size": 60267
+    },
+    {
+        "id": 16,
+        "ptype": 44,
+        "mass": 0.000003*63,
+        "core": 0,
+        "radius": 19,
+        "size": 25557
+    },
+    {
+        "id": 17,
+        "ptype": 40,
+        "mass": 0.000003*57,
+        "core": 0,
+        "radius": 30,
+        "size": 24766
+    }
 
-	this.animate = function(delta) {
-		this.planet.animate(delta);
-		for (var m=0;m<this.moon.length;m++) {
-			this.moon[m].animate(delta);
-		}
-	}
-}
-else {
-	var tag = "1-0-"+(tid%5)+"-"+(Math.floor(tid/5)+4);
-	gui_data[tag].name = " ";
-	gui_data[tag].cb = function(){};
-	this.planet        = new THREE.Object3D();
-	this.planet.object = new THREE.Object3D();
-	this.animate = function(delta) {};
-}}
-*/
+    //{ //MOON BROKEN :'(
+    //    "id": 18,
+    //    "ptype": 51,
+    //    "mass": 0.000003*0.0123,
+    //    "core": 12,
+    //    "radius": 0.00256,
+    //    "size": 1737
+    //}
+];

@@ -1,9 +1,10 @@
 function Socketer() {
 
-	socket.on('ClientStart', function (data) { if (!START) {
+	var clientStarted = false;
+	socket.on('ClientStart', function (data) { if (!clientStarted) {
 		if (resources.isReady()) BuildGui();
     	else resources.onReady(BuildGui);
-   		START = true;
+   		clientStarted = true;
     	UpdateMarkers("all");
 	} else { 
 		GUI.menu.Reset(); GUI.Draw(); } 

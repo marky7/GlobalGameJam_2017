@@ -17,7 +17,8 @@ function Now() {
 
 function HideAll() {
     controls.reset();
-    TECHNO.visible = false;
+    NewScene.visible = false;
+    system.visible = false;
 }
 
 // Global Start Checker
@@ -80,10 +81,11 @@ function init() {
 
     HideAll();
 
-    //TECHNO.init();
-    //TECHNO.show();
     NewScene.init();
-    NewScene.show();
+    //NewScene.show();
+
+    InitSystem();
+    ShowSystem();
 
     //SoundManager2
     Play();/*TOREMOVE*/Mute();
@@ -115,10 +117,12 @@ function update()
     var delta = clock.getDelta();
 
     //Animate scenes according to their visibility and the time delta
-    if (TECHNO.visible) {
-        TECHNO.animate(delta);
+    if (NewScene.visible) {
+        NewScene.animate(delta);
     }
-
+    if (system.visible) {
+        system.rotate(delta);
+    }
     //refresh cam control and fps display
     controls.update();
     stats.update();

@@ -417,8 +417,6 @@ resources.load([
 	'img/focus.jpg',
 	'img/focus.png',
 	'img/tech.png',
-	//GUI
-	'img/GUIplanet.png',
 	//MISC
 	'img/music.png'
 ]);

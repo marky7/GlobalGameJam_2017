@@ -50,6 +50,7 @@ NewScene.init = function() {
     NewScene.background = new THREE.CubeTextureLoader()
         .setPath( 'img/starbox/' )
         .load( [ 's_px.jpg', 's_nx.jpg', 's_py.jpg', 's_ny.jpg', 's_pz.jpg', 's_nz.jpg' ] );
+    scene.background = NewScene.background;
 
     //overing sprite example
     //this item must be added on the GUI scene, so we use guisc.add()
@@ -88,7 +89,7 @@ var Node = function(data) {
     this.link = data.link;
     this.position = new THREE.Vector3(data.x,data.y,data.z);
     //var material = new THREE.MeshBasicMaterial( { color: 0x0088dd, wireframe: true } );
-    var material = new THREE.MeshBasicMaterial( { color: this.unlock?0xffffff:0x444444, envMap: scene.background  } );//
+    var material = new THREE.MeshBasicMaterial( { color: this.unlock?0xffffff:0x444444, envMap: NewScene.background  } );//
     var geometry = new THREE.SphereBufferGeometry(200, 32, 32);
     var mesh = new THREE.Mesh( geometry, material );
     mesh.position.set(data.x*1000,data.y*1000,data.z*1000);
@@ -122,7 +123,7 @@ NewScene.Link = function(pos1,pos2) {
             return new THREE.Vector3( tx, ty, tz ).multiplyScalar( 1000 );
         });
     var geometry = new THREE.TubeGeometry( new curve, 10, 25, 16, false );
-    var material = new THREE.MeshBasicMaterial( { color: 0xffffff , envMap: scene.background } );
+    var material = new THREE.MeshBasicMaterial( { color: 0xffffff , envMap: NewScene.background } );
     var mesh = new THREE.Mesh( geometry, material );
     NewScene.add( mesh );
 };

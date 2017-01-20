@@ -7,13 +7,13 @@ function GalaxyOver() {
 	var ray = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
 	//var ray = new THREE.Raycaster();
 	//	ray.setFromCamera( {"x":mouse.x,"y":mouse.y}, camera );
-	//	ray.params.PointCloud.threshold = 4;
+	//	ray.params.Points.threshold = 4;
 
-	if (TECHNO.visible) {
-		var intersects = ray.intersectObjects( TECHNO.over );	
+	if (NewScene.visible) {
+		var intersects = ray.intersectObjects( NewScene.over );	
 		if ( intersects.length > 0) {
-			TECHNO.focusSprite.visible = true;
-			TECHNO.focusSprite.position.set(12+mouse.xp-window.innerWidth/2,window.innerHeight/2-mouse.yp,1);
+			NewScene.focusSprite.visible = true;
+			NewScene.focusSprite.position.set(12+mouse.xp-window.innerWidth/2,window.innerHeight/2-mouse.yp,1);
 			
 			ctx.clearRect(0,0,512,512);
 
@@ -47,7 +47,7 @@ function GalaxyOver() {
 				//if (INTERSECTED.tid>0) INTERSECTED.showlink(false);
 				INTERSECTED = null;
 			}
-			TECHNO.focusSprite.visible = false;
+			NewScene.focusSprite.visible = false;
 			//GUI.menu.Focus(-1);
 			ctx.clearRect(0,0,512,512);
 			overtext.needsUpdate = true;
@@ -55,8 +55,8 @@ function GalaxyOver() {
 	}
 
 	//over systeme example for particules
-	/*if (system.visible) { 
-		ray.params.PointCloud.threshold = controls.radius/10;
+	if (system.visible) { 
+		ray.params.Points.threshold = controls.radius/16;
 		var intersects = ray.intersectObject( icons );
 		if (intersects.length > 0) {
 			var bid = system.geometry.getAttribute('galaxyid').array[intersects[0].index];
@@ -88,6 +88,6 @@ function GalaxyOver() {
 			}
 			system.cursor.visible = false;
 		}
-	}*/
+	}
 
 }
