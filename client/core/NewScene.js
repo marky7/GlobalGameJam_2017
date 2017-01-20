@@ -14,7 +14,7 @@ NewScene.show = function() { if (!NewScene.visible) {
     controls.traveling(new THREE.Vector3(),2500);
     //once cam is ready, show the scene
     NewScene.visible = true;
-}}
+}};
 
 NewScene.init = function() {
     //we add our new scene to the game engine
@@ -27,8 +27,8 @@ NewScene.init = function() {
     NewScene.over = [];
 
     //bring the light to the full scene
-    var alight = new THREE.AmbientLight(0x888888);
-    NewScene.add(alight);
+    //NewScene.alight = new THREE.AmbientLight(0xffff22);
+    //NewScene.add(NewScene.alight);
 
     //free use lighting point
     //var plight = new THREE.PointLight(0xbbbbbb);
@@ -69,16 +69,17 @@ NewScene.init = function() {
     //textured object must not be added directly, use loadTexture callback
 
     //Animation of your scene, must be called by main-update
-    NewScene.animate = function(delta) {
+    NewScene.animate = function(delta) {Now();
         NewScene.rotation.y -= 0.02*delta;
-    }
+        NewScene.alight = new THREE.AmbientLight(0xffff88,Math.random());
+    };
 
     //Finish instancing all your objects
     //Theirs data are stored at the end of this file
     for (var i=0;i<NewScene.data.length;i++) {
         NewScene.node.push(new Node(NewScene.data[i]));
     }
-}
+};
 
 //After the init function, add your code custom function/objects
 //The construction of this scene is a bit disturbing, but each will be unique ^^
@@ -97,7 +98,7 @@ var Node = function(data) {
     mesh.name = data.name;
     mesh.tid  = data.id;
     //add to the scene to be rendered
-    NewScene.add(mesh)
+    NewScene.add(mesh);
     //Here bind properties to the SAME object you push into the 'over' array
     NewScene.over.push(mesh);
 
@@ -108,7 +109,7 @@ var Node = function(data) {
                 NewScene.Link(this.position,GetNodePos(this.link[i]));
         }
     }
-}
+};
 
 //This object is a sub product of Node, and we dont interact with it,
 // so we dont need to index it inside an array.

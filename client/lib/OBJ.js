@@ -17,7 +17,7 @@ THREE.OBJLoader.prototype = {
 		var scope = this;
 
 		var loader = new THREE.XHRLoader( scope.manager );
-		loader.setCrossOrigin( this.crossOrigin );
+		//loader.setCrossOrigin( this.crossOrigin );
 		loader.load( 'obj/'+obj+'.obj', function ( text ) {
 
 			onLoad( scope.parse( text, obj ) );

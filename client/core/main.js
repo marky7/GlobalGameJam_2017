@@ -19,6 +19,7 @@ function HideAll() {
     controls.reset();
     NewScene.visible = false;
     system.visible = false;
+    Axoaya.visible = false;
 }
 
 // Global Start Checker
@@ -87,6 +88,9 @@ function init() {
     InitSystem();
     ShowSystem();
 
+    Axoaya.init();
+    //Axoaya.show();
+
     //SoundManager2
     Play();/*TOREMOVE*/Mute();
 }
@@ -123,6 +127,9 @@ function update()
     if (system.visible) {
         system.rotate(delta);
     }
+    if (Axoaya.visible) {
+        Axoaya.animate(delta);
+    }
     //refresh cam control and fps display
     controls.update();
     stats.update();
@@ -132,6 +139,6 @@ function render()
 {   //please dont make anything stupid here
     renderer.clear();                               //Reset to a black screen   
     renderer.render( scene, camera );               //Render all 3D stuff
-    if ( Detector.webgl ) renderer.clearDepth();    
+    if ( Detector.webgl ) renderer.clearDepth();
     renderer.render( guisc, guicam );               //Render the 2D GUI
 }  
