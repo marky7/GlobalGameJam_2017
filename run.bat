@@ -1,3 +1,3 @@
-copy /b server\start.js + server\end.js exoserver.js
-node exoserver.js
+copy /b server\start.js + server\end.js ggjserver.js
+node ggjserver.js
 pause

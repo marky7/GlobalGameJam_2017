@@ -9,7 +9,7 @@ TECHNO.show = function() { if (!TECHNO.visible) {
 	camera.position.set(0,1500,2000);
     controls.center.set(0,0,0); 
     controls.traveling(new THREE.Vector3(),2500);
-}}
+}};
 
 var Node = function(data) {
 	this.id = data.id;
@@ -23,7 +23,7 @@ var Node = function(data) {
 		mesh.position.set(data.x*1000,data.y*1000,data.z*1000);
 		mesh.name = data.name;
 		mesh.tid  = data.id;
-	TECHNO.add(mesh)
+	TECHNO.add(mesh);
 	TECHNO.over.push(mesh);
 	for(var i=0;i<this.link.length;i++){
 		if (this.link[i]<this.id) {
@@ -31,7 +31,7 @@ var Node = function(data) {
 				TECHNO.Link(this.position,GetNodePos(this.link[i]));
 		}
 	}
-}
+};
 
 function GetNodePos(id) {
 	for (var i=0;i<TECHNO.data.length;i++) {
@@ -88,7 +88,7 @@ function C(r,g,b) {
 	var gre = g || Math.random()*255; 
 	var blu = b || Math.random()*255; 
 	return new THREE.Color("rgb("+Math.round(red)+","+Math.round(gre)+","+Math.round(blu)+")");
-};
+}
 
 TECHNO.init = function() {
 	scene.add(TECHNO);
@@ -106,7 +106,7 @@ TECHNO.init = function() {
 		//else					{ maskSprite1.scale.setY(80); maskSprite0.scale.setY(-80*Math.cos(camangle)); BlackMesh0.visible = true; BlackMesh1.visible = false; }
 		
 		TECHNO.rotation.y -= 0.02*delta;
-	}
+	};
 
 	//techno.showlink = function(tid,flag) {
 	//	GetStark(tid).showlink(flag);
@@ -115,8 +115,8 @@ TECHNO.init = function() {
 	var focusMaterial = new THREE.SpriteMaterial( 
 	{ 
 		map: new THREE.ImageUtils.loadTexture( './img/focus.jpg',{}, function() { guisc.add(TECHNO.focusSprite); } ),
-		useScreenCoordinates: false, 
-		color: 0xffffff,//0xffbb66,
+		//useScreenCoordinates: false,
+		color: 0xffffff,
 		transparent: false,
 		blending: THREE.AdditiveBlending
 	});
@@ -154,7 +154,7 @@ TECHNO.init = function() {
 	for (var i=0;i<TECHNO.data.length;i++) {
 		TECHNO.node.push(new Node(TECHNO.data[i]));
 	}
-}
+};
 
 // =======================
 // ===== TECH  CLASS =====

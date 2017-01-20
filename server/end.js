@@ -1,6 +1,6 @@
 
 console.log("╔════════════════════╗");
-console.log("║ EXO SERVER STARTED ║");
+console.log("║ GGJ SERVER STARTED ║");
 console.log("╚══╦══════════════╦══╝");
 console.log("   ╚═══ V0.0.1 ═══╝   ");
 console.log("Timestamp : "+Math.round(Date.now() / 1000) );

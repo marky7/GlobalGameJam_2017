@@ -80,9 +80,10 @@ function init() {
 
     HideAll();
 
-    TECHNO.init();
-
-    TECHNO.show();
+    //TECHNO.init();
+    //TECHNO.show();
+    NewScene.init();
+    NewScene.show();
 
     //SoundManager2
     Play();/*TOREMOVE*/Mute();
