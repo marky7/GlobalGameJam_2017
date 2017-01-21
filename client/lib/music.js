@@ -1,42 +1,29 @@
-var master_volume = 2;
+var master_volume = 10;
 soundManager.setup({
   url: '/none/',
   onready: function() {
 	soundManager.createSound({
 	  id: 'AN9',
-	  url: 'music/AN_Reboot_09_Stars.80k.mp3',
+	  url: 'http://89.234.182.150/H-LAM.mp3',
 	  volume: master_volume,
 	  onfinish : function(){soundManager.play('AN5')}
 	});
 	soundManager.createSound({
 	  id: 'AN5',
-	  url: 'music/AN_Reboot_05_Stop.80k.mp3',
+	  url: 'http://89.234.182.150/H-LI.mp3',
 	  volume: master_volume,
 	  onfinish : function(){soundManager.play('AN6')}
-	});
-	soundManager.createSound({
-	  id: 'AN6',
-	  url: 'music/AN_Reboot_06_Search.80k.mp3',
-	  volume: master_volume,
-	  onfinish : function(){soundManager.play('AN2')}
-	});
-	soundManager.createSound({
-	  id: 'AN2',
-	  url: 'music/AN_Reboot_02_Reboot.80k.mp3',
-	  volume: master_volume,
-	  onfinish : function(){soundManager.play('AN8')}
-	});
-	soundManager.createSound({
-	  id: 'AN8',
-	  url: 'music/AN_Reboot_08_AscendingDreams.80k.mp3',
-	  volume: master_volume,
-	  onfinish : function(){soundManager.play('AN9')}
 	});
   },
   ontimeout: function() {
 	// Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
   }
 });
+
+var musics = [
+	{ id: 'AN9', isPlaying: false, next: 'AN5' },
+	{ id: 'AN5', isPlaying: false, next: 'AN9' }
+];
 
 function Mute() {
 	if (soundManager.muted)
@@ -45,6 +32,24 @@ function Mute() {
 		soundManager.mute();
 }
 
-function Play() {
-	soundManager.play('AN9');
+function Play(id) {
+	Stop();
+	if (id == undefined)
+        soundManager.play(musics[0].id);
+	else
+		musics.forEach(function (e) {
+			if (e.id == id && !e.isPlaying) {
+				soundManager.play(id);
+				e.isPlaying = true;
+			}
+		});
+}
+
+function Stop(id) {
+    musics.forEach(function (e) {
+    	if (id === undefined || e.id == id) {
+            e.isPlaying = false;
+            soundManager.stop(e.id);
+        }
+    });
 }

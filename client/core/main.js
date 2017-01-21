@@ -96,7 +96,7 @@ function init() {
     MovingScene.show();
 
     //SoundManager2
-    Play();/*TOREMOVE*/Mute();
+    Play('AN9');/*TOREMOVE*///Mute();
 }
 
 //!MAIN ENGINE LOOP!
