@@ -35,55 +35,56 @@ MovingScene.init = function() {
     MovingScene.focusSprite.position.setX(12);
     MovingScene.focusSprite.visible = false;
 
-    var cube = new THREE.Mesh( new THREE.CubeGeometry( 200, 200, 200 ), new THREE.MeshNormalMaterial() );
-	cube.position.y = 150;
-	MovingScene.add(cube);
+    var players = [{
+        up: false,
+        left: false,
+        down: false,
+        right: false,
+        xVel: 0,
+        yVel: 0
+    }, {
+        up: false,
+        left: false,
+        down: false,
+        right: false,
+        xVel: 0,
+        yVel: 0
+    }, {
+        up: false,
+        left: false,
+        down: false,
+        right: false,
+        xVel: 0,
+        yVel: 0
+    }, {
+        up: false,
+        left: false,
+        down: false,
+        right: false,
+        xVel: 0,
+        yVel: 0
+    }];
+
+    for (var i = 0; i < 4; i++) {
+        players[i].mesh = new THREE.Mesh(new THREE.CubeGeometry(200, 200, 200), new THREE.MeshNormalMaterial());
+        players[i].mesh.position.y = 150;
+        MovingScene.add(players[i].mesh);
+    }
 
     MovingScene.animate = function(delta) {
-        //MovingScene.rotation.y -= 0.02*delta;
-        if (playerInput[0].up)      yVelocity += deltaSpeed;
-        if (playerInput[0].left)    xVelocity -= deltaSpeed;
-        if (playerInput[0].down)    yVelocity -= deltaSpeed;
-        if (playerInput[0].right)   xVelocity += deltaSpeed;
+        for (var i = 0; i < 4; i++) {
+            if (players[i].up)      players[i].yVel += deltaSpeed;
+            if (players[i].left)    players[i].xVel -= deltaSpeed;
+            if (players[i].down)    players[i].yVel -= deltaSpeed;
+            if (players[i].right)   players[i].xVel += deltaSpeed;
 
-        cube.position.x += xVelocity;
-        cube.position.y += yVelocity;
-        console.log(xVelocity,yVelocity);
-        //camera.position = cube.position;
+            players[i].mesh.position.x += players[i].xVel;
+            players[i].mesh.position.y += players[i].yVel;
+        }
     };
 
-    var xVelocity = 0, yVelocity = 0, maxVelocity = 10, deltaSpeed = 1;
-    var keyDown = false, lastKey = '';
-    var playerInput = [{
-        'up' : false,
-        'left' : false,
-        'down' : false,
-        'right' : false
-    }];
-    MovingScene.input = function(keyup,player,ipt) {
-        
-        playerInput[player][ipt] = keyup;
-        /*switch (ipt) {
-            case 'p1u':
-                lastKey = 'p1u';
-                keyDown = true;
-                break;
-            case 'p1l':
-                lastKey = 'p1l';
-                keyDown = true;
-                break;
-            case 'p1d':
-                lastKey = 'p1d';
-                keyDown = true;
-                break;
-            case 'p1r':
-                lastKey = 'p1r';
-                keyDown = true;
-                break;
-            default:
-                break;
-        }
-        if (['u1p', 'l1p', 'd1p', 'r1p'].indexOf(ipt) >= 0)
-            keyDown = false;*/
+    var maxVelocity = 10, deltaSpeed = 1;
+    MovingScene.input = function(key,player,ipt) {
+        players[player][ipt] = key;
     }
 };

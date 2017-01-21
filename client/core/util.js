@@ -20,42 +20,55 @@ document.addEventListener('keydown', event => {
 			break;
 
 		case 90: // z
-			MovingScene.input(true,0,'up');
+			MovingScene.input(true, 0, 'up');
 			break;
 		case 81: // q
-			MovingScene.input(true,0,'left');
+			MovingScene.input(true, 0, 'left');
 			break;
 		case 83: // s
-			MovingScene.input(true,0,'down');
+			MovingScene.input(true, 0, 'down');
 			break;
 		case 68: // d
-			MovingScene.input(true,0,'right');
+			MovingScene.input(true, 0, 'right');
 			break;
 
 		case 79: // o
-			MovingScene.input('p2u');
+		    MovingScene.input(true, 1, 'up');
 			break;
 		case 75: // k
-			MovingScene.input('p2l');
+    		MovingScene.input(true, 1, 'left');
 			break;
 		case 76: // l
-			MovingScene.input('p2d');
+			MovingScene.input(true, 1, 'down');
 			break;
 		case 77: // m
-			MovingScene.input('p2r');
+			MovingScene.input(true, 1, 'right');
 			break;
 
 		case 37: // Left
-			MovingScene.input('p3l');
+		    MovingScene.input(true, 2, 'left');
 			break;
 		case 38: // Up
-    		MovingScene.input('p3u');
+		    MovingScene.input(true, 2, 'up');
 			break;
 		case 39: // Right
-			MovingScene.input('p3r');
+    		MovingScene.input(true, 2, 'right');
 			break;
 		case 40: // Down
-			MovingScene.input('p3d');
+    		MovingScene.input(true, 2, 'down');
+			break;
+
+		case 12: // 5
+			MovingScene.input(true, 3, 'up');
+			break;
+		case 35: // 1
+			MovingScene.input(true, 3, 'left');
+			break;
+		case 40: // 2
+			MovingScene.input(true, 3, 'down');
+			break;
+		case 34: // 3
+			MovingScene.input(true, 3, 'right');
 			break;
 	}
 }, false);
@@ -67,44 +80,57 @@ document.addEventListener('keyup', event => {
 			createMissil(newOptionsCubeTest,missils);
 			break;
 
-		case 90: // z
-			MovingScene.input(false,0,'up');
-			break;
-		case 81: // q
-			MovingScene.input(false,0,'left');
-			break;
-		case 83: // s
-			MovingScene.input(false,0,'down');
-			break;
-		case 68: // d
-			MovingScene.input(false,0,'right');
-			break;
+			case 90: // z
+				MovingScene.input(false, 0, 'up');
+				break;
+			case 81: // q
+				MovingScene.input(false, 0, 'left');
+				break;
+			case 83: // s
+				MovingScene.input(false, 0, 'down');
+				break;
+			case 68: // d
+				MovingScene.input(false, 0, 'right');
+				break;
 
-		case 79: // o
-			MovingScene.input('u2p');
-			break;
-		case 75: // k
-			MovingScene.input('l2p');
-			break;
-		case 76: // l
-			MovingScene.input('d2p');
-			break;
-		case 77: // m
-			MovingScene.input('r2p');
-			break;
+			case 79: // o
+				MovingScene.input(false, 1, 'up');
+				break;
+			case 75: // k
+				MovingScene.input(false, 1, 'left');
+				break;
+			case 76: // l
+				MovingScene.input(false, 1, 'down');
+				break;
+			case 77: // m
+				MovingScene.input(false, 1, 'right');
+				break;
 
-		case 37: // Left
-			MovingScene.input('l3p');
-			break;
-		case 38: // Up
-			MovingScene.input('u3p');
-			break;
-		case 39: // Right
-			MovingScene.input('r3p');
-			break;
-		case 40: // Down
-			MovingScene.input('d3p');
-			break;
+			case 37: // Left
+				MovingScene.input(false, 2, 'left');
+				break;
+			case 38: // Up
+				MovingScene.input(false, 2, 'up');
+				break;
+			case 39: // Right
+				MovingScene.input(false, 2, 'right');
+				break;
+			case 40: // Down
+				MovingScene.input(false, 2, 'down');
+				break;
+
+			case 12: // 5
+				MovingScene.input(false, 3, 'up');
+				break;
+			case 35: // 1
+				MovingScene.input(false, 3, 'left');
+				break;
+			case 40: // 2
+				MovingScene.input(false, 3, 'down');
+				break;
+			case 34: // 3
+				MovingScene.input(false, 3, 'right');
+				break;
 	}
 }, false);
 
