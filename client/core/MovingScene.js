@@ -40,37 +40,30 @@ MovingScene.init = function() {
 	MovingScene.add(cube);
 
     MovingScene.animate = function(delta) {
-        MovingScene.rotation.y -= 0.02*delta;
-        if (keyDown)
-            switch (lastKey) {
-                case 'p1u':
-                    yVelocity += deltaSpeed;
-                    break;
-                case 'p1l':
-                    xVelocity -= deltaSpeed;
-                    break;
-                case 'p1d':
-                    yVelocity -= deltaSpeed;
-                    break;
-                case 'p1r':
-                    xVelocity += deltaSpeed;
-                    break;
-                default:
-                    break;
-            }
-        else {
-            xVelocity += xVelocity > 0 ? -deltaSpeed : deltaSpeed;
-            yVelocity += yVelocity > 0 ? -deltaSpeed : deltaSpeed;
-        }
+        //MovingScene.rotation.y -= 0.02*delta;
+        if (playerInput[0].up)      yVelocity += deltaSpeed;
+        if (playerInput[0].left)    xVelocity -= deltaSpeed;
+        if (playerInput[0].down)    yVelocity -= deltaSpeed;
+        if (playerInput[0].right)   xVelocity += deltaSpeed;
+
         cube.position.x += xVelocity;
         cube.position.y += yVelocity;
-        camera.position = cube.position;
+        console.log(xVelocity,yVelocity);
+        //camera.position = cube.position;
     };
 
     var xVelocity = 0, yVelocity = 0, maxVelocity = 10, deltaSpeed = 1;
     var keyDown = false, lastKey = '';
-    MovingScene.input = function(ipt) {
-        switch (ipt) {
+    var playerInput = [{
+        'up' : false,
+        'left' : false,
+        'down' : false,
+        'right' : false
+    }];
+    MovingScene.input = function(keyup,player,ipt) {
+        
+        playerInput[player][ipt] = keyup;
+        /*switch (ipt) {
             case 'p1u':
                 lastKey = 'p1u';
                 keyDown = true;
@@ -91,6 +84,6 @@ MovingScene.init = function() {
                 break;
         }
         if (['u1p', 'l1p', 'd1p', 'r1p'].indexOf(ipt) >= 0)
-            keyDown = false;
+            keyDown = false;*/
     }
 };

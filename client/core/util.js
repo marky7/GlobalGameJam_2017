@@ -20,16 +20,16 @@ document.addEventListener('keydown', event => {
 			break;
 
 		case 90: // z
-			MovingScene.input('p1u');
+			MovingScene.input(true,0,'up');
 			break;
 		case 81: // q
-			MovingScene.input('p1l');
+			MovingScene.input(true,0,'left');
 			break;
 		case 83: // s
-			MovingScene.input('p1d');
+			MovingScene.input(true,0,'down');
 			break;
 		case 68: // d
-			MovingScene.input('p1r');
+			MovingScene.input(true,0,'right');
 			break;
 
 		case 79: // o
@@ -68,16 +68,16 @@ document.addEventListener('keyup', event => {
 			break;
 
 		case 90: // z
-			MovingScene.input('u1p');
+			MovingScene.input(false,0,'up');
 			break;
 		case 81: // q
-			MovingScene.input('l1p');
+			MovingScene.input(false,0,'left');
 			break;
 		case 83: // s
-			MovingScene.input('d1p');
+			MovingScene.input(false,0,'down');
 			break;
 		case 68: // d
-			MovingScene.input('r1p');
+			MovingScene.input(false,0,'right');
 			break;
 
 		case 79: // o

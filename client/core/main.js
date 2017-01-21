@@ -90,7 +90,7 @@ function init() {
     //ShowSystem();
 
     Axoaya.init();
-    Axoaya.show();
+    //Axoaya.show();
 
     MovingScene.init();
     MovingScene.show();

@@ -39,10 +39,10 @@ Axoaya.init = function() {
     nebula.nb = 10;
     Now();
     for (var i=0;i<nebula.nb;i++) {
-        nebula.geo[i] = new THREE.SphereBufferGeometry((i+5)*100, 32, 32);
+        nebula.geo[i] = new THREE.SphereBufferGeometry(150000,32,32);//(i+5)*100
         nebula.uni[i] = {
             "texture": { type: "t", value: new THREE.TextureLoader().load('./img/nebula/'+i+'.png') },
-            "size" : { type: "f", value: 1 },
+            "size" : { type: "f", value: 0.5 },
 	        "intensity" : { type: "f", value: 0.6 + Math.cos(NOW*2*(1+i)) * 0.4 }
         };
 
