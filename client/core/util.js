@@ -13,12 +13,15 @@ document.addEventListener( 'mousedown', PointerClick, false );
 document.addEventListener( 'mouseup', PointerRelease, false );
 document.addEventListener('keydown', event => {
 	switch (event.keyCode) {
-		case 32:
-			var dir = camera.getWorldDirection();
-			var newOptionsCubeTest = {posX:cubemesh.position.x,posY:cubemesh.position.y,posZ:cubemesh.position.z,dirX:dir.x*50,dirY:dir.y*50,dirZ:dir.z*50};
-			createMissil(newOptionsCubeTest,missils);
+		case 17: // Ctrl
+            MovingScene.input(true, 2, 'action');
 			break;
-
+		case 18: // Alt
+			MovingScene.input(true, 0, 'action');
+			break;
+		case 32: // Space
+    		MovingScene.input(true, 1, 'action');
+			break;
 		case 90: // z
 			MovingScene.input(true, 0, 'up');
 			break;
@@ -31,7 +34,6 @@ document.addEventListener('keydown', event => {
 		case 68: // d
 			MovingScene.input(true, 0, 'right');
 			break;
-
 		case 79: // o
 		    MovingScene.input(true, 1, 'up');
 			break;
@@ -44,7 +46,6 @@ document.addEventListener('keydown', event => {
 		case 77: // m
 			MovingScene.input(true, 1, 'right');
 			break;
-
 		case 37: // Left
 		    MovingScene.input(true, 2, 'left');
 			break;
@@ -57,7 +58,6 @@ document.addEventListener('keydown', event => {
 		case 40: // Down
     		MovingScene.input(true, 2, 'down');
 			break;
-
 		case 12: // 5
 			MovingScene.input(true, 3, 'up');
 			break;
@@ -74,63 +74,63 @@ document.addEventListener('keydown', event => {
 }, false);
 document.addEventListener('keyup', event => {
     switch (event.keyCode) {
-		case 32:
-			var dir = camera.getWorldDirection();
-			var newOptionsCubeTest = {posX:cubemesh.position.x,posY:cubemesh.position.y,posZ:cubemesh.position.z,dirX:dir.x*50,dirY:dir.y*50,dirZ:dir.z*50};
-			createMissil(newOptionsCubeTest,missils);
+		case 17: // Ctrl
+			MovingScene.input(false, 2, 'action');
 			break;
-
-			case 90: // z
-				MovingScene.input(false, 0, 'up');
-				break;
-			case 81: // q
-				MovingScene.input(false, 0, 'left');
-				break;
-			case 83: // s
-				MovingScene.input(false, 0, 'down');
-				break;
-			case 68: // d
-				MovingScene.input(false, 0, 'right');
-				break;
-
-			case 79: // o
-				MovingScene.input(false, 1, 'up');
-				break;
-			case 75: // k
-				MovingScene.input(false, 1, 'left');
-				break;
-			case 76: // l
-				MovingScene.input(false, 1, 'down');
-				break;
-			case 77: // m
-				MovingScene.input(false, 1, 'right');
-				break;
-
-			case 37: // Left
-				MovingScene.input(false, 2, 'left');
-				break;
-			case 38: // Up
-				MovingScene.input(false, 2, 'up');
-				break;
-			case 39: // Right
-				MovingScene.input(false, 2, 'right');
-				break;
-			case 40: // Down
-				MovingScene.input(false, 2, 'down');
-				break;
-
-			case 12: // 5
-				MovingScene.input(false, 3, 'up');
-				break;
-			case 35: // 1
-				MovingScene.input(false, 3, 'left');
-				break;
-			case 40: // 2
-				MovingScene.input(false, 3, 'down');
-				break;
-			case 34: // 3
-				MovingScene.input(false, 3, 'right');
-				break;
+		case 18: // Alt
+			MovingScene.input(false, 0, 'action');
+			break;
+		case 32: // Space
+			MovingScene.input(false, 1, 'action');
+			break;
+		case 90: // z
+			MovingScene.input(false, 0, 'up');
+			break;
+		case 81: // q
+			MovingScene.input(false, 0, 'left');
+			break;
+		case 83: // s
+			MovingScene.input(false, 0, 'down');
+			break;
+		case 68: // d
+			MovingScene.input(false, 0, 'right');
+			break;
+		case 79: // o
+			MovingScene.input(false, 1, 'up');
+			break;
+		case 75: // k
+			MovingScene.input(false, 1, 'left');
+			break;
+		case 76: // l
+			MovingScene.input(false, 1, 'down');
+			break;
+		case 77: // m
+			MovingScene.input(false, 1, 'right');
+			break;
+		case 37: // Left
+			MovingScene.input(false, 2, 'left');
+			break;
+		case 38: // Up
+			MovingScene.input(false, 2, 'up');
+			break;
+		case 39: // Right
+			MovingScene.input(false, 2, 'right');
+			break;
+		case 40: // Down
+			MovingScene.input(false, 2, 'down');
+			break;
+		case 12: // 5
+			MovingScene.input(false, 3, 'up');
+			break;
+		case 35: // 1
+			MovingScene.input(false, 3, 'left');
+			break;
+		case 40: // 2
+			MovingScene.input(false, 3, 'down');
+			break;
+		case 34: // 3
+			MovingScene.input(false, 3, 'right');
+			break;
 	}
 }, false);
 
@@ -166,7 +166,6 @@ function PointerClick (event) {
 	} else { // if mouse in 3D call raycast
 		GalaxyOver();
 	}
-	mouse.t = false;
 }
 
 function PointerRelease (event) {
@@ -179,6 +178,7 @@ function PointerRelease (event) {
 	} GalaxyOver();
     mouse.d = false;
 	mouse.c = false;
+    mouse.t = false;
 }
 
 function CheckMenuBox() {
