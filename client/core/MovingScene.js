@@ -40,7 +40,7 @@ MovingScene.init = function() {
 	MovingScene.add(cube);
 
     MovingScene.animate = function(delta) {
-        MovingScene.rotation.y -= 0.02 * delta;
+        MovingScene.rotation.y -= 0.02*delta;
         if (keyDown)
             switch (lastKey) {
                 case 'p1u':

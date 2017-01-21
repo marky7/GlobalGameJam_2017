@@ -18,13 +18,14 @@ function Now() {
 function HideAll() {
     controls.reset();
     NewScene.visible = false;
+    MovingScene.visible = false;
     system.visible = false;
     Axoaya.visible = false;
 }
 
 // Global Start Checker
 var Start = false;
-       
+
 function init() { 
     // SCENE
     scene = new THREE.Scene();
@@ -50,7 +51,7 @@ function init() {
     // EVENTS
     THREEx.WindowResize(renderer, camera, false);
     THREEx.WindowResize(renderer, guicam, true );
-    THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
+    //THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
     // CONTROLS
     controls = new THREE.OrbitControls( camera, renderer.domElement );
     // STATS
@@ -91,6 +92,9 @@ function init() {
     Axoaya.init();
     Axoaya.show();
 
+    MovingScene.init();
+    MovingScene.show();
+
     //SoundManager2
     Play();/*TOREMOVE*/Mute();
 }
@@ -123,6 +127,9 @@ function update()
     //Animate scenes according to their visibility and the time delta
     if (NewScene.visible) {
         NewScene.animate(delta);
+    }
+    if (MovingScene.visible) {
+        MovingScene.animate(delta);
     }
     if (system.visible) {
         system.rotate(delta);
