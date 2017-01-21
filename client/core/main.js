@@ -95,14 +95,15 @@ function init() {
     MovingScene.init();
     MovingScene.show();
 
+    createAsteroidGenerator({interval:1000,rangeX:[-10000,10000],rangeY:[-10000,10000],z0:-400000,z1:50});
     //SoundManager2
     Play();/*TOREMOVE*/Mute();
 }
 
 //!MAIN ENGINE LOOP!
 function animate() 
-{   
-    update(); 
+{
+    update();
     render();  
     requestAnimationFrame( animate );
 }
@@ -137,12 +138,16 @@ function update()
     if (Axoaya.visible) {
         Axoaya.animate(delta);
     }
+
+    removeEnemies(MovingScene);
+    moveEnemies();
+
     //refresh cam control and fps display
     controls.update();
     stats.update();
 }
 
-function render() 
+function render()
 {   //please dont make anything stupid here
     renderer.clear();                               //Reset to a black screen   
     renderer.render( scene, camera );               //Render all 3D stuff
