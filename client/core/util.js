@@ -1,6 +1,6 @@
 //MOUSE MANAGEMENT
-var mouse = { 
-	x: 0, y: 0,		// 3D position // Computed for raycast // from bottom left to top right // Range : [-1,1] 
+var mouse = {
+	x: 0, y: 0,		// 3D position // Computed for raycast // from bottom left to top right // Range : [-1,1]
 	xp: 0, yp: 0,	// 2D position // Obtained from mouse  // from top left to bottom right // Range : [0,screen.width/height] 
 	xt: 0, yt: 0,	// 2D position saved on mouse down (usefull when dragging)
 	t:false, 		// Mouse state trigger// set true at mouse down // reset false at first interception
@@ -11,6 +11,90 @@ var mouse = {
 document.addEventListener( 'mousemove', PointerMove, false );
 document.addEventListener( 'mousedown', PointerClick, false );
 document.addEventListener( 'mouseup', PointerRelease, false );
+document.addEventListener('keydown', event => {
+	switch (event.keyCode) {
+		case 32:
+			var dir = camera.getWorldDirection();
+			var newOptionsCubeTest = {posX:cubemesh.position.x,posY:cubemesh.position.y,posZ:cubemesh.position.z,dirX:dir.x*50,dirY:dir.y*50,dirZ:dir.z*50};
+			createMissil(newOptionsCubeTest,missils);
+			break;
+
+		case 90: // z
+			MovingScene.input('p1u');
+			break;
+		case 81: // q
+			MovingScene.input('p1l');
+			break;
+		case 83: // s
+			MovingScene.input('p1d');
+			break;
+		case 68: // d
+			MovingScene.input('p1r');
+			break;
+
+		case 79: // o
+			MovingScene.input('p2u');
+			break;
+		case 75: // k
+			MovingScene.input('p2l');
+			break;
+		case 76: // l
+			MovingScene.input('p2d');
+			break;
+		case 77: // m
+			MovingScene.input('p2r');
+			break;
+
+		case 37: // Left
+			MovingScene.input('p3l');
+			break;
+		case 38: // Up
+    		MovingScene.input('p3u');
+			break;
+		case 39: // Right
+			MovingScene.input('p3r');
+			break;
+		case 40: // Down
+			MovingScene.input('p3d');
+			break;
+	}
+}, false);
+document.addEventListener('keydup', event => {
+    switch (event.keyCode) {
+		case 32:
+			var dir = camera.getWorldDirection();
+			var newOptionsCubeTest = {posX:cubemesh.position.x,posY:cubemesh.position.y,posZ:cubemesh.position.z,dirX:dir.x*50,dirY:dir.y*50,dirZ:dir.z*50};
+			createMissil(newOptionsCubeTest,missils);
+			break;
+
+		case 37: // Left
+			break;
+		case 38: // Up
+			break;
+		case 39: // Right
+			break;
+		case 40: // Down
+			break;
+
+		case 90: // z
+			break;
+		case 81: // q
+			break;
+		case 83: // s
+			break;
+		case 68: // d
+			break;
+
+		case 79: // o
+			break;
+		case 75: // k
+			break;
+		case 76: // l
+			break;
+		case 77: // m
+			break;
+	}
+}, false);
 
 function PointerMove( event ) { 
 	
