@@ -71,40 +71,25 @@ MovingScene.init = function() {
         MovingScene.add(players[i].mesh);
     }
 
-    var bufferMouse = { xp: mouse.xp, yp: mouse.yp };
     MovingScene.animate = function(delta) {
-        if (mouse.xp != bufferMouse.xp || mouse.yp != bufferMouse.yp) {
-            if (bufferMouse.yp < mouse.yp) {
-                players[3].down = true;
-                players[3].up = false;
-            }
-            else if (bufferMouse.yp > mouse.yp) {
-                players[3].down = false;
-                players[3].up = true;
-            }
-            if (bufferMouse.xp < mouse.xp) {
-                players[3].left = false;
-                players[3].right = true;
-            }
-            else if (bufferMouse.xp > mouse.xp) {
-                players[3].left = true;
-                players[3].right = false;
-            }
-        }
-        bufferMouse.xp = mouse.xp;
-        bufferMouse.yp = mouse.yp;
         for (var i = 0; i < 4; i++) {
-            if (players[i].up)      players[i].yVel += deltaSpeed;
-            if (players[i].left)    players[i].xVel -= deltaSpeed;
-            if (players[i].down)    players[i].yVel -= deltaSpeed;
-            if (players[i].right)   players[i].xVel += deltaSpeed;
+            if (i < 3) {
+                if (players[i].up)      players[i].yVel = Math.min(players[i].yVel + deltaSpeed, maxVelocity);
+                if (players[i].left)    players[i].xVel = Math.max(players[i].xVel - deltaSpeed, -maxVelocity);
+                if (players[i].down)    players[i].yVel = Math.max(players[i].yVel - deltaSpeed, -maxVelocity);
+                if (players[i].right)   players[i].xVel = Math.min(players[i].xVel + deltaSpeed, maxVelocity);
+            }
+            else {
+                players[i].xVel = Math.max(Math.min(mouse.x * 5, 1), -1) * maxVelocity;
+                players[i].yVel = Math.max(Math.min(mouse.y * 5, 1), -1) * maxVelocity;
+            }
 
             players[i].mesh.position.x += players[i].xVel;
             players[i].mesh.position.y += players[i].yVel;
         }
     };
 
-    var maxVelocity = 10, deltaSpeed = 1;
+    var maxVelocity = 20, deltaSpeed = 1;
     MovingScene.input = function(key,player,ipt) {
         players[player][ipt] = key;
     }
