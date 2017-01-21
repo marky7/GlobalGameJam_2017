@@ -386,7 +386,7 @@ THREE.OBJLoader.prototype = {
 			}
 			material.name = object.material.name;
 
-			var mesh = new THREE.Mesh( buffergeometry, material );
+			this.mesh = new THREE.Mesh( buffergeometry, material );
 			mesh.name = object.name;
 
 			container.add( mesh );

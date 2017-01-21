@@ -32,7 +32,7 @@ function init() {
     guisc = new THREE.Scene();
     // CAMERA
     var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-    var VIEW_ANGLE = 75, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.05, FAR = 1000000;
+    var VIEW_ANGLE = 90, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.05, FAR = 1000000;
     camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     scene.add(camera);
     camera.position.set(0,2,5);
@@ -90,10 +90,10 @@ function init() {
     //ShowSystem();
 
     Axoaya.init();
-    //Axoaya.show();
+    Axoaya.show();
 
     MovingScene.init();
-    MovingScene.show();
+    //MovingScene.show();
 
     createAsteroidGenerator({interval:1000,rangeX:[-10000,10000],rangeY:[-10000,10000],z0:-150000,z1:50});
     //SoundManager2
