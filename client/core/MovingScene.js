@@ -71,7 +71,28 @@ MovingScene.init = function() {
         MovingScene.add(players[i].mesh);
     }
 
+    var bufferMouse = { xp: mouse.xp, yp: mouse.yp };
     MovingScene.animate = function(delta) {
+        if (mouse.xp != bufferMouse.xp || mouse.yp != bufferMouse.yp) {
+            if (bufferMouse.yp < mouse.yp) {
+                players[3].down = true;
+                players[3].up = false;
+            }
+            else if (bufferMouse.yp > mouse.yp) {
+                players[3].down = false;
+                players[3].up = true;
+            }
+            if (bufferMouse.xp < mouse.xp) {
+                players[3].left = false;
+                players[3].right = true;
+            }
+            else if (bufferMouse.xp > mouse.xp) {
+                players[3].left = true;
+                players[3].right = false;
+            }
+        }
+        bufferMouse.xp = mouse.xp;
+        bufferMouse.yp = mouse.yp;
         for (var i = 0; i < 4; i++) {
             if (players[i].up)      players[i].yVel += deltaSpeed;
             if (players[i].left)    players[i].xVel -= deltaSpeed;
