@@ -95,7 +95,7 @@ function init() {
     MovingScene.init();
     MovingScene.show();
 
-    createAsteroidGenerator({interval:1000,rangeX:[-10000,10000],rangeY:[-10000,10000],z0:-400000,z1:50});
+    createAsteroidGenerator({interval:1000,rangeX:[-10000,10000],rangeY:[-10000,10000],z0:-150000,z1:50});
     //SoundManager2
     Play('AN9');/*TOREMOVE*///Mute();
 }

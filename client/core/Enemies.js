@@ -22,8 +22,8 @@ var createSphere = function(opt){
     enemies.push(planetMesh);
 };
 
-// createCube({textureUrl:'img/soleil1.jpg',scene:MovingScene,position:{x:0,y:0,z:0},speed:10,boxGeometry:[100,100,100]});
-/*
+// createCube({textureUrl:'img/planetmin/soleil1.jpg',scene:MovingScene,position:{x:0,y:0,z:0},speed:10,boxGeometry:[100,100,100]});
+
 var createCube= function(opt){
     var texture = new THREE.TextureLoader().load( opt.textureUrl,function(){
         // update texture
@@ -35,12 +35,13 @@ var createCube= function(opt){
     cubemesh.position.x = opt.position.x;
     cubemesh.position.y = opt.position.y;
     cubemesh.position.z = opt.position.z;
-    opt.scene.add( opt.scene );
+    opt.scene.add( cubemesh );
 
     cubemesh.speed = new THREE.Vector3(0,0,opt.speed);
-    enemies.push(planetMesh);
+    cubemesh.name = 'cube-'+Math.random()+'-'+Math.random();
+    enemies.push(cubemesh);
 };
- */
+
 
 var moveEnemies = function(){
     for(var i=0; i<enemies.length ; i++){
@@ -80,6 +81,7 @@ var createAsteroidGenerator = function(opt){
         var posX = Math.random()*diffX + confGenerator.rangeX[0];
         var posY = Math.random()*diffY + confGenerator.rangeY[0];
         // d : difuse
+        createCube({textureUrl:'img/planetmin/7d.jpg',scene:MovingScene,position:{x:posX,y:posY,z:confGenerator.z0},speed:500,boxGeometry:[2000,2000,2000]});
         createSphere({bumpScale:1,mapUrl:'./img/planetmin/7d.jpg',bumpMapUrl:'./img/planetmin/7n.jpg',scene:MovingScene,position:{x:posX,y:posY,z:confGenerator.z0},speed:{x:0,y:0,z:300},sphereGeometry:[650,70,70]});
         // createSphere({bumpScale:1,mapUrl:'./img/planetmin/6d.jpg',bumpMapUrl:'./img/planetmin/6n.jpg',scene:MovingScene,position:{x:1000,y:1000,z:confGenerator.z0},speed:{x:0,y:0,z:300},sphereGeometry:[400,32,32]});
     }, opt.interval);
