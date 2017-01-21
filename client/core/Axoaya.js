@@ -34,16 +34,29 @@ Axoaya.init = function() {
     Axoaya.add(nebula);
     nebula.geo = [];
     nebula.mat = [];
+    nebula.uni = [];
     nebula.txt = [];
-    for (var i=0;i<10;i++) {
-        nebula.geo[i] = new THREE.SphereBufferGeometry(i+1, 32, 32);
-        var nebulauni = {
-            "texture": { type: "t", value: THREE.ImageUtils.loadTexture('./img/nebula/'+i+'.png') },
-            "size" : { type: "f", value: 0.5 }
-//,	        "intensity" : { type: "f", value: 0.5 }
+    nebula.nb = 10;
+    Now();
+    for (var i=0;i<nebula.nb;i++) {
+        nebula.geo[i] = new THREE.SphereBufferGeometry((i+5)*100, 32, 32);
+        nebula.uni[i] = {
+            "texture": { type: "t", value: new THREE.TextureLoader().load('./img/nebula/'+i+'.png') },
+            "size" : { type: "f", value: 1 },
+	        "intensity" : { type: "f", value: 0.6 + Math.cos(NOW*2*(1+i)) * 0.4 }
         };
+
+        //var nebulaatt = [];
+        //var tempint = new Float32Array( nebula.nb );
+        //for( var k = 0; k < nebula.nb; k++ ) {
+        //    nebulaatt.push({ intensity: { type: "f", value: 0.6 + Math.cos(NOW*2*(1+k)) * 0.4 } });
+        //}
+        //system.geometry.addAttribute( 'intensity', new THREE.BufferAttribute( tempint, 1 ) );
+
         nebula.mat[i] = new THREE.ShaderMaterial({
-            uniforms: 		nebulauni,
+            //uniforms: 		nebulauni,
+            uniforms: 		nebula.uni[i],
+            //attributes: 	nebulaatt[i],
             vertexShader:  	lightMapShader.vertexShader,
             fragmentShader: lightMapShader.fragmentShader,
             transparent: true,
@@ -52,6 +65,14 @@ Axoaya.init = function() {
             blending: THREE.AdditiveBlending,
             depthTest: false
         });
+    }
+
+    for (var j=0;j<nebula.nb;j++) {
+        var nebulaMesh = new THREE.Mesh(nebula.geo[j], nebula.mat[j]);//
+        nebulaMesh.rotation.x = Math.random()*Math.PI*2;
+        nebulaMesh.rotation.y = Math.random()*Math.PI*2;
+        nebulaMesh.rotation.z = Math.random()*Math.PI*2;
+        nebula.add(nebulaMesh);
     }
     //free use lighting point
     //var plight = new THREE.PointLight(0xbbbbbb);
@@ -73,6 +94,12 @@ Axoaya.init = function() {
     Axoaya.animate = function(delta) {Now();
         Axoaya.rotation.y -= 0.02*delta;
         Axoaya.alight.intensity = 0.6+Math.sin(NOW*16)*0.4;
+        //var tempint = new Float32Array( nebula.nb );
+        for( var i = 0; i < nebula.nb; i++ ) {
+            nebula.uni[i].intensity = { type: "f", value: 0.6 + Math.cos(NOW*2*(1+i)) * 0.4 };
+        }
+        //geometry.attributes.size.set(tempint);
+        //geometry.attributes.size.needsUpdate = true;
     };
 
     //Finish instancing all your objects

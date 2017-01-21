@@ -86,10 +86,10 @@ function init() {
     //NewScene.show();
 
     InitSystem();
-    ShowSystem();
+    //ShowSystem();
 
     Axoaya.init();
-    //Axoaya.show();
+    Axoaya.show();
 
     //SoundManager2
     Play();/*TOREMOVE*/Mute();

@@ -171,7 +171,7 @@ function MakeSystem() {
 			}
 		}
 		//STAR
-		var newstar = NewGenStar(active_stars[s].size/150000000000*systemscale,active_stars[s].type%1024/512-0.128);
+		var newstar = NewGenStar(active_stars[s].size/150000000*systemscale,active_stars[s].type%1024/512-0.128);
 			active_stars[s].object = newstar;
 			//starMesh.position.x = (active_stars[s].radius + active_stars[s].core)*1000;
 		anchor.add(newstar);
