@@ -59,7 +59,7 @@ document.addEventListener('keydown', event => {
 			break;
 	}
 }, false);
-document.addEventListener('keydup', event => {
+document.addEventListener('keyup', event => {
     switch (event.keyCode) {
 		case 32:
 			var dir = camera.getWorldDirection();
@@ -67,31 +67,43 @@ document.addEventListener('keydup', event => {
 			createMissil(newOptionsCubeTest,missils);
 			break;
 
-		case 37: // Left
-			break;
-		case 38: // Up
-			break;
-		case 39: // Right
-			break;
-		case 40: // Down
-			break;
-
 		case 90: // z
+			MovingScene.input('u1p');
 			break;
 		case 81: // q
+			MovingScene.input('l1p');
 			break;
 		case 83: // s
+			MovingScene.input('d1p');
 			break;
 		case 68: // d
+			MovingScene.input('r1p');
 			break;
 
 		case 79: // o
+			MovingScene.input('u2p');
 			break;
 		case 75: // k
+			MovingScene.input('l2p');
 			break;
 		case 76: // l
+			MovingScene.input('d2p');
 			break;
 		case 77: // m
+			MovingScene.input('r2p');
+			break;
+
+		case 37: // Left
+			MovingScene.input('l3p');
+			break;
+		case 38: // Up
+			MovingScene.input('u3p');
+			break;
+		case 39: // Right
+			MovingScene.input('r3p');
+			break;
+		case 40: // Down
+			MovingScene.input('d3p');
 			break;
 	}
 }, false);
