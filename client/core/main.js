@@ -220,7 +220,8 @@ function detectCollisions(){
                 // Supprimer le vaisseau du tableau TODO
                 players[j].ship.visible = false;
                 players[j].isDead = true;
-
+                if (players[0].isDead && players[1].isDead && players[2].isDead && players[3].isDead)
+                    GAMEOVER();
                 break;
 
                 // Masquer le vaisseau TODO (visible:false)
