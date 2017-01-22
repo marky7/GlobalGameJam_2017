@@ -181,10 +181,8 @@ function updateScore(){
     if(updateStep[curUpdateStep] && (score > updateStep[curUpdateStep])){
         curUpdateStep++;
         console.log(speedGame);
-        speedGame -+ 1; // encrease asteroid creation
+        speedGame -= 1; // encrease asteroid creation
     }
-    console.log(speedGame);
-
     score +=(1*(curLevel+1));
     document.getElementById('score').innerHTML = 'Score : '+score+'<br> Niveau : '+(curLevel+1);
 
