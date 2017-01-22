@@ -159,6 +159,8 @@ function update() {
     moveEnemies();
     removeBonus(MovingScene);
     moveBonus();
+    //shipCollision();
+    detectCollisions();
 
     updateScore();
     //refresh cam control and fps display
@@ -186,4 +188,64 @@ function updateScore(){
     score +=(1*(curLevel+1));
     document.getElementById('score').innerHTML = 'Score : '+score+'<br> Niveau : '+(curLevel+1);
 
+}
+
+// Cette Méthode ne fonctionne qu'avec des ennemis ayant un radius (spheres..)
+// le radius du vaisseaux est pour le moment passé en dur : 50px
+function shipCollision(){
+    for(var i=0; i<players.length; i++){
+        for(var j=0; j<enemies.length; j++){
+            // Calculer la distance entre les deux centres de gravités
+            // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
+            var AB = Math.sqrt(Math.pow(enemies[j].position.x-players[i].ship.position.x, 2)+Math.pow(enemies[j].position.y-players[i].ship.position.y,2)+Math.pow(enemies[j].position.z-players[i].ship.position.z,2));
+            if(enemies[j].geometry.parameters.radius && (AB<(enemies[j].geometry.parameters.radius+50))){
+                console.log(" Player "+i+' est mort. name : '+players[i].ship.name);
+
+            }
+        }
+    }
+}
+
+
+function detectCollisions(){
+    // Detecter les collisions entre Les enemies et les vaisseaux afin de détruire les vaisseaux
+    for(var i=0; i<enemies.length; i++){
+        // Detecter collision entre astéroides et vaisseaux
+        for(var j=0; j<players.length; j++){
+            // Calculer la distance entre les deux centres de gravités
+            // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
+            var AB = Math.sqrt(Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2)+Math.pow(enemies[i].position.z-players[j].ship.position.z,2));
+            if(enemies[i].geometry.parameters.radius && (AB<(enemies[i].geometry.parameters.radius+50))){
+                console.log(" Player "+j+' est mort. name : '+players[j].ship.name);
+                // Supprimer le vaisseau du tableau TODO
+                // Masquer le vaisseau TODO (visible:false)
+            }
+        }
+        // Detecter les collision entre les missiles et les astéroides ICI afin de détruire les astéroides
+        for(var k=0; k<missils.length; k++){
+            // Calculer la distance entre les deux centres de gravités
+            // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
+            var AB = Math.sqrt(Math.pow(enemies[i].position.x - missils[k].position.x, 2) + Math.pow(enemies[i].position.y - missils[k].position.y,2) + Math.pow(enemies[i].position.z-missils[k].position.z,2));
+            if(enemies[i].geometry.parameters.radius && (AB<(enemies[i].geometry.parameters.radius+50))){
+                console.log(" Ennemi "+i+' est mort. name : '+enemies[i].name);
+                console.log(" Missil "+k+' est detruit. name : '+missils[k].name);
+                // Supprimer les objets des tableaux TODO
+                // Supprimer les objets de la scene TODO
+            }
+        }
+    }
+    // Detecter collision entre les bonus et les vaisseaux
+    for(var l=0; l<bonus.length; l++){
+        for(var m=0; m<players.length; m++){
+            // Calculer la distance entre les deux centres de gravités
+            // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
+            var AB = Math.sqrt(Math.pow(bonus[l].position.x-players[m].ship.position.x, 2) + Math.pow(bonus[l].position.y - players[m].ship.position.y,2) + Math.pow(bonus[l].position.z-players[m].ship.position.z,2));
+            if(bonus[l].children[1].geometry.parameters.radius && (AB<(bonus[l].children[1].geometry.parameters.radius+50))){
+                console.log(" Player "+m+' a reçu un Bonus. Bonus name : '+bonus[m].name);
+                score += 1000; // Give a score bonus to player
+                // Supprimer le Bonus du tableau TODO
+                // Supprimer le Bonus de la scène TODO
+            }
+        }
+    }
 }

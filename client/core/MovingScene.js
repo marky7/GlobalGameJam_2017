@@ -139,6 +139,7 @@ MovingScene.init = function() {
 };
 
 var fireround = 0;
+var missils = [];
 var Fire = function (start, end, color) {
     //var newSphere= new THREE.MeshPhongMaterial();
     //newSphere.map           = new THREE.TextureLoader().load('img/planetmin/30d.jpg');
@@ -155,6 +156,7 @@ var Fire = function (start, end, color) {
     obj.position.x = start.x;
     obj.position.y = start.y;
     obj.position.z = start.z;
+    missils.push(obj);
     MovingScene.add(obj);
 
     this.animate = function () {
