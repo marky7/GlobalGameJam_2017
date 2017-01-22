@@ -10,8 +10,8 @@ levels[0] = {
         {ratioLT:0.3,bumpScale:1,mapUrl:'./img/planetmin/18d.jpg',bumpMapUrl:'./img/planetmin/18n.jpg',speed:150,sphereGeometry:[300,20,20]},
        {ratioMT:0.95,bumpScale:1,mapUrl:'./img/planetmin/24d.jpg',bumpMapUrl:'./img/planetmin/24n.jpg',speed:150,sphereGeometry:[450,20,20]}
     ],bonus : [
-        {ratioLT:0.09,speed:170,meshPhongColor:'0xffffff',meshBasicColor:'0xFFBB00',height:70},
-        {ratioLT:0.7,speed:170,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:100}
+        {ratioLT:0.09,speed:100,meshPhongColor:'0xffffff',meshBasicColor:'0xFFBB00',height:70},
+        {ratioLT:0.7,speed:150,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:100}
     ]
 };
 
@@ -26,8 +26,8 @@ levels[1] = {
         {ratioLT:0.001,bumpScale:1,mapUrl:'./img/planetmin/10d.jpg',bumpMapUrl:'./img/planetmin/10n.jpg',speed:260,sphereGeometry:[500,20,20]},
         {bumpScale:1,mapUrl:'./img/planetmin/10d.jpg',bumpMapUrl:'./img/planetmin/8n.jpg',speed:260,sphereGeometry:[400,20,20]}
     ],bonus : [
-        {randomLT:0.07,speed:270,meshPhongColor:'#ffff00',meshBasicColor:'#FFDD00',height:70},
-        {ratioMT:0.97,speed:170,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:100}
+        {randomLT:0.07,speed:100,meshPhongColor:'#ffff00',meshBasicColor:'#FFDD00',height:70},
+        {ratioMT:0.97,speed:150,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:100}
 
     ]
 };

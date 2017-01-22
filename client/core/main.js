@@ -172,17 +172,19 @@ function render()
     renderer.render( scene, camera );               //Render all 3D stuff
     if ( Detector.webgl ) renderer.clearDepth();
     renderer.render( guisc, guicam );               //Render the 2D GUI
-}  
+}
 
 
-var updateStep = [1000,10000,50000,100000,150000,250000,400000];
+var updateStep = [1000,2000,4000,7000,10000,12000,15000,18000,21000,30000,40000,50000];
 var curUpdateStep = 0;
 function updateScore(){
     if(updateStep[curUpdateStep] && (score > updateStep[curUpdateStep])){
         curUpdateStep++;
-        console.log();
+        console.log(speedGame);
         speedGame -+ 1; // encrease asteroid creation
     }
+    console.log(speedGame);
+
     score +=(1*(curLevel+1));
     document.getElementById('score').innerHTML = 'Score : '+score+'<br> Niveau : '+(curLevel+1);
 
