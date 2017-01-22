@@ -33,7 +33,7 @@ MovingScene.init = function() {
     //    .load( [ 's_px.jpg', 's_nx.jpg', 's_py.jpg', 's_ny.jpg', 's_pz.jpg', 's_nz.jpg' ] );
     //scene.background = MovingScene.background;
 
-    var coolDown = 10
+    var coolDown = 10;
     players = [
         { color : 0x0000ff, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
         { color : 0x00ff00, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
@@ -132,7 +132,7 @@ MovingScene.init = function() {
         });
     };
 
-    var maxVelocity = 0.1, deltaSpeed = 0.001, xBoundBox = 1.2, yBoundBox = 0.8;
+    var maxVelocity = 0.115, deltaSpeed = 0.001, xBoundBox = 1.2, yBoundBox = 0.8;
     MovingScene.input = function(key, player, ipt) {
         players[player][ipt] = key;
     }
