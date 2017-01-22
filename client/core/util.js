@@ -2,7 +2,8 @@
 var mouse = {
 	x: 0, y: 0,		// 3D position // Computed for raycast // from bottom left to top right // Range : [-1,1]
 	xp: 0, yp: 0,	// 2D position // Obtained from mouse  // from top left to bottom right // Range : [0,screen.width/height] 
-	xt: 0, yt: 0,	// 2D position saved on mouse down (usefull when dragging)
+	xd: 0, yd: 0,	// 2D differential on mouse mouve
+	xs: 0, ys: 0,	// 2D position saved on mouse mouve//down (usefull when dragging)
 	t:false, 		// Mouse state trigger// set true at mouse down // reset false at first interception
 	c:false, 		// Mouse state click  // set true at mouse up   // reset false at first interception
 	d:false, 		// Mouse state drag   // set 'name' at interception // reset false at mouse up
@@ -138,6 +139,10 @@ function PointerMove( event ) {
 	
     mouse.xp = event.clientX;
     mouse.yp = event.clientY;
+	mouse.xd = mouse.xp-mouse.xs;
+	mouse.yd = mouse.yp-mouse.ys;
+	mouse.xs = event.clientX;
+	mouse.ys = event.clientY;
 
 	if (GUI) { //if mouse in GUI then interact
 		event.preventDefault();
@@ -155,8 +160,6 @@ function PointerMove( event ) {
 
 function PointerClick (event) {
 	mouse.t = true;
-    mouse.xt = event.clientX;
-    mouse.yt = event.clientY;
     // update the mouse variable
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;

@@ -90,9 +90,11 @@ MovingScene.init = function() {
                     players[i].cD = coolDown;
                 }
             }
-            else {
-                players[i].xVel = Math.max(Math.min(mouse.x * 5, 1), -1) * maxVelocity;
-                players[i].yVel = Math.max(Math.min(mouse.y * 5, 1), -1) * maxVelocity;
+            else { // Create safe spot for slow down           Add acceleration
+                if (Math.abs(mouse.x)>0.1) players[i].xVel += Math.max(Math.min(mouse.x*2, deltaSpeed), -deltaSpeed);
+                if (Math.abs(mouse.y)>0.1) players[i].yVel += Math.max(Math.min(mouse.y*2, deltaSpeed), -deltaSpeed);
+                players[i].xVel = Math.max(Math.min(players[i].xVel, maxVelocity), -maxVelocity);//max speed
+                players[i].yVel = Math.max(Math.min(players[i].yVel, maxVelocity), -maxVelocity);
                 if (mouse.t && players[i].cD <= 0) {
                     this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-1000}));
                     players[i].cD = coolDown;
@@ -100,16 +102,21 @@ MovingScene.init = function() {
             }
 
             if (players[i].ship) {
-                if (players[i].ship.position.x >= xBoundBox)
-                    players[i].xVel -= 0.1 * deltaSpeed * (players[i].ship.position.x - xBoundBox);
-                else if (players[i].ship.position.x <= -xBoundBox)
-                    players[i].xVel += 0.1 * deltaSpeed * -(players[i].ship.position.x + xBoundBox);
-                if (players[i].ship.position.y >= yBoundBox)
-                    players[i].yVel -= 0.1 * deltaSpeed * (players[i].ship.position.y - yBoundBox);
-                else if (players[i].ship.position.y <= -yBoundBox)
-                    players[i].yVel += 0.1 * deltaSpeed * -(players[i].ship.position.y + yBoundBox);
-                players[i].ship.position.x += players[i].xVel;
-                players[i].ship.position.y += players[i].yVel;
+                if (players[i].ship.position.x >= xBoundBox && players[i].xVel>-maxVelocity/2)
+                    players[i].xVel -= 1.5 * deltaSpeed;// * (players[i].ship.position.x - xBoundBox);
+                else if (players[i].ship.position.x <= -xBoundBox && players[i].xVel<maxVelocity/2)
+                    players[i].xVel += 1.5 * deltaSpeed;// * -(players[i].ship.position.x + xBoundBox);
+                if (players[i].ship.position.y >= yBoundBox && players[i].yVel>-maxVelocity/2)
+                    players[i].yVel -= 1.5 * deltaSpeed;// * (players[i].ship.position.y - yBoundBox);
+                else if (players[i].ship.position.y <= -yBoundBox && players[i].yVel<maxVelocity/2)
+                    players[i].yVel += 1.5 * deltaSpeed;// * -(players[i].ship.position.y + yBoundBox);
+                players[i].ship.position.x += players[i].xVel*0.5;
+                players[i].ship.position.y += players[i].yVel*0.5;
+                //auto slow down
+                players[i].xVel = players[i].xVel>0 ? (players[i].xVel<0.1  ? 0 : players[i].xVel-0.1):
+                                                      (players[i].xVel>-0.1 ? 0 : players[i].xVel+0.1);
+                players[i].yVel = players[i].yVel>0 ? (players[i].yVel<0.1  ? 0 : players[i].yVel-0.1):
+                                                      (players[i].yVel>-0.1 ? 0 : players[i].yVel+0.1);
             }
         }
         this.fires.forEach(function (e, i, arr) {
@@ -119,7 +126,7 @@ MovingScene.init = function() {
         });
     };
 
-    var maxVelocity = 7, deltaSpeed = 1, xBoundBox = 340, yBoundBox = 150;
+    var maxVelocity = 10, deltaSpeed = 0.5, xBoundBox = 340, yBoundBox = 150;
     MovingScene.input = function(key, player, ipt) {
         players[player][ipt] = key;
     }

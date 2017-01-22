@@ -291,7 +291,7 @@ function MakeSystem() {
 		//object.position.y = 0.1*systemscale;
 		system.add( object );
 	});//*/
-	//SHIP
+	/*/SHIP
 	var loader2 = new THREE.OBJLoader();
 	loader2.load( '0', function ( object ) {
 		//object.traverse( function ( child ) {
@@ -574,7 +574,7 @@ function NewGenStar(size,spectral) {
 		//gyro.lookAt ( camera.position.clone() ); //noneedit
 		//var globalrot = newgenstar.localToWorld( newgenstar.rotation.clone() );
 		//console.log(globalrot);
-    }
+    };
 
     return newgenstar;
 }
