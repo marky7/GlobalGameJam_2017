@@ -184,6 +184,21 @@ function PointerRelease (event) {
     mouse.t = false;
 }
 
+var simpleSpriteTxt = new THREE.ImageUtils.loadTexture( './img/star.png' );
+function getSimpleSprite(color,size) {
+	var focusMaterial = new THREE.SpriteMaterial(
+		{
+			map: simpleSpriteTxt,
+			//useScreenCoordinates: false,
+			color: color,
+			transparent: false,
+			blending: THREE.AdditiveBlending
+		});
+	var focusSprite = new THREE.Sprite( focusMaterial );
+	    focusSprite.scale.set(size, size, 1.0);
+	return focusSprite;
+}
+
 function CheckMenuBox() {
 	/*This function help you to isolate portion of scren that must not interfer with 3D scene
 	-> return true  if you are in the menu

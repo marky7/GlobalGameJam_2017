@@ -13,35 +13,24 @@ MovingScene.show = function() { if (!MovingScene.visible) {
 }};
 
 MovingScene.init = function() {
-    scene.add(MovingScene);
+    Axoaya.add(MovingScene);
+    MovingScene.rotation.y=0.2;
 
-    var alight = new THREE.AmbientLight(0x888888);
-    MovingScene.add(alight);
-    var lollight = new THREE.AmbientLight(0xffffff);
-    MovingScene.add(lollight);
-    var plight = new THREE.PointLight(0x888888);
-        plight.position.z = 1000;
-    MovingScene.add(plight);
+    //light managed in Axoaya
+    //var alight = new THREE.AmbientLight(0x888888);
+    //MovingScene.add(alight);
+    //var lollight = new THREE.AmbientLight(0xffffff);
+    //MovingScene.add(lollight);
+    //var plight = new THREE.PointLight(0x888888);
+    //    plight.position.z = 1000;
+    //MovingScene.add(plight);
 
     MovingScene.fires = [];
 
-    MovingScene.background = new THREE.CubeTextureLoader()
-        .setPath( 'img/starbox/' )
-        .load( [ 's_px.jpg', 's_nx.jpg', 's_py.jpg', 's_ny.jpg', 's_pz.jpg', 's_nz.jpg' ] );
-    scene.background = MovingScene.background;
-
-    var focusMaterial = new THREE.SpriteMaterial(
-        {
-            map: new THREE.ImageUtils.loadTexture( './img/focus.jpg',{}, function() { guisc.add(MovingScene.focusSprite); } ),
-            useScreenCoordinates: false,
-            color: 0xffffff,
-            transparent: false,
-            blending: THREE.AdditiveBlending
-        });
-    MovingScene.focusSprite = new THREE.Sprite( focusMaterial );
-    MovingScene.focusSprite.scale.set(256, 256, 1.0);
-    MovingScene.focusSprite.position.setX(12);
-    MovingScene.focusSprite.visible = false;
+    //MovingScene.background = new THREE.CubeTextureLoader()
+    //    .setPath( 'img/starbox/' )
+    //    .load( [ 's_px.jpg', 's_nx.jpg', 's_py.jpg', 's_ny.jpg', 's_pz.jpg', 's_nz.jpg' ] );
+    //scene.background = MovingScene.background;
 
     var coolDown = 10
     var players = [
@@ -55,24 +44,32 @@ MovingScene.init = function() {
     loader.load('0', function (obj) {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P0';
+        obj.scale.set(0.005,0.005,0.005);
+        addGuidance(obj,0x0000ff);
         players[0].ship = obj;
         MovingScene.add(obj);
     });
     loader.load('0', function (obj) {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P1';
+        obj.scale.set(0.005,0.005,0.005);
+        addGuidance(obj,0x00ff00);
         players[1].ship = obj;
         MovingScene.add(obj);
     });
     loader.load('0', function (obj) {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P2';
+        obj.scale.set(0.005,0.005,0.005);
+        addGuidance(obj,0xffff00);
         players[2].ship = obj;
         MovingScene.add(obj);
     });
     loader.load('0', function (obj) {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P3';
+        obj.scale.set(0.005,0.005,0.005);
+        addGuidance(obj,0xff0000);
         players[3].ship = obj;
         MovingScene.add(obj);
     });
@@ -102,21 +99,29 @@ MovingScene.init = function() {
             }
 
             if (players[i].ship) {
-                if (players[i].ship.position.x >= xBoundBox && players[i].xVel>-maxVelocity/2)
-                    players[i].xVel -= 1.5 * deltaSpeed;// * (players[i].ship.position.x - xBoundBox);
-                else if (players[i].ship.position.x <= -xBoundBox && players[i].xVel<maxVelocity/2)
-                    players[i].xVel += 1.5 * deltaSpeed;// * -(players[i].ship.position.x + xBoundBox);
-                if (players[i].ship.position.y >= yBoundBox && players[i].yVel>-maxVelocity/2)
-                    players[i].yVel -= 1.5 * deltaSpeed;// * (players[i].ship.position.y - yBoundBox);
-                else if (players[i].ship.position.y <= -yBoundBox && players[i].yVel<maxVelocity/2)
-                    players[i].yVel += 1.5 * deltaSpeed;// * -(players[i].ship.position.y + yBoundBox);
-                players[i].ship.position.x += players[i].xVel*0.5;
-                players[i].ship.position.y += players[i].yVel*0.5;
+                if (players[i].ship.position.x >= xBoundBox) {// && players[i].xVel>-maxVelocity/2
+                    players[i].xVel -= 2 * deltaSpeed;// * (players[i].ship.position.x - xBoundBox);
+                    players[i].xVel *= 0.9;
+                }
+                else if (players[i].ship.position.x <= -xBoundBox ) {//&& players[i].xVel<maxVelocity/2
+                    players[i].xVel += 2 * deltaSpeed;// * -(players[i].ship.position.x + xBoundBox);
+                    players[i].xVel *= 0.9;
+                }
+                if (players[i].ship.position.y >= yBoundBox) {// && players[i].yVel>-maxVelocity/2
+                    players[i].yVel -= 2 * deltaSpeed;// * (players[i].ship.position.y - yBoundBox);
+                    players[i].yVel *= 0.9;
+                }
+                else if (players[i].ship.position.y <= -yBoundBox) {// && players[i].yVel<maxVelocity/2
+                    players[i].yVel += 2 * deltaSpeed;// * -(players[i].ship.position.y + yBoundBox);
+                    players[i].yVel *= 0.9;
+                }
+                players[i].ship.position.x += players[i].xVel;
+                players[i].ship.position.y += players[i].yVel;
                 //auto slow down
-                players[i].xVel = players[i].xVel>0 ? (players[i].xVel<0.1  ? 0 : players[i].xVel-0.1):
-                                                      (players[i].xVel>-0.1 ? 0 : players[i].xVel+0.1);
-                players[i].yVel = players[i].yVel>0 ? (players[i].yVel<0.1  ? 0 : players[i].yVel-0.1):
-                                                      (players[i].yVel>-0.1 ? 0 : players[i].yVel+0.1);
+                players[i].xVel = players[i].xVel>0 ? (players[i].xVel<0.0002  ? 0 : players[i].xVel-0.0002):
+                                                      (players[i].xVel>-0.0002 ? 0 : players[i].xVel+0.0002);
+                players[i].yVel = players[i].yVel>0 ? (players[i].yVel<0.0002  ? 0 : players[i].yVel-0.0002):
+                                                      (players[i].yVel>-0.0002 ? 0 : players[i].yVel+0.0002);
             }
         }
         this.fires.forEach(function (e, i, arr) {
@@ -126,11 +131,12 @@ MovingScene.init = function() {
         });
     };
 
-    var maxVelocity = 10, deltaSpeed = 0.5, xBoundBox = 340, yBoundBox = 150;
+    var maxVelocity = 0.1, deltaSpeed = 0.001, xBoundBox = 1.2, yBoundBox = 0.8;
     MovingScene.input = function(key, player, ipt) {
         players[player][ipt] = key;
     }
 };
+
 
 var Fire = function (start, end) {
     var newSphere= new THREE.MeshPhongMaterial();
@@ -171,3 +177,18 @@ var Fire = function (start, end) {
             return (false);*/
     }
 };
+
+function addGuidance(obj,color) {
+    var lightsprite0 = getSimpleSprite(color, 32);
+    var light0 = new THREE.Object3D();
+    light0.position.x = 4;
+    light0.position.z = -20;
+    light0.add(lightsprite0);
+    obj.add(light0);
+    var lightsprite1 = getSimpleSprite(color, 32);
+    var light1 = new THREE.Object3D();
+    light1.position.x = 4;
+    light1.position.z = 20;
+    light1.add(lightsprite1);
+    obj.add(light1);
+}

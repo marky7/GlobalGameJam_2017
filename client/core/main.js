@@ -89,11 +89,11 @@ function init() {
     InitSystem();
     //ShowSystem();
 
-    Axoaya.init();
-    //Axoaya.show();
-
     MovingScene.init();
-    MovingScene.show();
+    //MovingScene.show();
+    Axoaya.init();
+    Axoaya.show();
+
 
     createAsteroidGenerator({interval:1000,rangeX:[-10000,10000],rangeY:[-10000,10000],z0:-150000,z1:50});
     //SoundManager2
