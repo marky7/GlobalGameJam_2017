@@ -1,4 +1,4 @@
-var master_volume = 10;
+var master_volume = 100;
 soundManager.setup({
   url: '/none/',
   onready: function() {
