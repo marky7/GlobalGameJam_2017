@@ -109,7 +109,7 @@ Axoaya.init = function() {
     newstar.visible = false;
     anchor.add(newstar);
     //init position for dark start
-    anchor.rotation.y = -0.70;
+    anchor.rotation.y = -0.05;
     //Animation of your scene, must be called by main-update
     Axoaya.animate = function(delta) {Now();
         anchor.rotation.y -= 0.02*delta;
