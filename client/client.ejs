@@ -14,8 +14,8 @@
 <script>
 	function Tuto() {
 		document.getElementById('imgstart').style.visibility = 'hidden';}
-	function chill() { Axoaya.reset(); Play(); curLevel=0; speedGame = 40; score=0; }
-	function psych() { Axoaya.reset(); Play('AN5'); curLevel=1; speedGame = 30; score=0;}
+	function chill() { Axoaya.reset(); RESPAWN(); Play(); curLevel=0; speedGame = 40; score=0; }
+	function psych() { Axoaya.reset(); RESPAWN(); Play('AN5'); curLevel=1; speedGame = 30; score=0;}
 	function mute() { Stop(); }
 	function GAMEOVER() {
 		document.getElementById('gameover').style.visibility = 'visible';
@@ -23,13 +23,17 @@
 	function RESTART() {
 		document.getElementById('gameover').style.visibility = 'hidden';
 		document.getElementById('imgstart').style.visibility = 'visible';
+		RESPAWN();
 		setTimeout(Tuto,5000);
+		chill();
+	}
+	function RESPAWN() {
 		players[0].isDead = false; players[0].ship.visible = true;
 		players[1].isDead = false; players[1].ship.visible = true;
 		players[2].isDead = false; players[2].ship.visible = true;
 		players[3].isDead = false; players[3].ship.visible = true;
-		chill();
-	}setTimeout(Tuto,5000);
+	}
+	setTimeout(Tuto,5000);
 </script>
 
 <div style="z-index: 100000000; position: absolute; width:100%;">
