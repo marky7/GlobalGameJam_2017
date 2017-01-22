@@ -60,6 +60,8 @@ var removeEnemies = function(curScene){
 
         if(enemies[i].position.z >= 2){
             curScene.remove(curScene.getObjectByName(enemies[i].name));
+            enemies.splice(i,1);
+            i--;
         }
     }
 };

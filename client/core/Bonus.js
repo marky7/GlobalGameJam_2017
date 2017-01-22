@@ -35,6 +35,8 @@ var removeBonus = function(curScene){
 
         if(bonus[i].position.z >= -100){
             curScene.remove(curScene.getObjectByName(bonus[i].name));
+            bonus.splice(i,1);
+            i--;
         }
     }
 };
