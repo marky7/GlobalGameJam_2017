@@ -7,12 +7,12 @@ var createSphere = function(opt){
     if(opt.ratioMT && (randomNumber1 < opt.ratioMT)){return;}
     if(opt.ratioLT && (randomNumber1 > opt.ratioLT)){return;}
     var sphereGeo = new THREE.SphereBufferGeometry(opt.sphereGeometry[0], opt.sphereGeometry[1], opt.sphereGeometry[2]);
-    var sphereMat = new THREE.MeshBasicMaterial();
-    sphereMat.map  = new THREE.TextureLoader().load(opt.mapUrl); // './img/planetmin/'+active_planet[p].ptype+'d.jpg'
-    sphereMat.bumpMap = new THREE.TextureLoader().load(opt.bumpMapUrl); // lumiere - './img/planetmin/'+active_planet[p].ptype+'n.jpg'
-    sphereMat.bumpScale = opt.bumpScale;
+    //var sphereMat = new THREE.MeshBasicMaterial();
+    //sphereMat.map  = new THREE.TextureLoader().load(opt.mapUrl); // './img/planetmin/'+active_planet[p].ptype+'d.jpg'
+    //sphereMat.bumpMap = new THREE.TextureLoader().load(opt.bumpMapUrl); // lumiere - './img/planetmin/'+active_planet[p].ptype+'n.jpg'
+    //sphereMat.bumpScale = opt.bumpScale;
 
-    var sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+    var sphereMesh = new THREE.Mesh(sphereGeo, opt.mat);
     sphereMesh.position.x = opt.position.x;
     sphereMesh.position.y = opt.position.y;
     sphereMesh.position.z = opt.position.z;
@@ -41,16 +41,18 @@ var createCube = function(opt){
     cubemesh.speed = new THREE.Vector3(0,0,opt.speed);
     cubemesh.name = 'cube-'+randomNumber1+'-'+Math.random();
     opt.scene.add( cubemesh );
+    cubemesh.visible = false;
     enemies.push(cubemesh);
 };
 
-
+var asteroSpeedFactor = 0.2;
 var moveEnemies = function(){
     for(var i=0; i<enemies.length ; i++){
         // Move
-        enemies[i].position.x += enemies[i].speed.x;
-        enemies[i].position.y += enemies[i].speed.y;
-        enemies[i].position.z += enemies[i].speed.z;
+        enemies[i].position.x += enemies[i].speed.x*asteroSpeedFactor;
+        enemies[i].position.y += enemies[i].speed.y*asteroSpeedFactor;
+        enemies[i].position.z += enemies[i].speed.z*asteroSpeedFactor;
+        enemies[i].visible = true;
     }
 };
 
@@ -58,7 +60,7 @@ var moveEnemies = function(){
 var removeEnemies = function(curScene){
     for(var i=0; i<enemies.length ; i++){
 
-        if(enemies[i].position.z >= -100){
+        if(enemies[i].position.z >= 2){
             curScene.remove(curScene.getObjectByName(enemies[i].name));
         }
     }

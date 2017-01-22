@@ -129,10 +129,10 @@ function update() {
         refreshSpeedCounter = 0;
         if(generatePosition == 'middle'){
             generatePosition = 'large';
-            generateAsteroids({rangeX:[-1000,3000],rangeY:[-1000,1000],z0:-150000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-2,2],rangeY:[-1,1],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
         } else if(generatePosition === 'large'){
             generatePosition = 'middle';
-            generateAsteroids({rangeX:[-1000,7000],rangeY:[-4000,4000],z0:-150000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-5,5],rangeY:[-2,2],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
         }
     }
 
