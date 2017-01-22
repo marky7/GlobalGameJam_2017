@@ -241,7 +241,7 @@ function detectCollisions(){
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
             var AB = Math.sqrt(Math.pow(bonus[l].position.x-players[m].ship.position.x, 2) + Math.pow(bonus[l].position.y - players[m].ship.position.y,2) + Math.pow(bonus[l].position.z-players[m].ship.position.z,2));
             if(bonus[l].children[1].geometry.parameters.radius && (AB<(bonus[l].children[1].geometry.parameters.radius+50))){
-                console.log(" Player "+m+' a reçu un Bonus. Bonus name : '+bonus[m].name);
+                //console.log(" Player "+m+' a reçu un Bonus. Bonus name : '+bonus[m].name);
                 score += 1000; // Give a score bonus to player
                 // Supprimer le Bonus du tableau TODO
                 // Supprimer le Bonus de la scène TODO
