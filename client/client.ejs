@@ -12,6 +12,8 @@
 <body style="margin:0px;overflow: hidden;">
 
 <script>
+	function Tuto() {
+		document.getElementById('imgstart').style.visibility = 'hidden';}
 	function chill() { Axoaya.reset(); Play(); curLevel=0; speedGame = 40; score=0; }
 	function psych() { Axoaya.reset(); Play('AN5'); curLevel=1; speedGame = 30; score=0;}
 	function mute() { Stop(); }
@@ -20,12 +22,14 @@
 	}
 	function RESTART() {
 		document.getElementById('gameover').style.visibility = 'hidden';
-		players[0].isDead = false; player[0].ship.visible = true;
-		players[1].isDead = false; player[1].ship.visible = true;
-		players[2].isDead = false; player[2].ship.visible = true;
-		players[3].isDead = false; player[3].ship.visible = true;
+		document.getElementById('imgstart').style.visibility = 'visible';
+		setTimeout(Tuto,5000);
+		players[0].isDead = false; players[0].ship.visible = true;
+		players[1].isDead = false; players[1].ship.visible = true;
+		players[2].isDead = false; players[2].ship.visible = true;
+		players[3].isDead = false; players[3].ship.visible = true;
 		chill();
-	}
+	}setTimeout(Tuto,5000);
 </script>
 
 <div style="z-index: 100000000; position: absolute; width:100%;">
@@ -41,7 +45,10 @@
 <div id="gameover" style="z-index: 100000000; visibility:hidden; position: absolute; width:400px; height:200px; left:50%; top:50%; margin-left:-200px; margin-top:-100px;">
 	<h1>GAME OVER</h1><br>
 	<button style="width:200px" onclick="RESTART()"><h3>Try again</h3></button>
-	</div>
+</div>
+<div id="imgstart" style="z-index: 100000000; visibility:visible; position: absolute; width:400px; height:600px; left:50%; top:50%; margin-left:-200px; margin-top:-300px;">
+	<img src="img/image.png" alt="Mountain View" style="width:100%;height:100%;">
+</div>
 
 <!--script>var socket;
 	r(function(){socket=io();Socketer();});//.connect();
