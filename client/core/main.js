@@ -214,8 +214,8 @@ function detectCollisions(){
         for(var j=0; j<players.length; j++){
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
-            var AB = Math.sqrt(Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2)+Math.pow(enemies[i].position.z-players[j].ship.position.z,2));
-            if(enemies[i].geometry.parameters.radius && (AB<(enemies[i].geometry.parameters.radius+50))){
+            var AB = Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2)+Math.pow(enemies[i].position.z-players[j].ship.position.z,2);
+            if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius, 2))){
                 console.log(" Player "+j+' est mort. name : '+players[j].ship.name);
                 // Supprimer le vaisseau du tableau TODO
                 // Masquer le vaisseau TODO (visible:false)
@@ -225,8 +225,8 @@ function detectCollisions(){
         for(var k=0; k<missils.length; k++){
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
-            var AB = Math.sqrt(Math.pow(enemies[i].position.x - missils[k].position.x, 2) + Math.pow(enemies[i].position.y - missils[k].position.y,2) + Math.pow(enemies[i].position.z-missils[k].position.z,2));
-            if(enemies[i].geometry.parameters.radius && (AB<(enemies[i].geometry.parameters.radius+50))){
+            var AB = Math.pow(enemies[i].position.x - missils[k].position.x, 2) + Math.pow(enemies[i].position.y - missils[k].position.y,2) + Math.pow(enemies[i].position.z-missils[k].position.z,2);
+            if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius, 2))){
                 console.log(" Ennemi "+i+' est mort. name : '+enemies[i].name);
                 console.log(" Missil "+k+' est detruit. name : '+missils[k].name);
                 // Supprimer les objets des tableaux TODO
@@ -239,8 +239,8 @@ function detectCollisions(){
         for(var m=0; m<players.length; m++){
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
-            var AB = Math.sqrt(Math.pow(bonus[l].position.x-players[m].ship.position.x, 2) + Math.pow(bonus[l].position.y - players[m].ship.position.y,2) + Math.pow(bonus[l].position.z-players[m].ship.position.z,2));
-            if(bonus[l].children[1].geometry.parameters.radius && (AB<(bonus[l].children[1].geometry.parameters.radius+50))){
+            var AB = Math.pow(bonus[l].position.x-players[m].ship.position.x, 2) + Math.pow(bonus[l].position.y - players[m].ship.position.y,2) + Math.pow(bonus[l].position.z-players[m].ship.position.z,2);
+            if(bonus[l].children[1].geometry.parameters.radius && (AB<Math.pow(bonus[l].children[1].geometry.parameters.radius,2))){
                 //console.log(" Player "+m+' a reçu un Bonus. Bonus name : '+bonus[m].name);
                 score += 1000; // Give a score bonus to player
                 // Supprimer le Bonus du tableau TODO

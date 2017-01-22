@@ -41,7 +41,6 @@ var createCube = function(opt){
     cubemesh.speed = new THREE.Vector3(0,0,opt.speed);
     cubemesh.name = 'cube-'+randomNumber1+'-'+Math.random();
     opt.scene.add( cubemesh );
-    cubemesh.visible = false;
     enemies.push(cubemesh);
 };
 
@@ -52,7 +51,6 @@ var moveEnemies = function(){
         enemies[i].position.x += enemies[i].speed.x*asteroSpeedFactor;
         enemies[i].position.y += enemies[i].speed.y*asteroSpeedFactor;
         enemies[i].position.z += enemies[i].speed.z*asteroSpeedFactor;
-        enemies[i].visible = true;
     }
 };
 
