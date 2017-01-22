@@ -94,6 +94,7 @@ Axoaya.init = function() {
     Axoaya.skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
     anchor.add( Axoaya.skyBox );
 
+    //Create Sun and PointLight separatelly
     var slight = new THREE.PointLight(0xdddddd);
     slight.position.x = -1000;
     slight.position.y =  100;
@@ -105,6 +106,7 @@ Axoaya.init = function() {
     newstar.position.z = 250;
     newstar.visible = false;
     anchor.add(newstar);
+    //init position for dark start
     anchor.rotation.y = -0.05;
     //Animation of your scene, must be called by main-update
     Axoaya.animate = function(delta) {Now();
