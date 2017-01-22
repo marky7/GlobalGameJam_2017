@@ -3,6 +3,9 @@ var enemies = [];
 
 // createSphere({bumpScale:1,mapUrl:'./img/planetmin/...',bumpMapUrl:'./img/planetmin/',scene:MovingScene,position:{x:0,y:0,z:0},speed:{x:0,y:0,z:100},sphereGeometry:[100,32,32]});
 var createSphere = function(opt){
+    var randomNumber1 = Math.random();
+    if(opt.ratioMT && (randomNumber1 > opt.ratioMT)){return;}
+    if(opt.ratioLT && (randomNumber1 < opt.ratioLT)){return;}
     var sphereGeo = new THREE.SphereBufferGeometry(opt.sphereGeometry[0], opt.sphereGeometry[1], opt.sphereGeometry[2]);
     var sphereMat = new THREE.MeshBasicMaterial();
     sphereMat.map  = new THREE.TextureLoader().load(opt.mapUrl); // './img/planetmin/'+active_planet[p].ptype+'d.jpg'
@@ -14,7 +17,7 @@ var createSphere = function(opt){
     sphereMesh.position.y = opt.position.y;
     sphereMesh.position.z = opt.position.z;
     sphereMesh.speed = new THREE.Vector3(0,0,opt.speed);
-    sphereMesh.name = 'sphere-'+Math.random()+'-'+Math.random();
+    sphereMesh.name = 'sphere-'+randomNumber1+'-'+Math.random();
     opt.scene.add(sphereMesh);
     enemies.push(sphereMesh);
 };
@@ -22,6 +25,9 @@ var createSphere = function(opt){
 
 // createCube({textureUrl:'img/planetmin/soleil1.jpg',scene:MovingScene,position:{x:0,y:0,z:0},speed:10,boxGeometry:[100,100,100]});
 var createCube = function(opt){
+    var randomNumber1 = Math.random();
+    if(opt.ratioMT && (randomNumber1 > opt.ratioMT)){return;}
+    if(opt.ratioLT && (randomNumber1 < opt.ratioLT)){return;}
     var cubeTexture = new THREE.TextureLoader().load( opt.textureUrl,function(){
         // update texture
         cubeTexture.verticesNeedUpdate = true;
@@ -33,7 +39,7 @@ var createCube = function(opt){
     cubemesh.position.y = opt.position.y;
     cubemesh.position.z = opt.position.z;
     cubemesh.speed = new THREE.Vector3(0,0,opt.speed);
-    cubemesh.name = 'cube-'+Math.random()+'-'+Math.random();
+    cubemesh.name = 'cube-'+randomNumber1+'-'+Math.random();
     opt.scene.add( cubemesh );
     enemies.push(cubemesh);
 };
@@ -63,12 +69,11 @@ var removeEnemies = function(curScene){
 // rangeY = [-5000,+5000];
 
 var generateAsteroids = function(opt){
-
     var curParams;
     var diffX = opt.rangeX[1] - opt.rangeX[0];
     var diffY = opt.rangeY[1] - opt.rangeY[0];
 
-    // Create all cubes from levels
+    // Create all Cubes
     for(var i = 0; i<opt.levels[opt.curLevel].spheres.length; i++){
         var posX = Math.random()*diffX + opt.rangeX[0];
         var posY = Math.random()*diffY + opt.rangeY[0];
@@ -79,7 +84,7 @@ var generateAsteroids = function(opt){
         createSphere(curParams);
     }
 
-    // Create all spheres
+    // Create all Spheres
     for(var j = 0; j<opt.levels[opt.curLevel].cubes.length; j++){
         curParams = opt.levels[opt.curLevel].cubes[j];
         var posX = Math.random()*diffX + opt.rangeX[0];
@@ -87,6 +92,16 @@ var generateAsteroids = function(opt){
         curParams.scene = opt.scene;
         curParams.position = {x:posX,y:posY,z:opt.z0};
         createCube(curParams);
+    }
+
+    // Create all Bonus
+    for(var j = 0; j<opt.levels[opt.curLevel].bonus.length; j++){
+        curParams = opt.levels[opt.curLevel].bonus[j];
+        var posX = Math.random()*diffX + opt.rangeX[0];
+        var posY = Math.random()*diffY + opt.rangeY[0];
+        curParams.scene = opt.scene;
+        curParams.position = {x:posX,y:posY,z:opt.z0};
+        createBonus(curParams);
     }
 };
 

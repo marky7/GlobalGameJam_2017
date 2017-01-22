@@ -12,8 +12,8 @@
 <body style="margin:0px;overflow: hidden;">
 
 <script>
-	function chill() { Play(); }
-	function psych() { Play('AN5'); }
+	function chill() { Play(); curLevel=0; speedGame = 40; }
+	function psych() { Play('AN5'); curLevel=1; speedGame = 30;}
 	function mute() { Stop(); }
 </script>
 
@@ -44,6 +44,7 @@
 <script src="core/socket.js"></script> 
 <script src="core/SolarSystem.js"></script>
 <script src="core/Enemies.js"></script>
+<script src="core/Bonus.js"></script>
 <script src="core/util.js"></script>
 <script src="core/MovingScene.js"></script>
 </div>

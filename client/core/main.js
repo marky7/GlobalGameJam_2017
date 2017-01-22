@@ -128,12 +128,11 @@ function update() {
         refreshSpeedCounter = 0;
         if(generatePosition == 'middle'){
             generatePosition = 'large';
-            generateAsteroids({rangeX:[-4000,4000],rangeY:[-3000,3000],z0:-200000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-6000,6000],rangeY:[-6000,6000],z0:-130000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
         } else if(generatePosition === 'large'){
             generatePosition = 'middle';
-            generateAsteroids({rangeX:[-45000,45000],rangeY:[-20000,20000],z0:-150000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-45000,45000],rangeY:[-30000,30000],z0:-160000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
         }
-
     }
 
     // execute stored delayed function
@@ -157,6 +156,8 @@ function update() {
 
     removeEnemies(MovingScene);
     moveEnemies();
+    removeBonus(MovingScene);
+    moveBonus();
 
     //refresh cam control and fps display
     controls.update();
