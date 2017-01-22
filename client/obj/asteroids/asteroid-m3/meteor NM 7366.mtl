@@ -1,0 +1,12 @@
+# Blender MTL File: 'meteor NM 7366.blend'
+# Material Count: 1
+
+newmtl meteor
+Ns 125.490196
+Ka 1.000000 1.000000 1.000000
+Kd 0.598276 0.467136 0.206327
+Ks 0.072896 0.052591 0.026378
+Ke 0.095724 0.074742 0.033012
+Ni 1.000000
+d 0.911000
+illum 2

@@ -17,7 +17,7 @@ THREE.OBJLoader.prototype = {
 		var scope = this;
 
 		var loader = new THREE.XHRLoader( scope.manager );
-		loader.setCrossOrigin( this.crossOrigin );
+		//loader.setCrossOrigin( this.crossOrigin );
 		loader.load( 'obj/'+obj+'.obj', function ( text ) {
 
 			onLoad( scope.parse( text, obj ) );
@@ -366,7 +366,7 @@ THREE.OBJLoader.prototype = {
 			if (obj == '0') {
 			material = new THREE.MeshPhongMaterial({
 				"map" : 		THREE.ImageUtils.loadTexture('./obj/'+obj+'D.jpg'),
-				"normalMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'N.jpg'), 
+				//"normalMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'N.jpg'),
 				"bumpMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'B.jpg'),
 				"specularMap" : THREE.ImageUtils.loadTexture('./obj/'+obj+'S.jpg'),
 				"lightMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'L.jpg'),

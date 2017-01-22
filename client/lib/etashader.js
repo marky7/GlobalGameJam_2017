@@ -4,6 +4,7 @@ var lightMapShader = {
 
     //**"varying vec2 vUv;",
     "varying vec3 vNormal;",
+		"varying vec3 intcolor;",
 
     "void main() {",
         //**"vUv = uv;",
@@ -18,14 +19,19 @@ var lightMapShader = {
 
     "uniform sampler2D texture;",
     "uniform float size;",
+	"uniform float intensity;",
     //**"varying vec2 vUv;",
-    "varying vec3 vNormal;",
+	//"varying float vintensity;",
+		"varying vec3 intcolor;",
+		"varying vec3 vNormal;",
     "void main() {",
 
         "vec2 vUv = normalize( vNormal ).xy * size + 0.5;",
 
         "vec4 color = texture2D(texture, vUv);",
-        "gl_FragColor = color;",
+		//"vec4 realcolor = vec4(intensity,intensity,intensity,intensity)",
+		//"vec3 intcolor.xyz = color.xyz;",
+        "gl_FragColor = vec4(color.x*intensity,color.y*intensity,color.z*intensity,1.0);",
 
     "}"
 

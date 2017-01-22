@@ -18,7 +18,7 @@ function GalaxyOver() {
 			ctx.clearRect(0,0,512,512);
 
 			//ctx.drawImage(resources.get("img/focus.jpg"),136,128);
-			ctx.drawImage(resources.get("img/tech.png"),252,151);
+			//ctx.drawImage(resources.get("img/tech.png"),252,151);
 			 ctx.textAlign = "center";
 			ctx.font = "Bold 16px continuummedium";
 			ctx.fillStyle = "rgba(255,255,255,0.8)";
@@ -27,6 +27,8 @@ function GalaxyOver() {
 			ctx.fillText( T["Vic."], 417, 194);
 			ctx.fillText( T["Pts."], 417, 218);
 			ctx.fillStyle = "rgba(0,255,255,0.8)";
+			ctx.fillRect(0,0,512,512);
+
 			ctx.fillText( 			 intersects[ 0 ].object.tid , 379, 218);
 			ctx.fillText( GetNodeVic(intersects[ 0 ].object.tid), 454, 194);
 			ctx.fillText( GetNodePts(intersects[ 0 ].object.tid), 454, 218);

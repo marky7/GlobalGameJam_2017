@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<title>Exo Commander</title>
+	<title>AXA-O-AYA</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<script src="lib/head/socket.io.min.js"></script><!--socket.io.1.3.6-->
@@ -11,6 +11,38 @@
 </head>
 <body style="margin:0px;overflow: hidden;">
 
+<script>
+	function chill() { Axoaya.reset(); Play(); curLevel=0; speedGame = 40; score=0; }
+	function psych() { Axoaya.reset(); Play('AN5'); curLevel=1; speedGame = 30; score=0;}
+	function mute() { Stop(); }
+	function GAMEOVER() {
+		document.getElementById('gameover').style.visibility = 'visible';
+	}
+	function RESTART() {
+		document.getElementById('gameover').style.visibility = 'hidden';
+		players[0].isDead = false; player[0].ship.visible = true;
+		players[1].isDead = false; player[1].ship.visible = true;
+		players[2].isDead = false; player[2].ship.visible = true;
+		players[3].isDead = false; player[3].ship.visible = true;
+		chill();
+	}
+</script>
+
+<div style="z-index: 100000000; position: absolute; width:100%;">
+	<button style="float:left" onclick="chill()">Chill</button>
+	<button style="float:left" onclick="psych()">Psych</button>
+	<!--<button onclick="hardc()">HardC</button>-->
+	<button style="float:left" onclick="mute()">Mute</button>
+	<div  style="position:absolute; right:5px;" id="score"></div>
+
+</div>
+
+
+<div id="gameover" style="z-index: 100000000; visibility:hidden; position: absolute; width:400px; height:200px; left:50%; top:50%; margin-left:-200px; margin-top:-100px;">
+	<h1>GAME OVER</h1><br>
+	<button style="width:200px" onclick="RESTART()"><h3>Try again</h3></button>
+	</div>
+
 <!--script>var socket;
 	r(function(){socket=io();Socketer();});//.connect();
 	function r(f){/in/.test(document.readyState)?setTimeout('r('+f+')',20):f()}
@@ -18,14 +50,21 @@
 <h1>Please Wait - Loading Scripts</h1>
 <!-- INGNORE ALL SCRIPT BUT COMPILED -->
 <!--script src="exocommander.min.js"></script-->
- 
-<div> <!--CORE FILES--> 
-<script src="core/main.js"></script> 
-<script src="core/NewScene.js"></script> 
-<script src="core/over.js"></script> 
+
+<!--DATA FILES-->
+<script src="data/levels.js"></script>
+
+
+<div> <!--CORE FILES-->
+<script src="core/main.js"></script>
+<script src="core/NewScene.js"></script>
+<script src="core/Axoaya.js"></script>
+<script src="core/over.js"></script>
 <script src="core/socket.js"></script> 
-<script src="core/SolarSystem.js"></script> 
-<script src="core/util.js"></script> 
+<script src="core/SolarSystem.js"></script>
+<script src="core/Enemies.js"></script>
+<script src="core/Bonus.js"></script>
+<script src="core/util.js"></script>
 <script src="core/MovingScene.js"></script>
 </div>
  
@@ -50,7 +89,7 @@
  
 
 <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-
+<div style="style:absolute; display:block; z-index:99999; backgound-color:#332255;width:100%;height:100%;text-align:center;">YOU LOOSE</div>
 <script>window.onload = function(e) {init();animate();}</script>
 </body>
 </html>

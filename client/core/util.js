@@ -2,7 +2,8 @@
 var mouse = {
 	x: 0, y: 0,		// 3D position // Computed for raycast // from bottom left to top right // Range : [-1,1]
 	xp: 0, yp: 0,	// 2D position // Obtained from mouse  // from top left to bottom right // Range : [0,screen.width/height] 
-	xt: 0, yt: 0,	// 2D position saved on mouse down (usefull when dragging)
+	xd: 0, yd: 0,	// 2D differential on mouse mouve
+	xs: 0, ys: 0,	// 2D position saved on mouse mouve//down (usefull when dragging)
 	t:false, 		// Mouse state trigger// set true at mouse down // reset false at first interception
 	c:false, 		// Mouse state click  // set true at mouse up   // reset false at first interception
 	d:false, 		// Mouse state drag   // set 'name' at interception // reset false at mouse up
@@ -13,97 +14,123 @@ document.addEventListener( 'mousedown', PointerClick, false );
 document.addEventListener( 'mouseup', PointerRelease, false );
 document.addEventListener('keydown', event => {
 	switch (event.keyCode) {
-		case 32:
-			var dir = camera.getWorldDirection();
-			var newOptionsCubeTest = {posX:cubemesh.position.x,posY:cubemesh.position.y,posZ:cubemesh.position.z,dirX:dir.x*50,dirY:dir.y*50,dirZ:dir.z*50};
-			createMissil(newOptionsCubeTest,missils);
+		case 17: // Ctrl
+            MovingScene.input(true, 2, 'action');
 			break;
-
+		case 18: // Alt
+			MovingScene.input(true, 0, 'action');
+			break;
+		case 32: // Space
+    		MovingScene.input(true, 1, 'action');
+			break;
 		case 90: // z
-			MovingScene.input('p1u');
+			MovingScene.input(true, 0, 'up');
 			break;
 		case 81: // q
-			MovingScene.input('p1l');
+			MovingScene.input(true, 0, 'left');
 			break;
 		case 83: // s
-			MovingScene.input('p1d');
+			MovingScene.input(true, 0, 'down');
 			break;
 		case 68: // d
-			MovingScene.input('p1r');
+			MovingScene.input(true, 0, 'right');
 			break;
-
 		case 79: // o
-			MovingScene.input('p2u');
+		    MovingScene.input(true, 1, 'up');
 			break;
 		case 75: // k
-			MovingScene.input('p2l');
+    		MovingScene.input(true, 1, 'left');
 			break;
 		case 76: // l
-			MovingScene.input('p2d');
+			MovingScene.input(true, 1, 'down');
 			break;
 		case 77: // m
-			MovingScene.input('p2r');
+			MovingScene.input(true, 1, 'right');
 			break;
-
 		case 37: // Left
-			MovingScene.input('p3l');
+		    MovingScene.input(true, 2, 'left');
 			break;
 		case 38: // Up
-    		MovingScene.input('p3u');
+		    MovingScene.input(true, 2, 'up');
 			break;
 		case 39: // Right
-			MovingScene.input('p3r');
+    		MovingScene.input(true, 2, 'right');
 			break;
 		case 40: // Down
-			MovingScene.input('p3d');
+    		MovingScene.input(true, 2, 'down');
+			break;
+		case 12: // 5
+			MovingScene.input(true, 3, 'up');
+			break;
+		case 35: // 1
+			MovingScene.input(true, 3, 'left');
+			break;
+		case 40: // 2
+			MovingScene.input(true, 3, 'down');
+			break;
+		case 34: // 3
+			MovingScene.input(true, 3, 'right');
 			break;
 	}
 }, false);
 document.addEventListener('keyup', event => {
     switch (event.keyCode) {
-		case 32:
-			var dir = camera.getWorldDirection();
-			var newOptionsCubeTest = {posX:cubemesh.position.x,posY:cubemesh.position.y,posZ:cubemesh.position.z,dirX:dir.x*50,dirY:dir.y*50,dirZ:dir.z*50};
-			createMissil(newOptionsCubeTest,missils);
+		case 17: // Ctrl
+			MovingScene.input(false, 2, 'action');
 			break;
-
+		case 18: // Alt
+			MovingScene.input(false, 0, 'action');
+			break;
+		case 32: // Space
+			MovingScene.input(false, 1, 'action');
+			break;
 		case 90: // z
-			MovingScene.input('u1p');
+			MovingScene.input(false, 0, 'up');
 			break;
 		case 81: // q
-			MovingScene.input('l1p');
+			MovingScene.input(false, 0, 'left');
 			break;
 		case 83: // s
-			MovingScene.input('d1p');
+			MovingScene.input(false, 0, 'down');
 			break;
 		case 68: // d
-			MovingScene.input('r1p');
+			MovingScene.input(false, 0, 'right');
 			break;
-
 		case 79: // o
-			MovingScene.input('u2p');
+			MovingScene.input(false, 1, 'up');
 			break;
 		case 75: // k
-			MovingScene.input('l2p');
+			MovingScene.input(false, 1, 'left');
 			break;
 		case 76: // l
-			MovingScene.input('d2p');
+			MovingScene.input(false, 1, 'down');
 			break;
 		case 77: // m
-			MovingScene.input('r2p');
+			MovingScene.input(false, 1, 'right');
 			break;
-
 		case 37: // Left
-			MovingScene.input('l3p');
+			MovingScene.input(false, 2, 'left');
 			break;
 		case 38: // Up
-			MovingScene.input('u3p');
+			MovingScene.input(false, 2, 'up');
 			break;
 		case 39: // Right
-			MovingScene.input('r3p');
+			MovingScene.input(false, 2, 'right');
 			break;
 		case 40: // Down
-			MovingScene.input('d3p');
+			MovingScene.input(false, 2, 'down');
+			break;
+		case 12: // 5
+			MovingScene.input(false, 3, 'up');
+			break;
+		case 35: // 1
+			MovingScene.input(false, 3, 'left');
+			break;
+		case 40: // 2
+			MovingScene.input(false, 3, 'down');
+			break;
+		case 34: // 3
+			MovingScene.input(false, 3, 'right');
 			break;
 	}
 }, false);
@@ -112,6 +139,10 @@ function PointerMove( event ) {
 	
     mouse.xp = event.clientX;
     mouse.yp = event.clientY;
+	mouse.xd = mouse.xp-mouse.xs;
+	mouse.yd = mouse.yp-mouse.ys;
+	mouse.xs = event.clientX;
+	mouse.ys = event.clientY;
 
 	if (GUI) { //if mouse in GUI then interact
 		event.preventDefault();
@@ -129,18 +160,15 @@ function PointerMove( event ) {
 
 function PointerClick (event) {
 	mouse.t = true;
-    mouse.xt = event.clientX;
-    mouse.yt = event.clientY;
     // update the mouse variable
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-	if (GUI) { // && CheckMenuBox()if mouse in GUI then interact
-		event.preventDefault();
-		GUI.Over(event.clientX,event.clientY);
-	} else { // if mouse in 3D call raycast
-		GalaxyOver();
-	}
-	mouse.t = false;
+	//if (GUI) { // && CheckMenuBox()if mouse in GUI then interact
+	//	event.preventDefault();
+	//	GUI.Over(event.clientX,event.clientY);
+	//} else { // if mouse in 3D call raycast
+	//	GalaxyOver();
+	//}
 }
 
 function PointerRelease (event) {
@@ -148,11 +176,27 @@ function PointerRelease (event) {
 	if (mouse.xt == event.clientX && mouse.yt == event.clientY) {
 		mouse.c = true;
 	}
-	if (GUI) {event.preventDefault();
-		GUI.Over(event.clientX,event.clientY);
-	} GalaxyOver();
+	//if (GUI) {event.preventDefault();
+	//	GUI.Over(event.clientX,event.clientY);
+	//} GalaxyOver();
     mouse.d = false;
 	mouse.c = false;
+    mouse.t = false;
+}
+
+var simpleSpriteTxt = new THREE.ImageUtils.loadTexture( './img/star.png' );
+function getSimpleSprite(color,size) {
+	var focusMaterial = new THREE.SpriteMaterial(
+		{
+			map: simpleSpriteTxt,
+			//useScreenCoordinates: false,
+			color: color,
+			transparent: false,
+			blending: THREE.AdditiveBlending
+		});
+	var focusSprite = new THREE.Sprite( focusMaterial );
+	    focusSprite.scale.set(size, size, 1.0);
+	return focusSprite;
 }
 
 function CheckMenuBox() {

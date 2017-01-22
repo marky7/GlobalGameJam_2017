@@ -257,7 +257,7 @@ function MakeSystem() {
 	//	slight.position.y = 100000; // UP TEMP LIGHT
 	//	slight.position.z =  50000; // UP TEMP LIGHT
 	//system.add(slight)
-	var alight = new THREE.AmbientLight(0x222222);
+	var alight = new THREE.AmbientLight(0xffffff);
 	system.add(alight);
 
 	//DONT TUCH
@@ -314,7 +314,7 @@ function MakeSystem() {
 
 	// Star Skybox
 	var skyGeometry = new THREE.SphereBufferGeometry(500000, 32, 32);
-	var skyMaterial = new THREE.MeshBasicMaterial({
+	var skyMaterial = new THREE.MeshLambertMaterial({
 		map: new THREE.TextureLoader().load( "img/starbox/skystar.jpg" ),
 			color : 0xbbdddd,
 			side: THREE.BackSide
@@ -399,6 +399,7 @@ function MakeSystem() {
 			active_stars[s].object.update(accutime);
 		}
 		Now();
+		alight.intensity = 0.8+Math.cos(NOW*16)/5;
     	//Global rotation system
     	var particles = system.icon.length;
 		var newpos = new Float32Array( particles*3 );
@@ -550,10 +551,10 @@ function NewGenStar(size,spectral) {
 	var sunGlow = new THREE.Mesh( glowGeo, sunGlowMaterial );
 		sunGlow.position.set( 0, 0, 0 );
 
-	var slight = new THREE.PointLight(0xdddddd);
+	//var slight = new THREE.PointLight(0xdddddd);
 	//	slight.position.y = 100000; // UP TEMP LIGHT
 	//	slight.position.z =  50000; // UP TEMP LIGHT
-	newgenstar.add(slight)
+	//newgenstar.add(slight)
 
 	var gyro = new THREE.Object3D();
 	newgenstar.add( gyro );	
@@ -573,7 +574,7 @@ function NewGenStar(size,spectral) {
 		//gyro.lookAt ( camera.position.clone() ); //noneedit
 		//var globalrot = newgenstar.localToWorld( newgenstar.rotation.clone() );
 		//console.log(globalrot);
-    }
+    };
 
     return newgenstar;
 }

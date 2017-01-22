@@ -1,37 +1,30 @@
-## Welcome to GitHub Pages
+## AXA-O-AYA
 
-You can use the [editor on GitHub](https://github.com/marky7/GlobalGameJam_2017/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+The Shaman gave me a drink and now I'm orbiting around a murderous planet, struggling to death.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Run the game
 
-### Markdown
+The game works with a NodeJS server for file delivery, and ThreeJS on client side.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
+Running the game for linux:
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+cd src/
+npm install
+./run.sh
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+You just have to run the 'npm install' command in the src/ folder in order to install dependencies, then execute the run.(sh/bat) script to launch the server. If you have no error, you can use your browser and go to http://localhost:8080/ to be amazed.
 
-### Jekyll Themes
+### How to play
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/marky7/GlobalGameJam_2017/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+There are 4 players on the screen, each of them have a set of keys to control the space ship and shooting:
+ - Player 1: ZQSD & Alt
+ - Player 2: OKLM & Space
+ - Player 3: Arrows & Ctrl
+ - Player 4: Mouse Movement & Mouse Click
 
-### Support or Contact
+### Team
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+ - Etienne Balon
+ - Florian Marc
+ - Sylvain Garant
