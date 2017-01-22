@@ -17,11 +17,13 @@
 	function mute() { Stop(); }
 </script>
 
-<div style="z-index: 100000000; position: absolute;">
-	<button onclick="chill()">Chill</button>
-	<button onclick="psych()">Psych</button>
+<div style="z-index: 100000000; position: absolute; width:100%;">
+	<button style="float:left" onclick="chill()">Chill</button>
+	<button style="float:left" onclick="psych()">Psych</button>
 	<!--<button onclick="hardc()">HardC</button>-->
-	<button onclick="mute()">Mute</button>
+	<button style="float:left" onclick="mute()">Mute</button>
+	<div  style="position:absolute; right:5px;" id="score"></div>
+
 </div>
 
 <!--script>var socket;

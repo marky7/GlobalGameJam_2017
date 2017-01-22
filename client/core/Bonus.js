@@ -2,10 +2,10 @@ var bonus = [];
 
 var createBonus = function(opt) {
     var randomNumber1 = Math.random();
-    if(opt.ratioMT && (randomNumber1 > opt.ratioMT)){return;}
+    if(opt.ratioMT && (randomNumber1 < opt.ratioMT)){return;}
     if(opt.ratioLT && (randomNumber1 < opt.ratioLT<randomNumber1)){return;}
 
-    var geometry3 = new THREE.IcosahedronGeometry( 300, 1 );
+    var geometry3 = new THREE.IcosahedronGeometry( opt.height, 1 );
     var materials3 = [
         new THREE.MeshPhongMaterial( { color: opt.meshPhongColor, shading: THREE.FlatShading, vertexColors: THREE.VertexColors, shininess: 0 } ),
         new THREE.MeshBasicMaterial( { color: opt.meshBasicColor, shading: THREE.FlatShading, wireframe: false, transparent: true } )

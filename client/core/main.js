@@ -8,7 +8,7 @@ var canvas,  ctx, overtext, overimg, OverSel = -1;
 var INTERSECTED,INTERSECSEL;
 // time managment
 var clock = new THREE.Clock();
-var curLevel = 0;
+var curLevel = 0, score = 0;
 
 var NOW;
 function Now() {
@@ -27,8 +27,9 @@ function HideAll() {
 // Global Start Checker
 var Start = false;
 
-function init() { 
-    // SCENE
+function init() {
+    var startLevel = Now();
+        // SCENE
     scene = new THREE.Scene();
     guisc = new THREE.Scene();
     // CAMERA
@@ -113,7 +114,7 @@ var UpdateNext = [];
 //limit the GUI refresh when nothing happen
 var refreshcounter = 0;
 var refreshSpeedCounter = 0;
-var speedGame = 35;
+var speedGame = 40;
 var generatePosition = 'large';
 function update() {
     refreshcounter++;
@@ -128,10 +129,10 @@ function update() {
         refreshSpeedCounter = 0;
         if(generatePosition == 'middle'){
             generatePosition = 'large';
-            generateAsteroids({rangeX:[-6000,6000],rangeY:[-6000,6000],z0:-130000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-1000,3000],rangeY:[-1000,1000],z0:-150000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
         } else if(generatePosition === 'large'){
             generatePosition = 'middle';
-            generateAsteroids({rangeX:[-45000,45000],rangeY:[-30000,30000],z0:-160000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-1000,7000],rangeY:[-4000,4000],z0:-150000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
         }
     }
 
@@ -159,6 +160,7 @@ function update() {
     removeBonus(MovingScene);
     moveBonus();
 
+    updateScore();
     //refresh cam control and fps display
     controls.update();
     stats.update();
@@ -171,3 +173,17 @@ function render()
     if ( Detector.webgl ) renderer.clearDepth();
     renderer.render( guisc, guicam );               //Render the 2D GUI
 }  
+
+
+var updateStep = [1000,10000,50000,100000,150000,250000,400000];
+var curUpdateStep = 0;
+function updateScore(){
+    if(updateStep[curUpdateStep] && (score > updateStep[curUpdateStep])){
+        curUpdateStep++;
+        console.log();
+        speedGame -+ 1; // encrease asteroid creation
+    }
+    score +=(1*(curLevel+1));
+    document.getElementById('score').innerHTML = 'Score : '+score+'<br> Niveau : '+(curLevel+1);
+
+}

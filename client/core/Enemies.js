@@ -4,8 +4,8 @@ var enemies = [];
 // createSphere({bumpScale:1,mapUrl:'./img/planetmin/...',bumpMapUrl:'./img/planetmin/',scene:MovingScene,position:{x:0,y:0,z:0},speed:{x:0,y:0,z:100},sphereGeometry:[100,32,32]});
 var createSphere = function(opt){
     var randomNumber1 = Math.random();
-    if(opt.ratioMT && (randomNumber1 > opt.ratioMT)){return;}
-    if(opt.ratioLT && (randomNumber1 < opt.ratioLT)){return;}
+    if(opt.ratioMT && (randomNumber1 < opt.ratioMT)){return;}
+    if(opt.ratioLT && (randomNumber1 > opt.ratioLT)){return;}
     var sphereGeo = new THREE.SphereBufferGeometry(opt.sphereGeometry[0], opt.sphereGeometry[1], opt.sphereGeometry[2]);
     var sphereMat = new THREE.MeshBasicMaterial();
     sphereMat.map  = new THREE.TextureLoader().load(opt.mapUrl); // './img/planetmin/'+active_planet[p].ptype+'d.jpg'
@@ -26,8 +26,8 @@ var createSphere = function(opt){
 // createCube({textureUrl:'img/planetmin/soleil1.jpg',scene:MovingScene,position:{x:0,y:0,z:0},speed:10,boxGeometry:[100,100,100]});
 var createCube = function(opt){
     var randomNumber1 = Math.random();
-    if(opt.ratioMT && (randomNumber1 > opt.ratioMT)){return;}
-    if(opt.ratioLT && (randomNumber1 < opt.ratioLT)){return;}
+    if(opt.ratioMT && (randomNumber1 < opt.ratioMT)){return;}
+    if(opt.ratioLT && (randomNumber1 > opt.ratioLT)){return;}
     var cubeTexture = new THREE.TextureLoader().load( opt.textureUrl,function(){
         // update texture
         cubeTexture.verticesNeedUpdate = true;
