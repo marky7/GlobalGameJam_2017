@@ -1,55 +1,53 @@
-
-// createSphere({bumpScale:1,mapUrl:'./img/planetmin/...',bumpMapUrl:'./img/planetmin/',scene:MovingScene,position:{x:0,y:0,z:0},speed:{x:0,y:0,z:100},sphereGeometry:[100,32,32]});
-
 var enemies = [];
 
+
+// createSphere({bumpScale:1,mapUrl:'./img/planetmin/...',bumpMapUrl:'./img/planetmin/',scene:MovingScene,position:{x:0,y:0,z:0},speed:{x:0,y:0,z:100},sphereGeometry:[100,32,32]});
 var createSphere = function(opt){
-    //PLANET
-    var geop = new THREE.SphereBufferGeometry(opt.sphereGeometry[0], opt.sphereGeometry[1], opt.sphereGeometry[2]);
+    var sphereGeo = new THREE.SphereBufferGeometry(opt.sphereGeometry[0], opt.sphereGeometry[1], opt.sphereGeometry[2]);
+    var sphereMat = new THREE.MeshBasicMaterial();
+    sphereMat.map  = new THREE.TextureLoader().load(opt.mapUrl); // './img/planetmin/'+active_planet[p].ptype+'d.jpg'
+    sphereMat.bumpMap = new THREE.TextureLoader().load(opt.bumpMapUrl); // lumiere - './img/planetmin/'+active_planet[p].ptype+'n.jpg'
+    sphereMat.bumpScale = opt.bumpScale;
 
-    var newSphere= new THREE.MeshPhongMaterial();
-    newSphere.map       	 = new THREE.TextureLoader().load(opt.mapUrl); // './img/planetmin/'+active_planet[p].ptype+'d.jpg'
-    newSphere.bumpMap   	= new THREE.TextureLoader().load(opt.bumpMapUrl); // lumiere - './img/planetmin/'+active_planet[p].ptype+'n.jpg'
-    newSphere.bumpScale 	= opt.bumpScale;
-
-    var planetMesh = new THREE.Mesh(geop, newSphere);
-    planetMesh.position.x = opt.position.x;
-    planetMesh.position.y = opt.position.y;
-    planetMesh.position.z = opt.position.z;
-    opt.scene.add(planetMesh);
-    planetMesh.speed = new THREE.Vector3(opt.speed.x,opt.speed.y,opt.speed.z);
-    planetMesh.name = 'sphere-'+Math.random()+'-'+Math.random();
-    enemies.push(planetMesh);
+    var sphereMesh = new THREE.Mesh(sphereGeo, sphereMat);
+    sphereMesh.position.x = opt.position.x;
+    sphereMesh.position.y = opt.position.y;
+    sphereMesh.position.z = opt.position.z;
+    sphereMesh.speed = new THREE.Vector3(0,0,opt.speed);
+    sphereMesh.name = 'sphere-'+Math.random()+'-'+Math.random();
+    opt.scene.add(sphereMesh);
+    enemies.push(sphereMesh);
 };
 
-// createCube({textureUrl:'img/planetmin/soleil1.jpg',scene:MovingScene,position:{x:0,y:0,z:0},speed:10,boxGeometry:[100,100,100]});
 
-var createCube= function(opt){
-    var texture = new THREE.TextureLoader().load( opt.textureUrl,function(){
+// createCube({textureUrl:'img/planetmin/soleil1.jpg',scene:MovingScene,position:{x:0,y:0,z:0},speed:10,boxGeometry:[100,100,100]});
+var createCube = function(opt){
+    var cubeTexture = new THREE.TextureLoader().load( opt.textureUrl,function(){
         // update texture
-        texture.verticesNeedUpdate = true;
+        cubeTexture.verticesNeedUpdate = true;
     }.bind(this));
-    var geometry = new THREE.BoxBufferGeometry( opt.boxGeometry[0], opt.boxGeometry[1], opt.boxGeometry[2]);
-    var material = new THREE.MeshBasicMaterial({ map: texture });
-    cubemesh = new THREE.Mesh( geometry, material );
+    var cubeGeometry = new THREE.BoxBufferGeometry( opt.boxGeometry[0], opt.boxGeometry[1], opt.boxGeometry[2]);
+    var cubeMaterial = new THREE.MeshBasicMaterial({ map: cubeTexture });
+    var cubemesh = new THREE.Mesh( cubeGeometry, cubeMaterial );
     cubemesh.position.x = opt.position.x;
     cubemesh.position.y = opt.position.y;
     cubemesh.position.z = opt.position.z;
-    opt.scene.add( cubemesh );
-
     cubemesh.speed = new THREE.Vector3(0,0,opt.speed);
     cubemesh.name = 'cube-'+Math.random()+'-'+Math.random();
+    opt.scene.add( cubemesh );
     enemies.push(cubemesh);
 };
 
 
 var moveEnemies = function(){
     for(var i=0; i<enemies.length ; i++){
+        // Move
         enemies[i].position.x += enemies[i].speed.x;
         enemies[i].position.y += enemies[i].speed.y;
         enemies[i].position.z += enemies[i].speed.z;
     }
 };
+
 
 var removeEnemies = function(curScene){
     for(var i=0; i<enemies.length ; i++){
@@ -63,27 +61,32 @@ var removeEnemies = function(curScene){
 
 // rangeX = [-10000,+10000];
 // rangeY = [-5000,+5000];
-// interval
-var confGenerator;
-var createAsteroidGenerator = function(opt){
 
-    confGenerator = opt;
-    setInterval(function(){
+var generateAsteroids = function(opt){
 
-        var diffX = confGenerator.rangeX[1] - confGenerator.rangeX[0];
-        var diffY = confGenerator.rangeY[1] - confGenerator.rangeY[0];
+    var curParams;
+    var diffX = opt.rangeX[1] - opt.rangeX[0];
+    var diffY = opt.rangeY[1] - opt.rangeY[0];
 
-        /*
-        for(var i = 0; i<confGenerator.quantity; i++) {
+    // Create all cubes from levels
+    for(var i = 0; i<opt.levels[opt.curLevel].spheres.length; i++){
+        var posX = Math.random()*diffX + opt.rangeX[0];
+        var posY = Math.random()*diffY + opt.rangeY[0];
 
-        }*/
+        curParams = opt.levels[opt.curLevel].spheres[i];
+        curParams.scene = opt.scene;
+        curParams.position = {x:posX,y:posY,z:opt.z0};
+        createSphere(curParams);
+    }
 
-        var posX = Math.random()*diffX + confGenerator.rangeX[0];
-        var posY = Math.random()*diffY + confGenerator.rangeY[0];
-        // d : difuse
-        createCube({textureUrl:'img/planetmin/7d.jpg',scene:MovingScene,position:{x:posX,y:posY,z:confGenerator.z0},speed:500,boxGeometry:[2000,2000,2000]});
-        createSphere({bumpScale:1,mapUrl:'./img/planetmin/7d.jpg',bumpMapUrl:'./img/planetmin/7n.jpg',scene:MovingScene,position:{x:posX,y:posY,z:confGenerator.z0},speed:{x:0,y:0,z:300},sphereGeometry:[650,70,70]});
-        // createSphere({bumpScale:1,mapUrl:'./img/planetmin/6d.jpg',bumpMapUrl:'./img/planetmin/6n.jpg',scene:MovingScene,position:{x:1000,y:1000,z:confGenerator.z0},speed:{x:0,y:0,z:300},sphereGeometry:[400,32,32]});
-    }, opt.interval);
+    // Create all spheres
+    for(var j = 0; j<opt.levels[opt.curLevel].cubes.length; j++){
+        curParams = opt.levels[opt.curLevel].cubes[j];
+        var posX = Math.random()*diffX + opt.rangeX[0];
+        var posY = Math.random()*diffY + opt.rangeY[0];
+        curParams.scene = opt.scene;
+        curParams.position = {x:posX,y:posY,z:opt.z0};
+        createCube(curParams);
+    }
 };
 

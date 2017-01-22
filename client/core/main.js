@@ -8,6 +8,7 @@ var canvas,  ctx, overtext, overimg, OverSel = -1;
 var INTERSECTED,INTERSECSEL;
 // time managment
 var clock = new THREE.Clock();
+var curLevel = 0;
 
 var NOW;
 function Now() {
@@ -95,13 +96,12 @@ function init() {
     MovingScene.init();
     MovingScene.show();
 
-    createAsteroidGenerator({interval:1000,rangeX:[-10000,10000],rangeY:[-10000,10000],z0:-150000,z1:50});
     //SoundManager2
     Play('AN9');/*TOREMOVE*///Mute();
 }
 
 //!MAIN ENGINE LOOP!
-function animate() 
+function animate()
 {
     update();
     render();  
@@ -112,12 +112,28 @@ function animate()
 var UpdateNext = [];
 //limit the GUI refresh when nothing happen
 var refreshcounter = 0;
-function update()
-{
+var refreshSpeedCounter = 0;
+var speedGame = 35;
+var generatePosition = 'large';
+function update() {
     refreshcounter++;
+    refreshSpeedCounter++;
+
     if (refreshcounter>=30) { //GUI only draw every 0.5 sec
         refreshcounter = 0;
         if (GUI) GUI.Draw();
+    }
+
+    if (refreshSpeedCounter >= speedGame){
+        refreshSpeedCounter = 0;
+        if(generatePosition == 'middle'){
+            generatePosition = 'large';
+            generateAsteroids({rangeX:[-4000,4000],rangeY:[-3000,3000],z0:-200000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+        } else if(generatePosition === 'large'){
+            generatePosition = 'middle';
+            generateAsteroids({rangeX:[-45000,45000],rangeY:[-20000,20000],z0:-150000,z1:50,curLevel:curLevel,levels:levels,scene:MovingScene});
+        }
+
     }
 
     // execute stored delayed function
