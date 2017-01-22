@@ -93,7 +93,7 @@ MovingScene.init = function() {
                 if (Math.abs(mouse.y)>0.1) players[i].yVel += Math.max(Math.min(mouse.y*2, deltaSpeed), -deltaSpeed);
                 players[i].xVel = Math.max(Math.min(players[i].xVel, maxVelocity), -maxVelocity);//max speed
                 players[i].yVel = Math.max(Math.min(players[i].yVel, maxVelocity), -maxVelocity);
-                if (mouse.t && players[i].cD <= 0) {
+                if (mouse.t && players[i].cD <= 0 && !players[i].isDead) {
                     this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-100}, players[i].color));
                     players[i].cD = coolDown;
                 }
