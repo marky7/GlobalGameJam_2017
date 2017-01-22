@@ -218,9 +218,15 @@ function detectCollisions(){
             if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius, 2))){
                 console.log(" Player "+j+' est mort. name : '+players[j].ship.name);
                 // Supprimer le vaisseau du tableau TODO
+                players[j].ship.visible = false;
+                players[j].isDead = true;
+
+                break;
+
                 // Masquer le vaisseau TODO (visible:false)
             }
         }
+/*
         // Detecter les collision entre les missiles et les astéroides ICI afin de détruire les astéroides
         for(var k=0; k<missils.length; k++){
             // Calculer la distance entre les deux centres de gravités
@@ -232,8 +238,9 @@ function detectCollisions(){
                 // Supprimer les objets des tableaux TODO
                 // Supprimer les objets de la scene TODO
             }
-        }
+        }*/
     }
+    /*
     // Detecter collision entre les bonus et les vaisseaux
     for(var l=0; l<bonus.length; l++){
         for(var m=0; m<players.length; m++){
@@ -247,5 +254,5 @@ function detectCollisions(){
                 // Supprimer le Bonus de la scène TODO
             }
         }
-    }
+    }*/
 }
