@@ -170,12 +170,16 @@ var Fire = function (start, end, color) {
     var collision = function () {
         if (obj.position.z < end.z + amp && obj.position.z > end.z - amp)
             return (true);
-        /*if (obj.position.x > end.x - amp && obj.position.x < end.x + amp &&
-            obj.position.y > end.y - amp && obj.position.y < end.y + amp &&
-            obj.position.z > end.z - amp && obj.position.z < end.z + amp)
-            return (true);
-        else
-            return (false);*/
+        for (var i in enemies) {
+            if ((obj.position.x < enemies[i].position.x + enemies[i].bound.x && obj.position.x > enemies[i].position.x - enemies[i].bound.x) &&
+                (obj.position.y < enemies[i].position.y + enemies[i].bound.y && obj.position.y > enemies[i].position.y - enemies[i].bound.y) &&
+                (obj.position.z < enemies[i].position.z + enemies[i].bound.z && obj.position.z > enemies[i].position.z - enemies[i].bound.z)) {
+                MovingScene.remove(MovingScene.getObjectByName(enemies[i].name));
+                console.log('MICHAEL BAY');
+                return (true);
+            }
+        }
+        return (false);
     }
 };
 
