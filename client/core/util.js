@@ -163,12 +163,12 @@ function PointerClick (event) {
     // update the mouse variable
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-	if (GUI) { // && CheckMenuBox()if mouse in GUI then interact
-		event.preventDefault();
-		GUI.Over(event.clientX,event.clientY);
-	} else { // if mouse in 3D call raycast
-		GalaxyOver();
-	}
+	//if (GUI) { // && CheckMenuBox()if mouse in GUI then interact
+	//	event.preventDefault();
+	//	GUI.Over(event.clientX,event.clientY);
+	//} else { // if mouse in 3D call raycast
+	//	GalaxyOver();
+	//}
 }
 
 function PointerRelease (event) {
@@ -176,12 +176,27 @@ function PointerRelease (event) {
 	if (mouse.xt == event.clientX && mouse.yt == event.clientY) {
 		mouse.c = true;
 	}
-	if (GUI) {event.preventDefault();
-		GUI.Over(event.clientX,event.clientY);
-	} GalaxyOver();
+	//if (GUI) {event.preventDefault();
+	//	GUI.Over(event.clientX,event.clientY);
+	//} GalaxyOver();
     mouse.d = false;
 	mouse.c = false;
     mouse.t = false;
+}
+
+var simpleSpriteTxt = new THREE.ImageUtils.loadTexture( './img/star.png' );
+function getSimpleSprite(color,size) {
+	var focusMaterial = new THREE.SpriteMaterial(
+		{
+			map: simpleSpriteTxt,
+			//useScreenCoordinates: false,
+			color: color,
+			transparent: false,
+			blending: THREE.AdditiveBlending
+		});
+	var focusSprite = new THREE.Sprite( focusMaterial );
+	    focusSprite.scale.set(size, size, 1.0);
+	return focusSprite;
 }
 
 function CheckMenuBox() {

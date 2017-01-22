@@ -90,11 +90,11 @@ function init() {
     InitSystem();
     //ShowSystem();
 
-    Axoaya.init();
-    //Axoaya.show();
-
     MovingScene.init();
-    MovingScene.show();
+    //MovingScene.show();
+    Axoaya.init();
+    Axoaya.show();
+
 
     //SoundManager2
     Play('AN9');/*TOREMOVE*///Mute();

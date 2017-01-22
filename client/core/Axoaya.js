@@ -8,13 +8,15 @@ Axoaya.show = function() { if (!Axoaya.visible) {
     //camera control option for this scene
     controls.minDistance =  0.1;
     controls.maxDistance = 10000;
-    controls.userPanSpeed = 4;
+    controls.userPanSpeed = 0.01;
+    controls.enabled = false;
     //place the camera, focus center, then play 'spawn' animation
-    camera.position.set(0,0,15);
+    camera.position.set(0,0,1);
     controls.center.set(0,0,0);
-    controls.traveling(new THREE.Vector3(),10);
+    controls.traveling(new THREE.Vector3(),1);
     //once cam is ready, show the scene
     Axoaya.visible = true;
+    MovingScene.visible = true;
 }};
 
 Axoaya.init = function() {
@@ -23,7 +25,7 @@ Axoaya.init = function() {
     scene.add(Axoaya);
     var anchor = new THREE.Object3D();
     anchor.position.x = -110;
-    anchor.position.y = -0.1;
+    anchor.position.y = -1;
     Axoaya.add(anchor);
 
     //For each group of object you need inside your scene, create an empty array
@@ -107,11 +109,11 @@ Axoaya.init = function() {
     newstar.visible = false;
     anchor.add(newstar);
     //init position for dark start
-    anchor.rotation.y = -0.05;
+    anchor.rotation.y = -0.70;
     //Animation of your scene, must be called by main-update
     Axoaya.animate = function(delta) {Now();
-        anchor.rotation.y -= 0.2*delta;
-        if (anchor.rotation.y<-0.85) {
+        anchor.rotation.y -= 0.02*delta;
+        if (anchor.rotation.y<-0.76) {
             newstar.visible = true;
         }
         if (anchor.rotation.y<(-Math.PI*2-0.05)) {
@@ -137,7 +139,7 @@ Axoaya.init = function() {
     //matp.normalMap   = new THREE.TextureLoader().load('./img/planet/Alien-n.png');
     //matp.normalScale = 0;
     matp.bumpMap   	= new THREE.TextureLoader().load('./img/planetmin/43n.jpg');
-    matp.bumpScale 	= 1;
+    matp.bumpScale 	= 0.1;
     //matp.specularMap= new THREE.TextureLoader().load('./img/planet/'+active_planet[p].ptype+'N.jpg');
     //matp.specular  	= new THREE.Color(0x2f2f2f);
 
@@ -186,7 +188,7 @@ function ParticuleInit() {
     var values_color = new Float32Array(3000);
     var values_size = new Float32Array(1000);
     for (var p=0;p<1000;p++) {
-        asteroTabX[p] = Math.random()*4-2;
+        asteroTabX[p] = Math.random()*10-5;
         asteroTabY[p] = Math.random()*2-1;
         positions[p*3+0] = asteroTabX[p];
         positions[p*3+1] = asteroTabY[p];
@@ -210,7 +212,7 @@ function ParticuleMove() {
     for (var p=0;p<1000;p++) {
         newpositions[p*3+0] = asteroTabX[p];
         newpositions[p*3+1] = asteroTabY[p];
-        newpositions[p*3+2] = -((p*0.010-NOW*5)%10);
+        newpositions[p*3+2] = -((p*0.005-NOW*5)%5)-5;
     }
     Asteropart.geometry.removeAttribute( 'position' );
     Asteropart.geometry.addAttribute( 'position', new THREE.BufferAttribute( newpositions, 3 ) );
