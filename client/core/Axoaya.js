@@ -131,6 +131,10 @@ Axoaya.init = function() {
         //geometry.attributes.size.needsUpdate = true;
     };
 
+    Axoaya.reset = function() {
+        anchor.rotation.y = -0.06-Math.PI*2;
+    };
+
 
     var geop = new THREE.SphereBufferGeometry(50, 64, 64);//0000000
 
