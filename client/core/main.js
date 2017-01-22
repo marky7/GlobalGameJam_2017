@@ -129,10 +129,10 @@ function update() {
         refreshSpeedCounter = 0;
         if(generatePosition == 'middle'){
             generatePosition = 'large';
-            generateAsteroids({rangeX:[-2,2],rangeY:[-1,1],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-2,3],rangeY:[-1.5,1.5],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
         } else if(generatePosition === 'large'){
             generatePosition = 'middle';
-            generateAsteroids({rangeX:[-5,5],rangeY:[-2,2],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-4,8],rangeY:[-4,4],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
         }
     }
 
@@ -242,7 +242,7 @@ function detectCollisions(){
             var AB = Math.pow(bonus[l].position.x-players[m].ship.position.x, 2) + Math.pow(bonus[l].position.y - players[m].ship.position.y,2) + Math.pow(bonus[l].position.z-players[m].ship.position.z,2);
             if(bonus[l].children[1].geometry.parameters.radius && (AB<Math.pow(bonus[l].children[1].geometry.parameters.radius,2))){
                 //console.log(" Player "+m+' a reçu un Bonus. Bonus name : '+bonus[m].name);
-                score += 1000; // Give a score bonus to player
+                // score += 1000; // Give a score bonus to player
                 // Supprimer le Bonus du tableau TODO
                 // Supprimer le Bonus de la scène TODO
             }
