@@ -1,4 +1,5 @@
 var MovingScene = new THREE.Object3D();
+var players = [];
 
 MovingScene.show = function() { if (!MovingScene.visible) {
     HideAll();
@@ -33,11 +34,11 @@ MovingScene.init = function() {
     //scene.background = MovingScene.background;
 
     var coolDown = 10
-    var players = [
-        { up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
-        { up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
-        { up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
-        { up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 }
+    players = [
+        { color : 0x0000ff, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
+        { color : 0x00ff00, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
+        { color : 0xffff00, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
+        { color : 0xff0000, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 }
         ];
 
     var loader = new THREE.OBJLoader();
@@ -45,7 +46,7 @@ MovingScene.init = function() {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P0';
         obj.scale.set(0.005,0.005,0.005);
-        addGuidance(obj,0x0000ff);
+        addGuidance(obj,players[0].color);
         players[0].ship = obj;
         MovingScene.add(obj);
     });
@@ -53,7 +54,7 @@ MovingScene.init = function() {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P1';
         obj.scale.set(0.005,0.005,0.005);
-        addGuidance(obj,0x00ff00);
+        addGuidance(obj,players[1].color);
         players[1].ship = obj;
         MovingScene.add(obj);
     });
@@ -61,7 +62,7 @@ MovingScene.init = function() {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P2';
         obj.scale.set(0.005,0.005,0.005);
-        addGuidance(obj,0xffff00);
+        addGuidance(obj,players[2].color);
         players[2].ship = obj;
         MovingScene.add(obj);
     });
@@ -69,7 +70,7 @@ MovingScene.init = function() {
         obj.rotation.y = -90 / 180 * Math.PI;
         obj.name = 'P3';
         obj.scale.set(0.005,0.005,0.005);
-        addGuidance(obj,0xff0000);
+        addGuidance(obj,players[3].color);
         players[3].ship = obj;
         MovingScene.add(obj);
     });
@@ -83,7 +84,7 @@ MovingScene.init = function() {
                 if (players[i].down)    players[i].yVel = Math.max(players[i].yVel - deltaSpeed, -maxVelocity);
                 if (players[i].right)   players[i].xVel = Math.min(players[i].xVel + deltaSpeed, maxVelocity);
                 if (players[i].action && players[i].cD <= 0) {
-                    this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-1000}));
+                    this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-100}, players[i].color));
                     players[i].cD = coolDown;
                 }
             }
@@ -93,7 +94,7 @@ MovingScene.init = function() {
                 players[i].xVel = Math.max(Math.min(players[i].xVel, maxVelocity), -maxVelocity);//max speed
                 players[i].yVel = Math.max(Math.min(players[i].yVel, maxVelocity), -maxVelocity);
                 if (mouse.t && players[i].cD <= 0) {
-                    this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-1000}));
+                    this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-100}, players[i].color));
                     players[i].cD = coolDown;
                 }
             }
@@ -137,17 +138,17 @@ MovingScene.init = function() {
     }
 };
 
-
-var Fire = function (start, end) {
-    var newSphere= new THREE.MeshPhongMaterial();
-    newSphere.map           = new THREE.TextureLoader().load('img/planetmin/30d.jpg');
-    newSphere.bumpMap      = new THREE.TextureLoader().load('img/planetmin/30n.jpg');
-    newSphere.bumpScale    = 1;
-    var obj = new THREE.Mesh(new THREE.CubeGeometry(3, 3, 3), newSphere);
-    //var obj = new THREE.Mesh(new THREE.SphereGeometry(3, 3, 3), new THREE.MeshNormalMaterial());
+var fireround = 0;
+var Fire = function (start, end, color) {
+    //var newSphere= new THREE.MeshPhongMaterial();
+    //newSphere.map           = new THREE.TextureLoader().load('img/planetmin/30d.jpg');
+    //newSphere.bumpMap      = new THREE.TextureLoader().load('img/planetmin/30n.jpg');
+    //newSphere.bumpScale    = 1;
+    //var obj = new THREE.Mesh(new THREE.CubeGeometry(3, 3, 3), newSphere);
+    var obj = new THREE.Object3D().add(getSimpleSprite(color, 1));
     var speed = 0.01;
     this.active = true;
-    this.name = 'fire' + Math.random();
+    this.name = 'fire' + fireround;    fireround++;
     var amp = 10;
 
     obj.name = this.name;

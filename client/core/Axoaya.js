@@ -9,7 +9,7 @@ Axoaya.show = function() { if (!Axoaya.visible) {
     controls.minDistance =  0.1;
     controls.maxDistance = 10000;
     controls.userPanSpeed = 0.01;
-    //controls.enabled = false;
+    controls.enabled = false;
     //place the camera, focus center, then play 'spawn' animation
     camera.position.set(0,0,1);
     controls.center.set(0,0,0);
@@ -139,7 +139,7 @@ Axoaya.init = function() {
     //matp.normalMap   = new THREE.TextureLoader().load('./img/planet/Alien-n.png');
     //matp.normalScale = 0;
     matp.bumpMap   	= new THREE.TextureLoader().load('./img/planetmin/43n.jpg');
-    matp.bumpScale 	= 1;
+    matp.bumpScale 	= 0.1;
     //matp.specularMap= new THREE.TextureLoader().load('./img/planet/'+active_planet[p].ptype+'N.jpg');
     //matp.specular  	= new THREE.Color(0x2f2f2f);
 
