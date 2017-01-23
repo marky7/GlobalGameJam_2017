@@ -135,6 +135,10 @@ Axoaya.init = function() {
         anchor.rotation.y = -0.06-Math.PI*2;
     };
 
+    //hide light in the planet to show rings
+    var clight = new THREE.PointLight(0xdddddd);
+    clight.position.y =  49;
+    anchor.add(clight);
 
     var geop = new THREE.SphereBufferGeometry(50, 64, 64);//0000000
 

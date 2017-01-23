@@ -120,9 +120,9 @@ function update() {
     refreshcounter++;
     refreshSpeedCounter++;
 
-    if (refreshcounter>=30) { //GUI only draw every 0.5 sec
+    if (refreshcounter>=60) { //refill ammunition every seconds
         refreshcounter = 0;
-        if (GUI) GUI.Draw();
+        MovingScene.recharge();
     }
 
     if (refreshSpeedCounter >= speedGame){
@@ -214,11 +214,12 @@ function detectCollisions(){
         var curEnemyKilled = false;
 
         // Detecter collision entre astéroides et vaisseaux
-        for(var j=0; j<players.length; j++){
+        for(var j=0; j<players.length; j++){//if (i==0 && j==0) console.log((Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2)),Math.pow(enemies[i].geometry.parameters.radius, 2));
+            if (enemies[i].position.z>-0.2 && !players[j].isDead) {
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
-            var AB = Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2)+Math.pow(enemies[i].position.z-players[j].ship.position.z,2);
-            if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius, 2))){
+            var AB = Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2);
+            if(enemies[i].geometry.parameters.radius && AB<(Math.pow(enemies[i].geometry.parameters.radius, 2)+0.1)){
                 console.log(" Player "+j+' est mort. name : '+players[j].ship.name);
                 // Supprimer le vaisseau du tableau TODO
                 players[j].ship.visible = false;
@@ -226,7 +227,7 @@ function detectCollisions(){
                 if (players[0].isDead && players[1].isDead && players[2].isDead && players[3].isDead)
                     GAMEOVER();
                 break;
-            }
+            }}
         }
 
 
@@ -253,6 +254,7 @@ function detectCollisions(){
             MovingScene.remove(MovingScene.getObjectByName(enemies[i].name));
             enemies.splice(i,1);
             i--;
+            curEnemyKilled = false;
         }
 
     }

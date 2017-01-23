@@ -35,10 +35,10 @@ MovingScene.init = function() {
 
     var coolDown = 10;
     players = [
-        { color : 0x0000ff, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
-        { color : 0x00ff00, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
-        { color : 0xffff00, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 },
-        { color : 0xff0000, up: false, left: false, down: false, right: false, action: false, cD: coolDown, xVel: 0, yVel: 0 }
+        { color : 0x0000ff, up: false, left: false, down: false, right: false, action: false, cD: coolDown, ammo: 5, xVel: 0, yVel: 0 },
+        { color : 0x00ff00, up: false, left: false, down: false, right: false, action: false, cD: coolDown, ammo: 5, xVel: 0, yVel: 0 },
+        { color : 0xffff00, up: false, left: false, down: false, right: false, action: false, cD: coolDown, ammo: 5, xVel: 0, yVel: 0 },
+        { color : 0xff0000, up: false, left: false, down: false, right: false, action: false, cD: coolDown, ammo: 5, xVel: 0, yVel: 0 }
         ];
 
     var loader = new THREE.OBJLoader();
@@ -83,21 +83,13 @@ MovingScene.init = function() {
                 if (players[i].left)    players[i].xVel = Math.max(players[i].xVel - deltaSpeed, -maxVelocity);
                 if (players[i].down)    players[i].yVel = Math.max(players[i].yVel - deltaSpeed, -maxVelocity);
                 if (players[i].right)   players[i].xVel = Math.min(players[i].xVel + deltaSpeed, maxVelocity);
-                if (players[i].action && players[i].cD <= 0) {
-                    this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-100}, players[i].color));
-                    players[i].cD = coolDown;
-                }
-            }
-            else { // Create safe spot for slow down           Add acceleration
+            } else { // Create safe spot for slow down           Add acceleration
                 if (Math.abs(mouse.x)>0.1) players[i].xVel += Math.max(Math.min(mouse.x*2, deltaSpeed), -deltaSpeed);
                 if (Math.abs(mouse.y)>0.1) players[i].yVel += Math.max(Math.min(mouse.y*2, deltaSpeed), -deltaSpeed);
                 players[i].xVel = Math.max(Math.min(players[i].xVel, maxVelocity), -maxVelocity);//max speed
                 players[i].yVel = Math.max(Math.min(players[i].yVel, maxVelocity), -maxVelocity);
-                if (mouse.t && players[i].cD <= 0 && !players[i].isDead) {
-                    this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-100}, players[i].color));
-                    players[i].cD = coolDown;
-                }
             }
+            MovingScene.playerFire(i);
 
             if (players[i].ship) {
                 if (players[i].ship.position.x >= xBoundBox) {// && players[i].xVel>-maxVelocity/2
@@ -135,6 +127,21 @@ MovingScene.init = function() {
     var maxVelocity = 0.115, deltaSpeed = 0.001, xBoundBox = 1.2, yBoundBox = 0.8;
     MovingScene.input = function(key, player, ipt) {
         players[player][ipt] = key;
+    }
+    MovingScene.playerFire = function(i) { // i = player        
+        if (players[i].action && players[i].cD <= 0 && !players[i].isDead && players[i].ammo>0) {
+            this.fires.push(new Fire(players[i].ship.position, {x:0,y:0,z:-100}, players[i].color));
+            players[i].ammo--;
+            players[i].cD = coolDown;
+        }
+    }
+    MovingScene.recharge = function() { // i = player 
+        Tuto();
+        for (var i = 0; i < 4; i++) {       
+            if (players[i].ammo<5) {
+                players[i].ammo++;
+            }
+        }
     }
 };
 

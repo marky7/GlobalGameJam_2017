@@ -169,6 +169,7 @@ function PointerClick (event) {
 	//} else { // if mouse in 3D call raycast
 	//	GalaxyOver();
 	//}
+	MovingScene.input(true, 3, 'action');
 }
 
 function PointerRelease (event) {
@@ -182,6 +183,7 @@ function PointerRelease (event) {
     mouse.d = false;
 	mouse.c = false;
     mouse.t = false;
+    MovingScene.input(false, 3, 'action');
 }
 
 var simpleSpriteTxt = new THREE.ImageUtils.loadTexture( './img/star.png' );
