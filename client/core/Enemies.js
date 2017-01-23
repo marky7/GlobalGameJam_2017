@@ -55,10 +55,9 @@ var moveEnemies = function(){
 };
 
 
-var removeEnemies = function(curScene){
+var removeEnemies = function(curScene,force){
     for(var i=0; i<enemies.length ; i++){
-
-        if(enemies[i].position.z >= 2){
+        if(enemies[i].position.z >= 2 || force){
             curScene.remove(curScene.getObjectByName(enemies[i].name));
             enemies.splice(i,1);
             i--;
