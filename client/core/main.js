@@ -206,8 +206,10 @@ function shipCollision(){
     }
 }
 
-
+var detedcted = false;
 function detectCollisions(){
+    var curEnemyKilled = false;
+
     // Detecter les collisions entre Les enemies et les vaisseaux afin de détruire les vaisseaux
     for(var i=0; i<enemies.length; i++){
         // Detecter collision entre astéroides et vaisseaux
@@ -215,7 +217,7 @@ function detectCollisions(){
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
             var AB = Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2)+Math.pow(enemies[i].position.z-players[j].ship.position.z,2);
-            if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius, 2))){
+            if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius+50, 2))){
                 console.log(" Player "+j+' est mort. name : '+players[j].ship.name);
                 // Supprimer le vaisseau du tableau TODO
                 players[j].ship.visible = false;
@@ -223,25 +225,37 @@ function detectCollisions(){
                 if (players[0].isDead && players[1].isDead && players[2].isDead && players[3].isDead)
                     GAMEOVER();
                 break;
-
-                // Masquer le vaisseau TODO (visible:false)
             }
         }
-/*
+
+
         // Detecter les collision entre les missiles et les astéroides ICI afin de détruire les astéroides
         for(var k=0; k<missils.length; k++){
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
             var AB = Math.pow(enemies[i].position.x - missils[k].position.x, 2) + Math.pow(enemies[i].position.y - missils[k].position.y,2) + Math.pow(enemies[i].position.z-missils[k].position.z,2);
+
             if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius, 2))){
-                console.log(" Ennemi "+i+' est mort. name : '+enemies[i].name);
-                console.log(" Missil "+k+' est detruit. name : '+missils[k].name);
+
+                // console.log(" Ennemi "+i+' est mort. name : '+enemies[i].name);
+                // console.log(" Missil "+k+' est detruit. name : '+missils[k].name);
                 // Supprimer les objets des tableaux TODO
+                MovingScene.remove(MovingScene.getObjectByName(missils[k].name));
+                missils.splice(k,1);
+                k--;
                 // Supprimer les objets de la scene TODO
+                curEnemyKilled = true;
+                break;
             }
-        }*/
+        }
+        if(curEnemyKilled){
+            MovingScene.remove(MovingScene.getObjectByName(enemies[i].name));
+            enemies.splice(i,1);
+            i--;
+        }
+
     }
-    /*
+/*
     // Detecter collision entre les bonus et les vaisseaux
     for(var l=0; l<bonus.length; l++){
         for(var m=0; m<players.length; m++){
