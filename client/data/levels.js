@@ -10,8 +10,8 @@ levelsMat[1].map  = new THREE.TextureLoader().load('./img/planetmin/18d.jpg');
 levelsMat[1].bumpMap = new THREE.TextureLoader().load('./img/planetmin/18n.jpg');
 levelsMat[1].bumpScale = 0.001;
 levelsMat[2] = new THREE.MeshLambertMaterial();
-levelsMat[2].map  = new THREE.TextureLoader().load('./img/planetmin/43d.jpg');
-levelsMat[2].bumpMap = new THREE.TextureLoader().load('./img/planetmin/43n.jpg');
+levelsMat[2].map  = new THREE.TextureLoader().load('./img/planetmin/25d.jpg');
+levelsMat[2].bumpMap = new THREE.TextureLoader().load('./img/planetmin/25n.jpg');
 levelsMat[2].bumpScale = 0.001;
 
 levelsMat[3] = new THREE.MeshLambertMaterial();

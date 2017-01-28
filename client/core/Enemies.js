@@ -16,8 +16,11 @@ var createSphere = function(opt){
     sphereMesh.position.x = opt.position.x;
     sphereMesh.position.y = opt.position.y;
     sphereMesh.position.z = opt.position.z;
+    sphereMesh.rotation.x = Math.random()*Math.PI*2;
+    sphereMesh.rotation.y = Math.random()*Math.PI*2;
     sphereMesh.speed = new THREE.Vector3(0,0,opt.speed);
     sphereMesh.name = 'sphere-'+randomNumber1+'-'+Math.random();
+    //sphereMesh.visible = false;
     opt.scene.add(sphereMesh);
     enemies.push(sphereMesh);
 };
@@ -58,7 +61,10 @@ var moveEnemies = function(){
 var removeEnemies = function(curScene,force){
     for(var i=0; i<enemies.length ; i++){
         if(enemies[i].position.z >= 2 || force){
-            curScene.remove(curScene.getObjectByName(enemies[i].name));
+            var obj = curScene.getObjectByName(enemies[i].name);
+            obj.material.dispose();
+            obj.geometry.dispose();
+            curScene.remove(obj);
             enemies.splice(i,1);
             i--;
         }
@@ -74,7 +80,7 @@ var generateAsteroids = function(opt){
     var diffX = opt.rangeX[1] - opt.rangeX[0];
     var diffY = opt.rangeY[1] - opt.rangeY[0];
 
-    // Create all Cubes
+    // Create all Spheres
     for(var i = 0; i<opt.levels[opt.curLevel].spheres.length; i++){
         var posX = Math.random()*diffX + opt.rangeX[0];
         var posY = Math.random()*diffY + opt.rangeY[0];
@@ -85,24 +91,24 @@ var generateAsteroids = function(opt){
         createSphere(curParams);
     }
 
-    // Create all Spheres
-    for(var j = 0; j<opt.levels[opt.curLevel].cubes.length; j++){
-        curParams = opt.levels[opt.curLevel].cubes[j];
-        var posX = Math.random()*diffX + opt.rangeX[0];
-        var posY = Math.random()*diffY + opt.rangeY[0];
-        curParams.scene = opt.scene;
-        curParams.position = {x:posX,y:posY,z:opt.z0};
-        createCube(curParams);
-    }
+    // Create all Cubes
+    //for(var j = 0; j<opt.levels[opt.curLevel].cubes.length; j++){
+    //    curParams = opt.levels[opt.curLevel].cubes[j];
+    //    var posX = Math.random()*diffX + opt.rangeX[0];
+    //    var posY = Math.random()*diffY + opt.rangeY[0];
+    //    curParams.scene = opt.scene;
+    //    curParams.position = {x:posX,y:posY,z:opt.z0};
+    //    createCube(curParams);
+    //}
 
     // Create all Bonus
-    for(var j = 0; j<opt.levels[opt.curLevel].bonus.length; j++){
-        curParams = opt.levels[opt.curLevel].bonus[j];
-        var posX = Math.random()*diffX + opt.rangeX[0];
-        var posY = Math.random()*diffY + opt.rangeY[0];
-        curParams.scene = opt.scene;
-        curParams.position = {x:posX,y:posY,z:opt.z0};
-        createBonus(curParams);
-    }
+    //for(var j = 0; j<opt.levels[opt.curLevel].bonus.length; j++){
+    //    curParams = opt.levels[opt.curLevel].bonus[j];
+    //    var posX = Math.random()*diffX + opt.rangeX[0];
+    //    var posY = Math.random()*diffY + opt.rangeY[0];
+    //    curParams.scene = opt.scene;
+    //    curParams.position = {x:posX,y:posY,z:opt.z0};
+    //    createBonus(curParams);
+    //}
 };
 
