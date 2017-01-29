@@ -33,32 +33,34 @@ levelsMat[6].bumpScale = 0.001;
 
 var levelSize = 1/50;
 levels[0] = {
+    speed:0.15,
     cubes : [
-        {textureUrl:'img/planetmin/51d.jpg',speed:1,boxGeometry:[55,55,100]}
+        {textureUrl:'img/planetmin/51d.jpg',boxGeometry:[55,55,100]}
     ],
     spheres : [
-        {bumpScale:1,mat:levelsMat[0],speed:1,sphereGeometry:[25*levelSize,20,20]},
-        {ratioMT:0.9,bumpScale:1,mat:levelsMat[1],speed:1,sphereGeometry:[20*levelSize,20,20]},
-        {ratioLT:0.3,bumpScale:1,mat:levelsMat[1],speed:1,sphereGeometry:[10*levelSize,20,20]},
-        {ratioLT:0.1,bumpScale:1,mat:levelsMat[2],speed:1,sphereGeometry:[20*levelSize,20,20]}
+        {bumpScale:1,mat:levelsMat[0],sphereGeometry:[25*levelSize,20,20]},
+        {ratioMT:0.9,bumpScale:1,mat:levelsMat[1],sphereGeometry:[20*levelSize,20,20]},
+        {ratioLT:0.3,bumpScale:1,mat:levelsMat[1],sphereGeometry:[10*levelSize,20,20]},
+        {ratioLT:0.1,bumpScale:1,mat:levelsMat[2],sphereGeometry:[20*levelSize,20,20]}
     ],bonus : [
-        {ratioLT:0.1,speed:0.7,meshPhongColor:'0xffffff',meshBasicColor:'0xFFBB00',height:0.14,type:2},
-        {ratioMT:0.85,speed:0.7,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:0.22,type:1}
+        {ratioLT:0.1,meshPhongColor:'0xffffff',meshBasicColor:'0xFFBB00',height:0.14,type:2},
+        {ratioMT:0.85,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:0.22,type:1}
     ]
 };
 
 levels[1] = {
+    speed:0.18,
     cubes : [
-        {ratioLT:0.5,textureUrl:'img/planetmin/18d.jpg',speed:1,boxGeometry:[55,55,300]}
+        {ratioLT:0.5,textureUrl:'img/planetmin/18d.jpg',boxGeometry:[55,55,300]}
     ],
     spheres : [
-        {ratioLT:1,bumpScale:1,mat:levelsMat[3],speed:1,sphereGeometry:[20*levelSize,20,20]},
-        {ratioMT:0.9,bumpScale:1,mat:levelsMat[4],speed:1,sphereGeometry:[40*levelSize,20,20]},
-        {ratioLT:0.001,bumpScale:1,mat:levelsMat[0],speed:1,sphereGeometry:[50*levelSize,20,20]},
-        {bumpScale:1,mat:levelsMat[0],speed:1,sphereGeometry:[40*levelSize,20,20]},
-        {ratioLT:0.02,bumpScale:1,mat:levelsMat[5],speed:1,sphereGeometry:[10*levelSize,20,20]}
+        {ratioLT:1,bumpScale:1,mat:levelsMat[3],sphereGeometry:[20*levelSize,20,20]},
+        {ratioMT:0.9,bumpScale:1,mat:levelsMat[4],sphereGeometry:[40*levelSize,20,20]},
+        {ratioLT:0.001,bumpScale:1,mat:levelsMat[0],sphereGeometry:[50*levelSize,20,20]},
+        {bumpScale:1,mat:levelsMat[0],sphereGeometry:[40*levelSize,20,20]},
+        {ratioLT:0.02,bumpScale:1,mat:levelsMat[5],sphereGeometry:[10*levelSize,20,20]}
     ],bonus : [
-        {randomLT:0.06,speed:1,meshPhongColor:'#ffff00',meshBasicColor:'#FFDD00',height:0.17,type:2},
-        {ratioMT:0.97,speed:1,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:0.22,type:1}
+        {randomLT:0.06,meshPhongColor:'#ffff00',meshBasicColor:'#FFDD00',height:0.17,type:2},
+        {ratioMT:0.97,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:0.22,type:1}
     ]
 };

@@ -24,13 +24,12 @@ var createBonus = function(opt) {
     bonus.push(bonus3);
 };
 
-var bonusSpeedFactor = 0.2;
 var moveBonus = function(){
     for(var i=0; i<bonus.length ; i++){
         // Move
-        bonus[i].position.x += bonus[i].speed.x*bonusSpeedFactor;
-        bonus[i].position.y += bonus[i].speed.y*bonusSpeedFactor;
-        bonus[i].position.z += bonus[i].speed.z*bonusSpeedFactor;
+        bonus[i].position.x += bonus[i].speed.x;
+        bonus[i].position.y += bonus[i].speed.y;
+        bonus[i].position.z += bonus[i].speed.z;
     }
 };
 

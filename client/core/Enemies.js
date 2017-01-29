@@ -49,13 +49,12 @@ var createCube = function(opt){
     enemies.push(cubemesh);
 };
 
-var asteroSpeedFactor = 0.15;
 var moveEnemies = function(){
     for(var i=0; i<enemies.length ; i++){
         // Move
-        enemies[i].position.x += enemies[i].speed.x*asteroSpeedFactor;
-        enemies[i].position.y += enemies[i].speed.y*asteroSpeedFactor;
-        enemies[i].position.z += enemies[i].speed.z*asteroSpeedFactor;
+        enemies[i].position.x += enemies[i].speed.x;
+        enemies[i].position.y += enemies[i].speed.y;
+        enemies[i].position.z += enemies[i].speed.z;
     }
 };
 
@@ -91,6 +90,7 @@ var generateAsteroids = function(opt){
         curParams = opt.levels[opt.curLevel].spheres[i];
         curParams.scene = opt.scene;
         curParams.position = {x:posX,y:posY,z:opt.z0};
+        curParams.speed = opt.levels[opt.curLevel].speed;
         createSphere(curParams);
     }
 
@@ -112,6 +112,7 @@ var generateAsteroids = function(opt){
 
         curParams.scene = opt.scene;
         curParams.position = {x:posX,y:posY,z:opt.z0};
+        curParams.speed = opt.levels[opt.curLevel].speed;
         createBonus(curParams);
     }
 };
