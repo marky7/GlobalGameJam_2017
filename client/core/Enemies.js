@@ -102,13 +102,14 @@ var generateAsteroids = function(opt){
     //}
 
     // Create all Bonus
-    //for(var j = 0; j<opt.levels[opt.curLevel].bonus.length; j++){
-    //    curParams = opt.levels[opt.curLevel].bonus[j];
-    //    var posX = Math.random()*diffX + opt.rangeX[0];
-    //    var posY = Math.random()*diffY + opt.rangeY[0];
-    //    curParams.scene = opt.scene;
-    //    curParams.position = {x:posX,y:posY,z:opt.z0};
-    //    createBonus(curParams);
-    //}
+    for(var j = 0; j<opt.levels[opt.curLevel].bonus.length; j++){
+        curParams = opt.levels[opt.curLevel].bonus[j];
+        var posX = Math.random()*diffX + opt.rangeX[0];
+        var posY = Math.random()*diffY + opt.rangeY[0];
+
+        curParams.scene = opt.scene;
+        curParams.position = {x:posX,y:posY,z:opt.z0};
+        createBonus(curParams);
+    }
 };
 

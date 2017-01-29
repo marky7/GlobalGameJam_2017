@@ -132,7 +132,7 @@ function update() {
             generateAsteroids({rangeX:[-2,2],rangeY:[-1.5,1.5],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
         } else if(generatePosition === 'large'){
             generatePosition = 'middle';
-            generateAsteroids({rangeX:[-4,4],rangeY:[-3,3],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
+            generateAsteroids({rangeX:[-6,6],rangeY:[-6,6],z0:-100,z1:2,curLevel:curLevel,levels:levels,scene:MovingScene});
         }
     }
 

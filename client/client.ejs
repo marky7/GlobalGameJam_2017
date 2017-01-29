@@ -51,8 +51,9 @@
 	<h1>GAME OVER</h1><br>
 	<button style="width:200px" onclick="RESTART()"><h3>Try again</h3></button>
 </div>
-<div id="imgstart" style="z-index: 100000000; visibility:visible; position: absolute; width:400px; height:600px; left:50%; top:50%; margin-left:-200px; margin-top:-300px;">
-	<img src="img/image.png" alt="Mountain View" style="width:100%;height:100%;">
+
+<div id="imgstart" style="z-index: 1000000; visibility:visible; position: absolute; width:100%; height:60%; top:20%;">
+	<img src="img/image.png" alt="Mountain View" style="width:auto;height:100%;">
 </div>
 
 <!--script>var socket;
@@ -89,7 +90,7 @@
 <script src="lib/stats.js"></script> 
 <script src="lib/THREExFS.js"></script> 
 <script src="lib/THREExWR.js"></script> 
-</div> 
+</div>
  
 <div> <!--GUI FILES--> 
 <script src="gui/gui.js"></script> 
@@ -101,7 +102,7 @@
  
 
 <div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
-<div style="style:absolute; display:block; z-index:99999; backgound-color:#332255;width:100%;height:100%;text-align:center;">YOU LOOSE</div>
+<div style="style:absolute; display:none; z-index:99999; backgound-color:#332255;width:100%;height:100%;text-align:center;">YOU LOOSE</div>
 <script>window.onload = function(e) {init();animate();}</script>
 </body>
 </html>

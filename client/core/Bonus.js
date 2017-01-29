@@ -21,19 +21,20 @@ var createBonus = function(opt) {
     bonus.push(bonus3);
 };
 
+var bonusSpeedFactor = 0.2;
 var moveBonus = function(){
     for(var i=0; i<bonus.length ; i++){
         // Move
-        bonus[i].position.x += bonus[i].speed.x;
-        bonus[i].position.y += bonus[i].speed.y;
-        bonus[i].position.z += bonus[i].speed.z;
+        bonus[i].position.x += bonus[i].speed.x*bonusSpeedFactor;
+        bonus[i].position.y += bonus[i].speed.y*bonusSpeedFactor;
+        bonus[i].position.z += bonus[i].speed.z*bonusSpeedFactor;
     }
 };
 
 var removeBonus = function(curScene){
     for(var i=0; i<bonus.length ; i++){
 
-        if(bonus[i].position.z >= -100){
+        if(bonus[i].position.z >= 2){
             curScene.remove(curScene.getObjectByName(bonus[i].name));
             bonus.splice(i,1);
             i--;
