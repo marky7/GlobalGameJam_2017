@@ -15,8 +15,12 @@
 	function Tuto() {
 		document.getElementById('imgstart').style.visibility = 'hidden';
 	}
-	function chill() { Axoaya.reset(); RESPAWN(); Play(); curLevel=0; speedGame = 40; RESTART();}
-	function psych() { Axoaya.reset(); RESPAWN(); Play('AN5'); curLevel=1; speedGame = 30; RESTART();}
+	function chill() { Axoaya.reset(); Play(); curLevel=0; speedGame = 40; RESTART();}
+	function psych() { Axoaya.reset(); Play('AN5'); curLevel=1; speedGame = 30; RESTART();}
+	function unFocus() {
+		document.getElementById('level1').blur();
+		document.getElementById('level2').blur();
+	}
 	function mute() { Stop(); }
 	function GAMEOVER() {
 		gameOver = true;
@@ -28,23 +32,25 @@
 		document.getElementById('imgstart').style.visibility = 'visible';
 		RESPAWN();
 		setTimeout(Tuto,5000);
-		chill();
+		//chill();
 	}
 	function RESPAWN() {
 		gameOver = false;
 		score=0;
+		unFocus();
 		players[0].isDead = false; players[0].ship.visible = true;
 		players[1].isDead = false; players[1].ship.visible = true;
 		players[2].isDead = false; players[2].ship.visible = true;
 		players[3].isDead = false; players[3].ship.visible = true;
 		removeEnemies(MovingScene,true);
+		removeBonus(MovingScene,true);
 	}
 	setTimeout(Tuto,5000);
 </script>
 
 <div style="z-index: 100000000; position: absolute; width:100%;">
-	<button style="float:left" onclick="chill()">Chill</button>
-	<button style="float:left" onclick="psych()">Psych</button>
+	<button id="level1" style="float:left" onclick="chill()">Chill</button>
+	<button id="level2" style="float:left" onclick="psych()">Psych</button>
 	<!--<button onclick="hardc()">HardC</button>-->
 	<button style="float:left" onclick="mute()">Mute</button>
 	<div  style="font-size:1.7em;position:absolute; right:5px;" id="score"></div>

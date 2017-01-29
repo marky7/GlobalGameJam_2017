@@ -35,7 +35,7 @@ Axoaya.init = function() {
     Axoaya.over = [];
 
     //bring the light to the full scene
-    Axoaya.alight = new THREE.AmbientLight(0x222222);
+    Axoaya.alight = new THREE.AmbientLight(0x444444);
     Axoaya.add(Axoaya.alight);
 
     //anchor.add(nebula);

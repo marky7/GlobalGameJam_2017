@@ -33,10 +33,10 @@ var moveBonus = function(){
     }
 };
 
-var removeBonus = function(curScene){
+var removeBonus = function(curScene,force){
     for(var i=0; i<bonus.length ; i++){
 
-        if(bonus[i].position.z >= 2){
+        if(bonus[i].position.z >= 2 || force){
             bonus[i].active = false;
             curScene.remove(curScene.getObjectByName(bonus[i].name));
             bonus.splice(i,1);
