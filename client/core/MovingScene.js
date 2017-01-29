@@ -146,7 +146,6 @@ MovingScene.init = function() {
 };
 
 var fireround = 0;
-var missils = [];
 var Fire = function (start, end, color) {
     //var newSphere= new THREE.MeshPhongMaterial();
     //newSphere.map           = new THREE.TextureLoader().load('img/planetmin/30d.jpg');
@@ -163,8 +162,23 @@ var Fire = function (start, end, color) {
     obj.position.x = start.x;
     obj.position.y = start.y;
     obj.position.z = start.z;
-    missils.push(obj);
     MovingScene.add(obj);
+
+    this.getX = function () {
+        return obj.position.x;
+    };
+
+    this.getY = function () {
+        return obj.position.y;
+    };
+
+    this.getZ = function () {
+        return obj.position.z;
+    };
+
+    this.getRadius = function () {
+        return 0;
+    };
 
     this.animate = function () {
         obj.position.x += speed * end.x;
@@ -179,15 +193,6 @@ var Fire = function (start, end, color) {
     var collision = function () {
         if (obj.position.z < end.z + amp && obj.position.z > end.z - amp)
             return (true);
-        //for (var i in enemies) {
-        //    if ((obj.position.x < enemies[i].position.x + enemies[i].bound.x && obj.position.x > enemies[i].position.x - enemies[i].bound.x) &&
-        //        (obj.position.y < enemies[i].position.y + enemies[i].bound.y && obj.position.y > enemies[i].position.y - enemies[i].bound.y) &&
-        //        (obj.position.z < enemies[i].position.z + enemies[i].bound.z && obj.position.z > enemies[i].position.z - enemies[i].bound.z)) {
-        //        MovingScene.remove(MovingScene.getObjectByName(enemies[i].name));
-        //        console.log('MICHAEL BAY');
-        //        return (true);
-        //    }
-        //}
         return (false);
     }
 };

@@ -159,9 +159,8 @@ function update() {
     moveEnemies();
     removeBonus(MovingScene);
     moveBonus();
-    //shipCollision();
-    detectCollisions();
 
+    detectCollisions();
     updateScore();
     //refresh cam control and fps display
     controls.update();
@@ -206,8 +205,8 @@ function shipCollision(){
     }
 }
 
-var detedcted = false;
 function detectCollisions(){
+    var fires = MovingScene.fires;
 
     // Detecter les collisions entre Les enemies et les vaisseaux afin de détruire les vaisseaux
     for(var i=0; i<enemies.length; i++){
@@ -230,22 +229,21 @@ function detectCollisions(){
             }}
         }
 
-
         // Detecter les collision entre les missiles et les astéroides ICI afin de détruire les astéroides
-        for(var k=0; k<missils.length; k++){
+        for(var k=0; k<fires.length; k++){
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
-            var AB = Math.pow(enemies[i].position.x - missils[k].position.x, 2) + Math.pow(enemies[i].position.y - missils[k].position.y,2) + Math.pow(enemies[i].position.z-missils[k].position.z,2);
+            var AB = Math.pow(enemies[i].position.x - fires[k].getX(), 2) + Math.pow(enemies[i].position.y - fires[k].getY(),2) + Math.pow(enemies[i].position.z-fires[k].getZ(),2);
 
-            if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius, 2))){
+            if(enemies[i].geometry.parameters.radius && (AB<Math.pow(enemies[i].geometry.parameters.radius+fires[k].getRadius(), 2))){
 
                 // console.log(" Ennemi "+i+' est mort. name : '+enemies[i].name);
-                // console.log(" Missil "+k+' est detruit. name : '+missils[k].name);
+                // console.log(" Missil "+k+' est detruit. name : '+fires[k].name);
                 // Supprimer les objets des tableaux TODO
-                MovingScene.remove(MovingScene.getObjectByName(missils[k].name));
-                missils.splice(k,1);
+                MovingScene.remove(MovingScene.getObjectByName(fires[k].name));
+                fires.splice(k,1);
                 k--;
-                // Supprimer les objets de la scene TODO
+                // Supprimer les objets de la scene
                 curEnemyKilled = true;
                 break;
             }
