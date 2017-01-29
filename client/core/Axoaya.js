@@ -89,7 +89,7 @@ Axoaya.init = function() {
     //STARBOX
     var skyGeometry = new THREE.SphereBufferGeometry(100000, 32, 32);
     var skyMaterial = new THREE.MeshLambertMaterial({
-    		map: THREE.ImageUtils.loadTexture( "img/starbox/skystar.jpg" ),
+    		map: new THREE.TextureLoader().load( "img/starbox/skystar.jpg" ),
     		color : 0xbbdddd,
     		side: THREE.BackSide
     	});
@@ -179,7 +179,7 @@ function ParticuleInit() {
     };
     Asteropart.uniforms = {
         color: {type: "c", value: new THREE.Color(0xffffff)},
-        texture: {type: "t", value: THREE.ImageUtils.loadTexture('./img/miniasteroid.jpg')}
+        texture: {type: "t", value: new THREE.TextureLoader().load('./img/miniasteroid.jpg')}
     };
     Asteropart.shaderMaterial = new THREE.ShaderMaterial({
         uniforms: Asteropart.uniforms,
@@ -209,7 +209,7 @@ function ParticuleInit() {
     Asteropart.geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
     Asteropart.geometry.addAttribute('customColor', new THREE.BufferAttribute(values_color, 3));
     Asteropart.geometry.addAttribute('size', new THREE.BufferAttribute(values_size, 1));
-    stars = new THREE.PointCloud(Asteropart.geometry, Asteropart.shaderMaterial);
+    stars = new THREE.Points(Asteropart.geometry, Asteropart.shaderMaterial);
     stars.frustumCulled = false;
     Asteropart.add(stars);
 }
@@ -235,7 +235,6 @@ var RingMaterial = new THREE.MeshPhongMaterial(
         shininess: 3,
         emissive:10,
         side: THREE.DoubleSide,
-        castshadow:true,
         transparent : true,
         opacity     : 0.8
     } );
@@ -419,7 +418,7 @@ RingGeometry.prototype = Object.create( THREE.Geometry.prototype );
  }
  createGlobe() {
  let geometry = new THREE.SphereGeometry(7, 32, 32),
- texture = THREE.ImageUtils.loadTexture(this.map),
+ texture = THREE.TextureLoader().load(this.map),
  material = new THREE.MeshPhongMaterial({
  map: texture
  }),
@@ -436,7 +435,7 @@ RingGeometry.prototype = Object.create( THREE.Geometry.prototype );
  gridY: 200,
  autoInit: true
  }),
- texture = THREE.ImageUtils.loadTexture(ringsmap),
+ texture = THREE.TextureLoader().load(ringsmap),
  material = new THREE.MeshLambertMaterial({
  map: texture,
  transparent: false,

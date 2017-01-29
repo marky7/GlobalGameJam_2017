@@ -186,12 +186,11 @@ function PointerRelease (event) {
     MovingScene.input(false, 3, 'action');
 }
 
-var simpleSpriteTxt = new THREE.ImageUtils.loadTexture( './img/star.png' );
+var simpleSpriteTxt = new THREE.TextureLoader().load( './img/star.png' );
 function getSimpleSprite(color,size) {
 	var focusMaterial = new THREE.SpriteMaterial(
 		{
 			map: simpleSpriteTxt,
-			//useScreenCoordinates: false,
 			color: color,
 			transparent: false,
 			blending: THREE.AdditiveBlending

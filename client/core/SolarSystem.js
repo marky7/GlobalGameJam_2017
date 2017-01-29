@@ -120,7 +120,7 @@ function MakeSystem() {
 	//TOREMOVE LOCATOR
 	var sunMaterial = new THREE.SpriteMaterial( 
 	{ 
-		map: new new THREE.TextureLoader().load( './img/star.png' ),
+		map: new THREE.TextureLoader().load( './img/star.png' ),
 		//useScreenCoordinates: false, 
 		color: 0xffddbb,
 		transparent: false,

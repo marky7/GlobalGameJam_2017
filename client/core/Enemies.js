@@ -47,7 +47,7 @@ var createCube = function(opt){
     enemies.push(cubemesh);
 };
 
-var asteroSpeedFactor = 0.2;
+var asteroSpeedFactor = 0.15;
 var moveEnemies = function(){
     for(var i=0; i<enemies.length ; i++){
         // Move

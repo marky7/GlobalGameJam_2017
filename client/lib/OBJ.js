@@ -365,21 +365,21 @@ THREE.OBJLoader.prototype = {
 			}
 			if (obj == '0') {
 			material = new THREE.MeshPhongMaterial({
-				"map" : 		THREE.ImageUtils.loadTexture('./obj/'+obj+'D.jpg'),
-				//"normalMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'N.jpg'),
-				"bumpMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'B.jpg'),
-				"specularMap" : THREE.ImageUtils.loadTexture('./obj/'+obj+'S.jpg'),
-				"lightMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'L.jpg'),
+				"map" : 		new THREE.TextureLoader().load('./obj/'+obj+'D.jpg'),
+				//"normalMap" : 	THREE.TextureLoader().load('./obj/'+obj+'N.jpg'),
+				"bumpMap" : 	new THREE.TextureLoader().load('./obj/'+obj+'B.jpg'),
+				"specularMap" : new THREE.TextureLoader().load('./obj/'+obj+'S.jpg'),
+				"lightMap" : 	new THREE.TextureLoader().load('./obj/'+obj+'L.jpg'),
 				"bumpScale" : 	systemscale/100,
 				"specular" : 	new THREE.Color( 0x888888 )
 			});
 			} else {
 			material = new THREE.MeshPhongMaterial({
-				"map" : 		THREE.ImageUtils.loadTexture('./obj/'+obj+'D.png'),
-				"normalMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'N.png'), 
-				"bumpMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'B.png'),
-				"specularMap" : THREE.ImageUtils.loadTexture('./obj/'+obj+'S.png'),
-				"lightMap" : 	THREE.ImageUtils.loadTexture('./obj/'+obj+'L.png'),
+				"map" : 		new THREE.TextureLoader().load('./obj/'+obj+'D.png'),
+				"normalMap" : 	new THREE.TextureLoader().load('./obj/'+obj+'N.png'), 
+				"bumpMap" : 	new THREE.TextureLoader().load('./obj/'+obj+'B.png'),
+				"specularMap" : new THREE.TextureLoader().load('./obj/'+obj+'S.png'),
+				"lightMap" : 	new THREE.TextureLoader().load('./obj/'+obj+'L.png'),
 				"bumpScale" : 	systemscale/100,
 				"specular" : 	new THREE.Color( 0x888888 )
 			});

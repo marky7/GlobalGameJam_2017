@@ -39,7 +39,7 @@ NewScene.init = function() {
     // Star Skybox example 1
     //var skyGeometry = new THREE.SphereBufferGeometry(200000, 32, 32);
     //var skyMaterial = new THREE.MeshBasicMaterial({
-    //		map: THREE.ImageUtils.loadTexture( "img/starbox/skystar.jpg" ),
+    //		map: THREE.TextureLoader().load( "img/starbox/skystar.jpg" ),
     //		color : 0xbbdddd,
     //		side: THREE.BackSide
     //	});
@@ -56,8 +56,7 @@ NewScene.init = function() {
     //this item must be added on the GUI scene, so we use guisc.add()
     var focusMaterial = new THREE.SpriteMaterial(
         {
-            map: new THREE.ImageUtils.loadTexture( './img/focus.jpg',{}, function() { guisc.add(NewScene.focusSprite); } ),
-            useScreenCoordinates: false,
+            map: new THREE.TextureLoader().load( './img/focus.jpg', function() { guisc.add(NewScene.focusSprite); } ),
             color: 0xffffff,//0xffbb66,
             transparent: false,
             blending: THREE.AdditiveBlending
