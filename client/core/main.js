@@ -26,6 +26,7 @@ function HideAll() {
 
 // Global Start Checker
 var Start = false;
+var gameOver = false;
 
 function init() {
     var startLevel = Now();
@@ -176,17 +177,18 @@ function render()
 }
 
 
-var updateStep = [1000,2000,4000,7000,10000,12000,15000,18000,21000,30000,40000,50000];
+var updateStep = [2000,3000,4000,5000,7000,9000,12000,15000,18000,21000,25000,30000,35000,40000,45000,50000,60000,80000,100000,150000];
 var curUpdateStep = 0;
 function updateScore(){
-    if(updateStep[curUpdateStep] && (score > updateStep[curUpdateStep])){
-        curUpdateStep++;
-        console.log(speedGame);
-        speedGame -= 1; // encrease asteroid creation
+    if(!gameOver){
+        if(updateStep[curUpdateStep] && (score > updateStep[curUpdateStep])){
+            curUpdateStep++;
+            speedGame -= 1; // encrease asteroid creation
+            console.log("The new speed game is : "+speedGame);
+        }
+        score += (curLevel+1);
+        document.getElementById('score').innerHTML = 'Score : '+score+'<br> Niveau : '+(curLevel+1);
     }
-    score +=(1*(curLevel+1));
-    document.getElementById('score').innerHTML = 'Score : '+score+'<br> Niveau : '+(curLevel+1);
-
 }
 
 // Cette Méthode ne fonctionne qu'avec des ennemis ayant un radius (spheres..)
@@ -219,7 +221,7 @@ function detectCollisions(){
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
             var AB = Math.pow(enemies[i].position.x-players[j].ship.position.x, 2)+Math.pow(enemies[i].position.y-players[j].ship.position.y,2);
             if(enemies[i].geometry.parameters.radius && AB<(Math.pow(enemies[i].geometry.parameters.radius, 2)+0.1)){
-                console.log(" Player "+j+' est mort. name : '+players[j].ship.name);
+                // console.log(" Player "+j+' est mort. name : '+players[j].ship.name);
                 // Supprimer le vaisseau du tableau TODO
                 players[j].ship.visible = false;
                 players[j].isDead = true;
@@ -239,36 +241,51 @@ function detectCollisions(){
 
                 // console.log(" Ennemi "+i+' est mort. name : '+enemies[i].name);
                 // console.log(" Missil "+k+' est detruit. name : '+fires[k].name);
-                // Supprimer les objets des tableaux TODO
+                // Supprimer les objets des tableaux
                 MovingScene.remove(MovingScene.getObjectByName(fires[k].name));
                 fires.splice(k,1);
                 k--;
                 // Supprimer les objets de la scene
-                curEnemyKilled = true;
+                enemies[i].active=false;
                 break;
             }
         }
-        if(curEnemyKilled){
+        if(!enemies[i].active){
             MovingScene.remove(MovingScene.getObjectByName(enemies[i].name));
             enemies.splice(i,1);
             i--;
-            curEnemyKilled = false;
         }
 
     }
-/*
+
+    var curBonusKilled = false;
     // Detecter collision entre les bonus et les vaisseaux
     for(var l=0; l<bonus.length; l++){
         for(var m=0; m<players.length; m++){
             // Calculer la distance entre les deux centres de gravités
             // AB=racine((xB−xA)2+(yB−yA)2+(zB−zA)2);
+            if(!bonus[l]){
+                console.log('error');
+            }
             var AB = Math.pow(bonus[l].position.x-players[m].ship.position.x, 2) + Math.pow(bonus[l].position.y - players[m].ship.position.y,2) + Math.pow(bonus[l].position.z-players[m].ship.position.z,2);
-            if(bonus[l].children[1].geometry.parameters.radius && (AB<Math.pow(bonus[l].children[1].geometry.parameters.radius,2))){
-                //console.log(" Player "+m+' a reçu un Bonus. Bonus name : '+bonus[m].name);
-                // score += 1000; // Give a score bonus to player
-                // Supprimer le Bonus du tableau TODO
-                // Supprimer le Bonus de la scène TODO
+            if(bonus[l].radius && (AB<Math.pow(bonus[l].radius,2))){
+
+                //console.log(" Player "+l+' a reçu un Bonus. Bonus name : '+bonus[l].name);
+                   switch (bonus[l].type){
+                       case 1 : score += 2000; break;
+                       case 2 : score += 5000 ; break;
+                   }
+                   bonus[l].active = false;
+                   break;
             }
         }
-    }*/
+        if(!bonus[l].active){
+            console.log("remove");
+            // Supprimer le Bonus de la scène
+            MovingScene.remove(MovingScene.getObjectByName(bonus[l].name));
+            // Supprimer le Bonus du tableau
+            bonus.splice(l,1);
+            l--;
+        }
+    }
 }

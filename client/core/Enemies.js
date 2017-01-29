@@ -20,6 +20,7 @@ var createSphere = function(opt){
     sphereMesh.rotation.y = Math.random()*Math.PI*2;
     sphereMesh.speed = new THREE.Vector3(0,0,opt.speed);
     sphereMesh.name = 'sphere-'+randomNumber1+'-'+Math.random();
+    sphereMesh.active = true;
     //sphereMesh.visible = false;
     opt.scene.add(sphereMesh);
     enemies.push(sphereMesh);
@@ -43,6 +44,7 @@ var createCube = function(opt){
     cubemesh.position.z = opt.position.z;
     cubemesh.speed = new THREE.Vector3(0,0,opt.speed);
     cubemesh.name = 'cube-'+randomNumber1+'-'+Math.random();
+    cubemesh.active = true;
     opt.scene.add( cubemesh );
     enemies.push(cubemesh);
 };
@@ -64,6 +66,7 @@ var removeEnemies = function(curScene,force){
             var obj = curScene.getObjectByName(enemies[i].name);
             obj.material.dispose(); // not working better, need more digging
             obj.geometry.dispose();
+            enemies[i].active = false;
             curScene.remove(obj);
             enemies.splice(i,1);
             i--;

@@ -42,8 +42,8 @@ levels[0] = {
         {ratioLT:0.3,bumpScale:1,mat:levelsMat[1],speed:1,sphereGeometry:[10*levelSize,20,20]},
         {ratioLT:0.1,bumpScale:1,mat:levelsMat[2],speed:1,sphereGeometry:[20*levelSize,20,20]}
     ],bonus : [
-        {ratioLT:0.1,speed:1,meshPhongColor:0xffffff,meshBasicColor:0xffbb00,height:0.1,type:2},
-        {ratioMT:0.85,speed:1,meshPhongColor:0x2222ff,meshBasicColor:0x33bbff,height:0.15,type:1}
+        {ratioLT:0.1,speed:0.7,meshPhongColor:'0xffffff',meshBasicColor:'0xFFBB00',height:0.14,type:2},
+        {ratioMT:0.85,speed:0.7,meshPhongColor:'#2222ff',meshBasicColor:'#33BBFF',height:0.22,type:1}
     ]
 };
 

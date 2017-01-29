@@ -13,11 +13,14 @@ var createBonus = function(opt) {
     var bonus3 = THREE.SceneUtils.createMultiMaterialObject( geometry3, materials3 );
 
     opt.scene.add(bonus3);
+    bonus3.type=opt.type;
+    bonus3.radius = opt.height;
     bonus3.position.x = opt.position.x;
     bonus3.position.y = opt.position.y;
     bonus3.position.z = opt.position.z;
     bonus3.speed = new THREE.Vector3(0, 0, opt.speed);
-    bonus3.name = 'sphere-' + randomNumber1 + '-' + Math.random();
+    bonus3.active = true;
+    bonus3.name = 'bonus-' + randomNumber1 + '-' + Math.random();
     bonus.push(bonus3);
 };
 
@@ -35,6 +38,7 @@ var removeBonus = function(curScene){
     for(var i=0; i<bonus.length ; i++){
 
         if(bonus[i].position.z >= 2){
+            bonus[i].active = false;
             curScene.remove(curScene.getObjectByName(bonus[i].name));
             bonus.splice(i,1);
             i--;
