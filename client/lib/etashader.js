@@ -371,3 +371,52 @@ var StarHalo = {
 
     ].join("\n")
 };
+
+
+//I can not write shader properly -__-
+var StarFlare = {
+
+    vertexShader: [
+
+	"varying vec2 vUv;",
+	"void main() {",
+			"vUv = uv;",
+			//"float rotation = 0.0;",
+			//'vec2 alignedPosition = position.xy;',
+
+			//'vec2 rotatedPosition;',
+			//'rotatedPosition.x = cos( rotation ) * alignedPosition.x - sin( rotation ) * alignedPosition.y;',
+			//'rotatedPosition.y = sin( rotation ) * alignedPosition.x + cos( rotation ) * alignedPosition.y;',
+
+			'vec4 finalPosition;',
+
+			'finalPosition = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );',
+			//'finalPosition.xy += rotatedPosition;',
+			'finalPosition = projectionMatrix * finalPosition;',
+
+			'gl_Position = finalPosition;',	
+		//"gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
+		//"vUv = uv;",
+	"}"
+
+    ].join("\n"),
+
+    fragmentShader: [
+
+	"varying vec2 vUv;",
+	//"varying vec3 spectralColor;",
+	"uniform sampler2D texturePrimary;",
+	"uniform float opacity;",
+
+	"void main() {",
+		"vec3 colorIndex = texture2D( texturePrimary, vUv ).xyz;",
+
+		//"spectralColor.x =  1",
+		//"spectralColor.y =  1",
+		//"spectralColor.z = 0.5",
+// * spectralColor.xyz
+		"gl_FragColor = vec4( colorIndex , opacity );",
+	"}"
+
+    ].join("\n")
+};

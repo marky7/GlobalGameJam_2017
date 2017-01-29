@@ -62,7 +62,7 @@ var removeEnemies = function(curScene,force){
     for(var i=0; i<enemies.length ; i++){
         if(enemies[i].position.z >= 2 || force){
             var obj = curScene.getObjectByName(enemies[i].name);
-            obj.material.dispose();
+            obj.material.dispose(); // not working better, need more digging
             obj.geometry.dispose();
             curScene.remove(obj);
             enemies.splice(i,1);

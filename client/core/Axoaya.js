@@ -102,18 +102,18 @@ Axoaya.init = function() {
     slight.position.y =  100;
     slight.position.z =  250;
     anchor.add(slight);
-    var newstar = NewGenStar(10,1);
+    var newstar = NewGenStar(20,1);
     newstar.position.x = -1000;
     newstar.position.y = 100;
     newstar.position.z = 250;
     newstar.visible = false;
     anchor.add(newstar);
     //init position for dark start
-    anchor.rotation.y = -0.05;
+    anchor.rotation.y = -0.5;
     //Animation of your scene, must be called by main-update
     Axoaya.animate = function(delta) {Now();
         anchor.rotation.y -= 0.02*delta;
-        if (anchor.rotation.y<-0.76) {
+        if (anchor.rotation.y<-0.755) {
             newstar.visible = true;
         }
         if (anchor.rotation.y<(-Math.PI*2-0.05)) {
@@ -122,7 +122,7 @@ Axoaya.init = function() {
         }
         planetMesh.rotation.y -= 0.01*delta;
         Axoaya.alight.intensity = 1;//0.6+Math.sin(NOW*16)*0.4;
-        newstar.update(NOW*1000);
+        newstar.update(Math.min(1,Math.max(0,Math.min((-0.755-anchor.rotation.y)*50,1+(0.8+anchor.rotation.y)*0.5))));
         for( var i = 0; i < nebula.nb; i++ ) {
             //nebula.uni[i].intensity = { type: "f", value: 0.6 + Math.cos(NOW*2*(1+i)) * 0.4 };
         }

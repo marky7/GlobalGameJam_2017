@@ -35,6 +35,7 @@ function InitSystem() {
 	TsunCoronaTexture = new THREE.TextureLoader().load( "./img/star/corona.png" );
 	TsunHaloTexture = new THREE.TextureLoader().load( "/img/star/sunhalo.png" );
 	TsunHaloColorTexture = new THREE.TextureLoader().load( "/img/star/halocolorshift.png" );
+	TsunFlareTexture = new THREE.TextureLoader().load( "/img/star/lensflare.png" );
 }
 
 
@@ -491,6 +492,10 @@ function NewGenStar(size,spectral) {
 		textureSpectral: { type: "t", value: TstarColorGraph },
 		spectralLookup: { type: "f", value: 0 }			
 	};
+	var flareUniforms = {
+		texturePrimary:   { type: "t", value: TsunFlareTexture },
+		opacity: { type: "f", value: 1 }			
+	};
 	function map(v, i1, i2, o1, o2) {
 		return o1 + (o2 - o1) * ((v - i1) / (i2 - i1));
 	}
@@ -551,6 +556,42 @@ function NewGenStar(size,spectral) {
 	var sunGlow = new THREE.Mesh( glowGeo, sunGlowMaterial );
 		sunGlow.position.set( 0, 0, 0 );
 
+	//var flareGeo = new THREE.PlaneGeometry( 1024, 512 );
+	//var sunFlareMaterial = new THREE.ShaderMaterial(
+	//	{
+	//		//map: sunCoronaTexture,
+	//		uniforms: 		flareUniforms,
+	//		vertexShader: 	StarFlare.vertexShader,
+	//		fragmentShader: StarFlare.fragmentShader,
+	//		blending: THREE.AdditiveBlending,
+	//		//color: 0xffffff,
+	//		transparent: true,
+	//		//	settings that prevent z fighting
+	//		polygonOffset: true,
+	//		polygonOffsetFactor: -1,
+	//		polygonOffsetUnits: 100,
+	//		depthTest: true,
+	//		depthWrite: true
+	//	}
+	//);
+	//var sunFlare = new THREE.Mesh( flareGeo, sunFlareMaterial );
+	//	sunFlare.position.set( 0, 0, 0 );
+		
+	var flareMaterial = new THREE.SpriteMaterial(
+		{
+			map: TsunFlareTexture,
+			//useScreenCoordinates: false,
+			color: 0xffff88,
+			blending: THREE.AdditiveBlending,
+			transparent: true,
+			//	settings that prevent z fighting
+			depthWrite: false,
+			depthTest: false
+		});
+	newgenstar.flareSprite = new THREE.Sprite( flareMaterial );
+	//newgenstar.flareSprite.position.x = -100;
+	newgenstar.flareSprite.scale.set(1600, 800, 1.0);
+
 	//var slight = new THREE.PointLight(0xdddddd);
 	//	slight.position.y = 100000; // UP TEMP LIGHT
 	//	slight.position.z =  50000; // UP TEMP LIGHT
@@ -560,20 +601,14 @@ function NewGenStar(size,spectral) {
 	newgenstar.add( gyro );	
 
 	//	the corona that lines the edge of the sun sphere
-    // console.time("make sun halo");
 		gyro.add( sunHalo );
-    // console.timeEnd("make sun halo");
-	
-    // console.time("make sun glow");
 		gyro.add( sunGlow );
-    // console.timeEnd("make sun glow");
-    newgenstar.update = function(time) {
-		sunUniforms.time.value = time;
-		haloUniforms.time.value = time + camera.accuY*5;
-		//lookAtAndOrient(gyro, new THREE.Vector3(), camera);//failed
-		//gyro.lookAt ( camera.position.clone() ); //noneedit
-		//var globalrot = newgenstar.localToWorld( newgenstar.rotation.clone() );
-		//console.log(globalrot);
+		gyro.add( newgenstar.flareSprite );
+
+    newgenstar.update = function(opa) {
+    	newgenstar.flareSprite.material.opacity = opa;
+		//sunUniforms.time.value = time;
+		//haloUniforms.time.value = time + camera.accuY*5;
     };
 
     return newgenstar;
