@@ -222,8 +222,11 @@ function ParticuleMove() {
         newpositions[p*3+1] = asteroTabY[p];
         newpositions[p*3+2] = -((p*0.005-NOW*5)%5)-5;
     }
-    Asteropart.geometry.removeAttribute( 'position' );
-    Asteropart.geometry.addAttribute( 'position', new THREE.BufferAttribute( newpositions, 3 ) );
+    Asteropart.geometry.attributes.position.setArray(newpositions);
+    Asteropart.geometry.attributes.position.needsUpdate = true;
+    //might cause memory leaks
+    //Asteropart.geometry.removeAttribute( 'position' );
+    //Asteropart.geometry.addAttribute( 'position', new THREE.BufferAttribute( newpositions, 3 ) );
 }
 
 var RingMaterial = new THREE.MeshPhongMaterial(
