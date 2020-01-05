@@ -1,3 +1,9 @@
+var configs = {
+    'protocol' : 'http',
+    'host': '/florianmarc.com',
+    'path': '/axa-o-aya'
+};
+
 // standard global variables
 var container, scene, camera, renderer, controls, stats;
 // gui  variables
@@ -28,78 +34,159 @@ function HideAll() {
 var Start = false;
 var gameOver = false;
 
+var imgsToLoad = [
+    '/img/nebula/1.png',
+    '/img/nebula/2.png',
+    '/img/nebula/3.png',
+    '/img/nebula/4.png',
+    '/img/nebula/5.png',
+    '/img/nebula/6.png',
+    '/img/nebula/7.png',
+    '/img/nebula/8.png',
+    '/img/nebula/9.png',
+    '/img/starbox/skystar.jpg',
+    '/img/miniasteroid.jpg',
+    '/img/ring.jpg',
+    '/img/planetmin/10d.jpg',
+    '/img/planetmin/10n.jpg',
+    '/img/planetmin/18d.jpg',
+    '/img/planetmin/18n.jpg',
+    '/img/planetmin/25d.jpg',
+    '/img/planetmin/25n.jpg',
+    '/img/planetmin/27d.jpg',
+    '/img/planetmin/27n.jpg',
+    '/img/planetmin/24d.jpg',
+    '/img/planetmin/24n.jpg',
+    '/img/planetmin/48d.jpg',
+    '/img/planetmin/48n.jpg',
+    '/img/planetmin/43d.jpg',
+    '/img/planetmin/43n.jpg',
+    '/img/planetmin/51d.jpg',
+    '/img/planetmin/51d.jpg'
+];
+
+var objToLoad = [
+    '/obj/0.obj'
+];
+
+var filesLoaded = {};
+
+var loadImg = function(urlFile){
+    return function(callback){
+        filesLoaded[urlFile] = new Image();
+        filesLoaded[urlFile].src = '/axa-o-aya'+urlFile ;
+        filesLoaded[urlFile].onload = function(){
+            callback(null,urlFile);
+        }
+    }
+};
+
+var httpGetAsync = function(urlFile) {
+    return function(callback){
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(null,xmlHttp.responseText);
+        };
+        xmlHttp.open("GET", '/axa-o-aya'+urlFile, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+};
+
+
+function loadAll(cb) {
+    var asyncFunctions = [];
+
+    // Fill asyncFunctions with all functions that will load images
+    for(var i=0; i<imgsToLoad.length; i++){
+        asyncFunctions.push(loadImg(imgsToLoad[i]));
+    }
+
+    // Fill asyncFunctions with all functions that will load OBJ
+    for(var j=0; j<objToLoad.length; j++){
+        asyncFunctions.push(httpGetAsync(objToLoad[j]));
+    }
+
+    async.parallel(asyncFunctions,
+        // optional callback
+        function(err, results) {
+            console.log('asyncErr',err);
+            cb(err, results); // Even if there is an error... that should not be blocking // TODO something better
+        });
+}
+
 function init() {
-    var startLevel = Now();
+        var startLevel = Now();
         // SCENE
-    scene = new THREE.Scene();
-    guisc = new THREE.Scene();
-    // CAMERA
-    var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
-    var VIEW_ANGLE = 90, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.05, FAR = 1000000;
-    camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
-    scene.add(camera);
-    camera.position.set(0,2,5);
-    camera.lookAt(scene.position);  
+        scene = new THREE.Scene();
+        guisc = new THREE.Scene();
+        // CAMERA
+        var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+        var VIEW_ANGLE = 90, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.05, FAR = 1000000;
+        camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+        scene.add(camera);
+        camera.position.set(0,2,5);
+        camera.lookAt(scene.position);
 
-    guicam = new THREE.OrthographicCamera( -SCREEN_WIDTH /2, SCREEN_WIDTH /2, SCREEN_HEIGHT /2, -SCREEN_HEIGHT /2, 1, 10 );
-    guicam.position.z = 10;
+        guicam = new THREE.OrthographicCamera( -SCREEN_WIDTH /2, SCREEN_WIDTH /2, SCREEN_HEIGHT /2, -SCREEN_HEIGHT /2, 1, 10 );
+        guicam.position.z = 10;
 
-    renderer = new THREE.WebGLRenderer( {antialias:true,precision:"lowp"} );
-    //else
-    //    renderer = new THREE.CanvasRenderer(); 
-    renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    renderer.autoClear = false; // important for double render
-    container = document.getElementById( 'ThreeJS' );
-    container.appendChild( renderer.domElement );
-    // EVENTS
-    THREEx.WindowResize(renderer, camera, false);
-    THREEx.WindowResize(renderer, guicam, true );
-    //THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
-    // CONTROLS
-    controls = new THREE.OrbitControls( camera, renderer.domElement );
-    // STATS
-    stats = new Stats();
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.top = '4px';
-    stats.domElement.style.left = '320px';
-    stats.domElement.style.zIndex = 100;
-    container.appendChild( stats.domElement );
-    
-    //CANVAS INIT
-    // create a canvas element
-    canvas = document.createElement('canvas');
-    canvas.width  = 512;
-    canvas.height = 512;
-    ctx = canvas.getContext('2d');
-    ctx.font = "Bold 20px Arial";
-    ctx.fillStyle = "rgba(0,0,0,0.80)";
-    ctx.fillText(' ', 0, 20);
-    
-    // canvas over texture
-    overtext = new THREE.Texture(canvas);
-    overtext.needsUpdate = true;
-    var spriteMaterial = new THREE.SpriteMaterial( { map: overtext/*, useScreenCoordinates: true*/ } );
-    overimg = new THREE.Sprite( spriteMaterial );
-    overimg.scale.set(512,512,1.0);
-    overimg.position.set( 0, 0, 0 );
-    guisc.add( overimg );
+        renderer = new THREE.WebGLRenderer( {antialias:true,precision:"lowp"} );
+        //else
+        //    renderer = new THREE.CanvasRenderer();
+        renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        renderer.autoClear = false; // important for double render
+        container = document.getElementById( 'ThreeJS' );
+        container.appendChild( renderer.domElement );
+        // EVENTS
+        THREEx.WindowResize(renderer, camera, false);
+        THREEx.WindowResize(renderer, guicam, true );
+        //THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
+        // CONTROLS
+        controls = new THREE.OrbitControls( camera, renderer.domElement );
+        // STATS
+        stats = new Stats();
+        stats.domElement.style.position = 'absolute';
+        stats.domElement.style.top = '4px';
+        stats.domElement.style.left = '320px';
+        stats.domElement.style.zIndex = 100;
+        container.appendChild( stats.domElement );
 
-    HideAll();
+        //CANVAS INIT
+        // create a canvas element
+        canvas = document.createElement('canvas');
+        canvas.width  = 512;
+        canvas.height = 512;
+        ctx = canvas.getContext('2d');
+        ctx.font = "Bold 20px Arial";
+        ctx.fillStyle = "rgba(0,0,0,0.80)";
+        ctx.fillText(' ', 0, 20);
 
-    NewScene.init();
-    //NewScene.show();
+        // canvas over texture
+        overtext = new THREE.Texture(canvas);
+        overtext.needsUpdate = true;
+        var spriteMaterial = new THREE.SpriteMaterial( { map: overtext/*, useScreenCoordinates: true*/ } );
+        overimg = new THREE.Sprite( spriteMaterial );
+        overimg.scale.set(512,512,1.0);
+        overimg.position.set( 0, 0, 0 );
+        guisc.add( overimg );
 
-    InitSystem();
-    //ShowSystem();
+        HideAll();
 
-    MovingScene.init();
-    //MovingScene.show();
-    Axoaya.init();
-    Axoaya.show();
+        NewScene.init();
+        //NewScene.show();
+
+        InitSystem();
+        //ShowSystem();
+
+        MovingScene.init();
+        //MovingScene.show();
+        Axoaya.init();
+        Axoaya.show();
 
 
-    //SoundManager2
-    Play('AN9');/*TOREMOVE*///Mute();
+        //SoundManager2
+        Play('AN9');/*TOREMOVE*///Mute();
 }
 
 //!MAIN ENGINE LOOP!
